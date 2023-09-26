@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Gradient Discord Bot</title>
+
+        <link rel="icon" href="static/avatar.png" type="image/x-icon">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div id="nav-wrapper">
+            <img src="static/avatar.png" alt="Gradient Avatar" id="nav-avatar">
+
+            <nav id="top-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="commands.html">Commands</a></li>
+                    <li><a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands">Invite</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="premium.html">Premium</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="onload-wrapper">
+            <div id="home-title" class="centered-div">
+                <img src="static/avatar.png" alt="Gradient Avatar" id="home-title-avatar">
+                <h1>Gradient</h1>
+                <h1 id="home-bot-tag">#8321</h1>
+            </div>
+            
+            <div id="home-badges" class="centered-div">
+                <div class="home-badge-hover">
+                    <img src="static/badges/verified-bot.png" alt="Bot Tag" id="home-verified-bot-badge">
+                    <span class="home-badge-text" id="home-verified-bot-text">Verified Bot</span>
+                </div>
+
+                <div class="home-badge-separator"></div>
+
+                <div class="home-badge-hover">
+                    <img src="static/badges/supports-commands.png" alt="Supports Commands" id="home-supports-commands-badge">
+                    <span class="home-badge-text" id="home-supports-commands-text">Supports Commands</span>
+                </div>
+
+                <div class="home-badge-separator"></div>
+
+                <div class="home-badge-hover" id="home-status">
+                    <div id="home-status-badge-loading"></div>
+                </div>
+            </div>
+            
+            <div id="home-subtitle" class="centered-div">
+                <h2>The one Discord bot to do it all.</h2>
+            </div>
+        </div>
+
+        <div id="onload-wrapper-delayed">
+            <div id="home-buttons" class="centered-div">
+                <a href="invite">
+                    <button id="home-invite">
+                        <img src="static/discord-icon-white.png" alt="Discord Icon" id="home-invite-icon">
+                        Add to Discord
+                    </button>
+                </a>
+            
+                <a href="about">
+                    <button id="home-more-info">See features</button>
+                </a>
+            </div>
+        </div>
+
+
+
+        <script>
+            window.onload = async () => {
+                var status;
+
+                try {
+                    status = await fetch("https://93zbgvn3px8d.statuspage.io/api/v2/summary.json");
+                    status = await status.json();
+                } catch {
+                    status = undefined;
+                }
+
+                var homeStatus = document.getElementById("home-status");
+
+                var statusIcon = document.createElement("img");
+                statusIcon.setAttribute("id", "home-status-badge");
+
+                var statusHover = document.createElement("span");
+                statusHover.classList.add("home-badge-text");
+                statusHover.setAttribute("id", "home-status-text");
+
+                if (status && status.status) {
+                    setTimeout(() => {
+                        document.getElementById("home-status-badge-loading").remove();
+
+                        status = status.status;
+
+                        if (status.description) {
+                            if (status.description == "All Systems Operational") {
+                                statusIcon.src = "static/status/operational.png";
+                                statusIcon.alt = "All Systems Operational";
+                            } else {
+                                statusIcon.src = "static/status/minor-outage.png";
+                                statusIcon.alt = "Minor Outage";
+                            }
+                        } else {
+                            statusIcon.src = "static/status/major-outage.png";
+                            statusIcon.alt = "Major Outage";
+                        }
+
+                        statusHover.textContent = statusIcon.alt;
+
+                        homeStatus.appendChild(statusIcon);
+                        homeStatus.appendChild(statusHover);
+                    }, 2000);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById("home-status-badge-loading").remove();
+
+                        statusIcon.src = "static/status/major-outage.png";
+                        statusIcon.alt = "Major Outage";
+
+                        statusHover.textContent = statusIcon.alt;
+
+                        homeStatus.appendChild(statusIcon);
+                        homeStatus.appendChild(statusHover);
+                    }, 2000);
+                }
+            }
+        </script>
+    </body>
+</html>
