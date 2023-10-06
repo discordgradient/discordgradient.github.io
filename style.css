@@ -66,6 +66,9 @@
 body {
     background-color: #2c2c34;
     cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 
@@ -402,7 +405,7 @@ body {
 }
 
 #about-category-view {
-    max-width: 50%;
+    max-width: 50vh;
 }
 
 .about-category-text {
@@ -411,7 +414,7 @@ body {
     position: absolute;
     max-width: 90vh;
     text-align: left;
-    right: 50px;
+    right: 6vh;
     z-index: 1;
 }
 
@@ -470,7 +473,7 @@ body {
 }
 
 #commands-search-bar input[type="text"] {
-    width: 100vh;
+    width: 60%;
     border-radius: 500px;
     background-color: #4e4e4e;
     padding: 10px 30px;
@@ -486,16 +489,145 @@ body {
     color: #8f8f8f;
 }
 
+#commands-search-bar input[type="text"]:focus {
+    outline: none;
+}
+
 #commands-search-button {
     margin-left: 30px;
-    cursor: pointer;
     border-radius: 50%;
     border: none;
     background-color: #4e4e4e;
     width: 50px;
     height: 50px;
+    position: relative;
 }
 
 #commands-search-button img {
     filter: invert(1);
+}
+
+#commands-search-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+}
+
+#commands-search-loading::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 5%;
+    width: 70%;
+    height: 70%;
+    border: 2px solid white;
+    border-top-color: #4e4e4e;
+    border-radius: 50%;
+    animation: loading-spin 1s linear infinite;
+}
+
+#commands-search-results {
+    max-width: 140vh;
+    margin: 0 auto;
+    border-radius: 15px;
+    position: relative;
+}
+
+#commands-search-results-dropdown {
+    background-color: #4e4e4e;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    border: 1px solid #cacaca;
+}
+
+.commands-search-results-header, .commands-search-results-card {
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: "GG Sans Normal";
+}
+
+.commands-search-results-header {
+    font-size: 18px;
+    color: #c0c0c0;
+    text-align: center;
+}
+
+.commands-search-results-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.commands-search-results-description-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    padding: 10px;
+    gap: 10px;
+}
+
+.commands-search-results-show-hide-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 18px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    position: relative;
+    width: 50px;
+    margin: 0 auto;
+}
+
+.commands-search-results-show-hide-container::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.commands-search-results-show-hide-container:hover::after {
+    opacity: 1;
+}
+
+.commands-search-results-card {
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.commands-search-results-card b {
+    font-family: "GG Sans Bold";
+    font-weight: 300;
+}
+
+.commands-search-results-card-description {
+    font-family: "GG Sans Normal";
+    font-size: 16px;
+    color: #c0c0c0;
+}
+
+.commands-search-results-card-description b {
+    font-family: "GG Sans Bold";
+    font-weight: 300;
 }

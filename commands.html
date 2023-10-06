@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-        <title>Gradient Discord Bot | About</title>
+        <title>Gradient Discord Bot | Commands</title>
     
         <link rel="icon" href="static/avatar.png" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
@@ -38,12 +38,527 @@
             </div>
 
             <div id="commands-search-bar" class="centered-div">
-                <input type="text" placeholder="Find a command by name, category, or description..." autocomplete="off">
+                <input type="text" placeholder="Find a command by name, category, or description..." autocomplete="off" id="commands-search-input">
 
                 <button id="commands-search-button">
                     <img src="static/material-icons/search.svg" alt="Search">
                 </button>
             </div>
         </div>
+
+        <div id="commands-search-results" class="centered-div"></div>
+
+
+        <script src="static/helpers/command-list.js"></script>
+        <script src="static/helpers/helpers.js"></script>
+
+        <script>
+            const configurationColor = "#4c3791";
+            const economyColor = "#bdad44";
+            const funColor = "#96457f";
+            const gamesColor = "#913a3a";
+            const imagesColor = "#753f9e";
+            const moderationColor = "#8f5e2e";
+            const musicColor = "#2d8767";
+            const sciencesColor = "#37782f";
+            const statisticsColor = "#3a8791";
+            const textColor = "#879126";
+            const utilityColor = "#3a6391";
+
+
+            function searchCommands(input, searchButton) {
+                var idx, jdx;
+                var exact, starts, contains, category, description, letters;
+                var resultsContainer = document.getElementById("commands-search-results");
+                var dropdown = document.createElement("div");
+                dropdown.setAttribute("id", "commands-search-results-dropdown");
+                var header, cardsContainer, showHideContainer;
+
+
+                function generateCards(cardsContainer, filtered) {
+                    filtered.forEach(x => {
+                        var resultCard = document.createElement("div");
+                        resultCard.innerHTML = x.formatted || x.name;
+                        resultCard.classList.add("commands-search-results-card");
+                        resultCard.setAttribute("title", `category: ${x.category}`);
+
+                        switch (x.category) {
+                            case "configuration":
+                                resultCard.style.backgroundColor = configurationColor;
+                                break;
+
+                            case "economy":
+                                resultCard.style.backgroundColor = economyColor;
+                                break;
+
+                            case "fun":
+                                resultCard.style.backgroundColor = funColor;
+                                break;
+
+                            case "games":
+                                resultCard.style.backgroundColor = gamesColor;
+                                break;
+
+                            case "images":
+                                resultCard.style.backgroundColor = imagesColor;
+                                break;
+
+                            case "moderation":
+                                resultCard.style.backgroundColor = moderationColor;
+                                break;
+
+                            case "music":
+                                resultCard.style.backgroundColor = musicColor;
+                                break;
+
+                            case "sciences":
+                                resultCard.style.backgroundColor = sciencesColor;
+                                break;
+
+                            case "statistics":
+                                resultCard.style.backgroundColor = statisticsColor;
+                                break;
+
+                            case "text":
+                                resultCard.style.backgroundColor = textColor;
+                                break;
+
+                            case "utility":
+                                resultCard.style.backgroundColor = utilityColor;
+                                break;
+                        }
+
+                        cardsContainer.appendChild(resultCard);
+                    });
+                }
+
+
+                function letterRecursion(inputLetters, givenLetters, offset, minimumMatches) {
+                    var i, j = 0, matches = [];
+
+                    for (i = 0; i < givenLetters.length && j < inputLetters.length; i++) {
+                        if (givenLetters[i] == inputLetters[j]) {
+                            j++;
+                            if (offset > 0) {
+                                matches.push(i + offset - 1);
+                            } else {
+                                matches.push(i);
+                            }
+                        }
+                    }
+
+                    if (j < minimumMatches && inputLetters.length > minimumMatches) {
+                        return letterRecursion(inputLetters.slice(1), offset + 1);
+                    } else {
+                        return matches;
+                    }
+                }
+
+
+                if (input.length == 1) {
+                    starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    starts.forEach(x => x.formatted = "<b>" + x.name[0] + "</b>" + x.name.slice(1));
+
+                    header = document.createElement("p");
+                    header.classList.add("commands-search-results-header");
+
+                    if (starts.length > 0) {
+                        header.textContent = `${starts.length} ${pluralize("command", starts.length)} starting with "${input}" found:`;
+
+                        cardsContainer = document.createElement("div");
+                        cardsContainer.classList.add("commands-search-results-cards-container");
+
+                        generateCards(cardsContainer, starts);
+
+                        dropdown.appendChild(header);
+                        dropdown.appendChild(cardsContainer);
+                    } else {
+                        header.textContent = `We searched far and wide for ${input}, but no matching commands were found. Try searching for something else.`;
+
+                        dropdown.appendChild(header);
+                    }
+
+                    resultsContainer.appendChild(dropdown);
+
+                    return (starts.length > 0) ? "starts" : "none";
+                } else {
+                    exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+
+                    if (exact.length > 0) {
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        header.textContent = `Exact match:`;
+
+                        cardsContainer = document.createElement("div");
+                        cardsContainer.classList.add("commands-search-results-cards-container");
+
+                        generateCards(cardsContainer, exact);
+
+                        dropdown.appendChild(header);
+                        dropdown.appendChild(cardsContainer);
+                    }
+
+                    exact = new Set(exact.map(x => x.name));
+
+                    starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    starts.forEach(x => x.formatted = "<b>" + x.name.slice(0, input.length) + "</b>" + x.name.slice(input.length));
+
+                    if (starts.length > 0) {
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        header.textContent = `${starts.length} ${pluralize("command", starts.length)} starting with "${input}" found:`;
+
+                        cardsContainer = document.createElement("div");
+                        cardsContainer.classList.add("commands-search-results-cards-container");
+
+                        generateCards(cardsContainer, starts);
+
+                        dropdown.appendChild(header);
+                        dropdown.appendChild(cardsContainer);
+                    }
+
+                    starts = new Set(starts.map(x => x.name));
+
+                    contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    contains.forEach(x => {
+                        var name = x.name.toLowerCase();
+                        var inputLower = input.toLowerCase();
+                        var formatted = "";
+                        var i;
+
+                        for (i = 0; i < name.length; i++) {
+                            if (inputLower.includes(name[i])) {
+                                formatted += `<b>${name[i]}</b>`;
+                            } else {
+                                formatted += name[i];
+                            }
+                        }
+
+                        x.formatted = formatted;
+                    });
+
+                    if (contains.length > 0) {
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        header.textContent = `${contains.length} command ${pluralize("name", contains.length)} containing "${input}" found:`;
+
+                        cardsContainer = document.createElement("div");
+                        cardsContainer.classList.add("commands-search-results-cards-container");
+
+                        generateCards(cardsContainer, contains);
+
+                        dropdown.appendChild(header);
+                        dropdown.appendChild(cardsContainer);
+                    }
+
+                    contains = new Set(contains.map(x => x.name));
+
+                    description = [];
+                    for (idx = 0; idx < allCommands.length; idx++) {
+                        if (exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.has(allCommands[idx].name) || allCommands[idx].category == "creator") continue;
+
+                        var descriptionOriginal = allCommands[idx].description.replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                        var descriptionWords = allCommands[idx].description.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                        var inputWords = input.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                        var matches = letterRecursion(inputWords, descriptionWords, 0, 3);
+                        var formatted = [];
+
+                        if (matches.length >= 3) {
+                            for (jdx = 0; jdx < descriptionOriginal.length; jdx++) {
+                                if (matches.includes(jdx)) {
+                                    formatted.push(`<b>${descriptionOriginal[jdx]}</b>`);
+                                } else {
+                                    formatted.push(descriptionOriginal[jdx]);
+                                }
+                            }
+
+                            description.push({ name: allCommands[idx].name, description: formatted.join(" "), category: allCommands[idx].category, matchCount: matches.length });
+                        }
+                    }
+                    description.sort((a, b) => {
+                        if (a.matchCount > b.matchCount) {
+                            return -1;
+                        } else if (a.matchCount < b.matchCount) {
+                            return 1;
+                        } else {
+                            return a.name.localeCompare(b.name);
+                        }
+                    });
+
+                    if (description.length > 0) {
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        header.textContent = `${description.length} ${pluralize("command", description.length)} with 3 or more words from "${input}" in their description found:`;
+
+                        cardsContainer = document.createElement("div");
+                        cardsContainer.classList.add("commands-search-results-cards-container-left");
+
+                        description.forEach(x => {
+                            var descriptionContainer = document.createElement("div");
+                            var resultCard = document.createElement("div");
+                            var resultCardDescription = document.createElement("p");
+
+                            descriptionContainer.classList.add("commands-search-results-description-container");
+
+                            resultCard.innerHTML = x.name;
+                            resultCard.classList.add("commands-search-results-card");
+                            resultCard.setAttribute("title", `category: ${x.category}`);
+                            switch (x.category) {
+                                case "configuration":
+                                    resultCard.style.backgroundColor = configurationColor;
+                                    break;
+
+                                case "economy":
+                                    resultCard.style.backgroundColor = economyColor;
+                                    break;
+
+                                case "fun":
+                                    resultCard.style.backgroundColor = funColor;
+                                    break;
+
+                                case "games":
+                                    resultCard.style.backgroundColor = gamesColor;
+                                    break;
+
+                                case "images":
+                                    resultCard.style.backgroundColor = imagesColor;
+                                    break;
+
+                                case "moderation":
+                                    resultCard.style.backgroundColor = moderationColor;
+                                    break;
+
+                                case "music":
+                                    resultCard.style.backgroundColor = musicColor;
+                                    break;
+
+                                case "sciences":
+                                    resultCard.style.backgroundColor = sciencesColor;
+                                    break;
+
+                                case "statistics":
+                                    resultCard.style.backgroundColor = statisticsColor;
+                                    break;
+
+                                case "text":
+                                    resultCard.style.backgroundColor = textColor;
+                                    break;
+
+                                case "utility":
+                                    resultCard.style.backgroundColor = utilityColor;
+                                    break;
+                            }
+
+                            resultCardDescription.innerHTML = x.description;
+                            resultCardDescription.classList.add("commands-search-results-card-description");
+
+                            descriptionContainer.appendChild(resultCard);
+                            descriptionContainer.appendChild(resultCardDescription);
+                            cardsContainer.appendChild(descriptionContainer);
+                        });
+
+                        dropdown.appendChild(header);
+                        dropdown.appendChild(cardsContainer);
+                    }
+
+                    description = new Set(description.map(x => x.name));
+
+                    category = allCommands.filter(x => {
+                        if (x.category == "creator") return false;
+
+                        var categoryLetters = x.category.split("");
+                        var inputLetters = input.toLowerCase().split("");
+                        var i;
+
+                        if (inputLetters.length > categoryLetters.length) return false;
+
+                        for (i = 0; i < categoryLetters.length / 2; i++) {
+                            if (inputLetters[i] != categoryLetters[i]) return false;
+                        }
+
+                        return true;
+                    }).map(x => ({ name: x.name, category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+
+                    if (category.length > 0) {
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        header.textContent = `Looking for the ${category.length} ${pluralize("command", category.length)} in the ${category[0].category} category?`;
+
+                        cardsContainer = document.createElement("div");
+                        cardsContainer.classList.add("commands-search-results-cards-container");
+
+                        generateCards(cardsContainer, category);
+
+                        dropdown.appendChild(header);
+                        dropdown.appendChild(cardsContainer);
+                    }
+
+                    category = new Set(category.map(x => x.name));
+
+                    letters = [];
+                    for (idx = 0; idx < allCommands.length; idx++) {
+                        if (exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.has(allCommands[idx].name) || category.has(allCommands[idx].name) || description.has(allCommands[idx].name) || allCommands[idx].category == "creator") continue;
+
+                        var nameLetters = allCommands[idx].name.split("");
+                        var inputLetters = input.toLowerCase().split("");
+                        var matches = letterRecursion(inputLetters, nameLetters, 0, 3);
+                        var formatted = "";
+
+                        if (matches.length >= 3) {
+                            for (jdx = 0; jdx < nameLetters.length; jdx++) {
+                                if (matches.includes(jdx)) {
+                                    formatted += `<b>${nameLetters[jdx]}</b>`;
+                                } else {
+                                    formatted += nameLetters[jdx];
+                                }
+                            }
+
+                            letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category });
+                        }
+                    }
+                    letters.sort((a, b) => a.name.localeCompare(b.name));
+
+                    if (letters.length > 0) {
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        header.textContent = `${letters.length} ${pluralize("command", letters.length)} containing 3 or more letters from "${input}" found:`;
+
+                        cardsContainer = document.createElement("div");
+                        cardsContainer.classList.add("commands-search-results-cards-container");
+                        cardsContainer.style.display = "none";
+
+                        generateCards(cardsContainer, letters);
+
+                        showHideContainer = document.createElement("div");
+                        showHideContainer.classList.add("commands-search-results-show-hide-container");
+                        showHideContainer.textContent = "Show";
+                        showHideContainer.addEventListener("click", () => {
+                            switch (showHideContainer.textContent) {
+                                case "Show":
+                                    showHideContainer.textContent = "Hide";
+                                    cardsContainer.style.display = "flex";
+                                    break;
+
+                                case "Hide":
+                                    showHideContainer.textContent = "Show";
+                                    cardsContainer.style.display = "none";
+                                    break;
+                            }
+                        });
+
+                        dropdown.appendChild(header);
+                        dropdown.appendChild(showHideContainer);
+                        dropdown.appendChild(cardsContainer);
+                    }
+
+                    letters = new Set(letters.map(x => x.name));
+
+                    if (exact.size == 0 && starts.size == 0 && contains.size == 0 && description.size == 0 && category.size == 0 && letters.size == 0) {
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        header.textContent = `We searched far and wide for ${input}, but no matching commands were found. Try searching for something else.`;
+
+                        dropdown.appendChild(header);
+                    }
+
+                    resultsContainer.appendChild(dropdown);
+
+                    return (exact.size > 0) ? "exact" : (starts.size > 0) ? "starts" : (contains.size > 0) ? "contains" : (description.size > 0) ? "description" : (category.size > 0) ? "category" : (letters.size > 0) ? "letters" : "none";
+                }
+            }
+
+            var timeout, searchStatus;
+
+            function onInput() {
+                clearTimeout(timeout);
+
+                const searchButton = document.getElementById("commands-search-button");
+
+                var searchIcon = searchButton.querySelector("img");
+                if (searchIcon) {
+                    searchButton.removeChild(searchIcon);
+                }
+
+                var searchSpinner = document.getElementById("commands-search-loading");
+                if (!searchSpinner) {
+                    searchSpinner = document.createElement("div");
+                    searchSpinner.setAttribute("id", "commands-search-loading");
+
+                    searchButton.appendChild(searchSpinner);
+
+                    searchButton.style.backgroundColor = "#4e4e4e";
+                }
+
+                var previousResult = document.getElementById("commands-search-results-dropdown");
+                if (previousResult) previousResult.remove();
+
+                var searchInput = document.getElementById("commands-search-input");
+                if (searchInput.value.length > 0) {
+                    searchStatus = searchCommands(searchInput.value, searchButton);
+                }
+
+                timeout = setTimeout(() => {
+                    searchSpinner.remove();
+                    
+                    searchInput = document.getElementById("commands-search-input");
+
+                    searchIcon = document.createElement("img");
+                    searchIcon.alt = "Search";
+
+                    if (searchInput.value.length > 0) {
+                        switch (searchStatus) {
+                            case "exact":
+                                searchIcon.src = "static/material-icons/exact.svg";
+                                searchButton.style.backgroundColor = "#21851d";
+                                break;
+
+                            case "starts":
+                                searchIcon.src = "static/material-icons/start.svg";
+                                searchButton.style.backgroundColor = "#21851d";
+                                break;
+
+                            case "contains":
+                                searchIcon.src = "static/material-icons/contains.svg";
+                                searchButton.style.backgroundColor = "#ebb52f";
+                                break;
+
+                            case "description":
+                                searchIcon.src = "static/material-icons/description.svg";
+                                searchButton.style.backgroundColor = "#8bb548";
+                                break;
+
+                            case "category":
+                                searchIcon.src = "static/material-icons/category.svg";
+                                searchButton.style.backgroundColor = "#3756c4";
+                                break;
+
+                            case "letters":
+                                searchIcon.src = "static/material-icons/letters.svg";
+                                searchButton.style.backgroundColor = "#c77834";
+                                break;
+
+                            case "none":
+                                searchIcon.src = "static/material-icons/unknown.svg";
+                                searchButton.style.backgroundColor = "#4e4e4e";
+                                break;
+                        }
+                    } else {
+                        searchIcon.src = "static/material-icons/search.svg";
+                        searchButton.style.backgroundColor = "#4e4e4e";
+                    }
+
+                    searchButton.appendChild(searchIcon);
+                }, 1000);
+            }
+
+            document.getElementById("commands-search-bar").addEventListener("input", onInput);
+        </script>
     </body>
 </html>
