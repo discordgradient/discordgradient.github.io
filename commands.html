@@ -81,6 +81,9 @@
                         resultCard.innerHTML = x.formatted || x.name;
                         resultCard.classList.add("commands-search-results-card");
                         resultCard.setAttribute("title", `category: ${x.category}`);
+                        if (x.nsfw) {
+                            resultCard.classList.add("blurred");
+                        }
 
                         switch (x.category) {
                             case "configuration":
@@ -133,22 +136,39 @@
                 }
 
 
-                function letterRecursion(inputLetters, givenLetters, offset, minimumMatches) {
+                function broadRecursion(inputText, givenText, offset, minimumMatches, mode) {
                     var i, j = 0, matches = [];
 
-                    for (i = 0; i < givenLetters.length && j < inputLetters.length; i++) {
-                        if (givenLetters[i] == inputLetters[j]) {
-                            j++;
-                            if (offset > 0) {
-                                matches.push(i + offset - 1);
-                            } else {
-                                matches.push(i);
-                            }
+                    for (i = 0; i < givenText.length && j < inputText.length; i++) {
+                        switch (mode) {
+                            case "letters":
+                                if (givenText[i] == inputText[j]) {
+                                    j++;
+                                    if (offset > 0) {
+                                        matches.push(i + offset - 1);
+                                    } else {
+                                        matches.push(i);
+                                    }
+                                }
+
+                                break;
+
+                            case "words":
+                                if (givenText[i] == inputText[j] || givenText[i] == inputText[j] + "s" || givenText[i] + "s" == inputText[j]) {
+                                    j++;
+                                    if (offset > 0) {
+                                        matches.push(i + offset - 1);
+                                    } else {
+                                        matches.push(i);
+                                    }
+                                }
+
+                                break;
                         }
                     }
 
-                    if (j < minimumMatches && inputLetters.length > minimumMatches) {
-                        return letterRecursion(inputLetters.slice(1), offset + 1);
+                    if (j < minimumMatches && inputText.length > minimumMatches) {
+                        return broadRecursion(inputText.slice(1), offset + 1, minimumMatches, mode);
                     } else {
                         return matches;
                     }
@@ -156,7 +176,7 @@
 
 
                 if (input.length == 1) {
-                    starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
                     starts.forEach(x => x.formatted = "<b>" + x.name[0] + "</b>" + x.name.slice(1));
 
                     header = document.createElement("p");
@@ -182,7 +202,7 @@
 
                     return (starts.length > 0) ? "starts" : "none";
                 } else {
-                    exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
 
                     if (exact.length > 0) {
                         header = document.createElement("p");
@@ -201,7 +221,7 @@
 
                     exact = new Set(exact.map(x => x.name));
 
-                    starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
                     starts.forEach(x => x.formatted = "<b>" + x.name.slice(0, input.length) + "</b>" + x.name.slice(input.length));
 
                     if (starts.length > 0) {
@@ -221,7 +241,7 @@
 
                     starts = new Set(starts.map(x => x.name));
 
-                    contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
                     contains.forEach(x => {
                         var name = x.name.toLowerCase();
                         var inputLower = input.toLowerCase();
@@ -260,13 +280,13 @@
                     for (idx = 0; idx < allCommands.length; idx++) {
                         if (exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.has(allCommands[idx].name) || allCommands[idx].category == "creator") continue;
 
-                        var descriptionOriginal = allCommands[idx].description.replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
-                        var descriptionWords = allCommands[idx].description.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                        var descriptionOriginal = allCommands[idx].description.replace(/[\n\\/]+/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                        var descriptionWords = allCommands[idx].description.toLowerCase().replace(/[\n\\/]+/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
                         var inputWords = input.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
-                        var matches = letterRecursion(inputWords, descriptionWords, 0, 3);
+                        var matches = broadRecursion(inputWords, descriptionWords, 0, 2, "words");
                         var formatted = [];
 
-                        if (matches.length >= 3) {
+                        if (matches.length >= 2) {
                             for (jdx = 0; jdx < descriptionOriginal.length; jdx++) {
                                 if (matches.includes(jdx)) {
                                     formatted.push(`<b>${descriptionOriginal[jdx]}</b>`);
@@ -275,7 +295,7 @@
                                 }
                             }
 
-                            description.push({ name: allCommands[idx].name, description: formatted.join(" "), category: allCommands[idx].category, matchCount: matches.length });
+                            description.push({ name: allCommands[idx].name, description: formatted.join(" "), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, matchCount: matches.length });
                         }
                     }
                     description.sort((a, b) => {
@@ -292,15 +312,16 @@
                         header = document.createElement("p");
                         header.classList.add("commands-search-results-header");
 
-                        header.textContent = `${description.length} ${pluralize("command", description.length)} with 3 or more words from "${input}" in their description found:`;
+                        header.textContent = `${description.length} ${pluralize("command", description.length)} with 2 or more words from "${input}" in their description found:`;
 
                         cardsContainer = document.createElement("div");
                         cardsContainer.classList.add("commands-search-results-cards-container-left");
+                        // cardsContainer.style.display = "none";
 
                         description.forEach(x => {
                             var descriptionContainer = document.createElement("div");
                             var resultCard = document.createElement("div");
-                            var resultCardDescription = document.createElement("p");
+                            var resultCardDescription = document.createElement("div");
 
                             descriptionContainer.classList.add("commands-search-results-description-container");
 
@@ -356,12 +377,37 @@
                             resultCardDescription.innerHTML = x.description;
                             resultCardDescription.classList.add("commands-search-results-card-description");
 
+                            if (x.nsfw) {
+                                resultCard.classList.add("blurred");
+                                resultCardDescription.classList.add("blurred");
+                            }
+
                             descriptionContainer.appendChild(resultCard);
                             descriptionContainer.appendChild(resultCardDescription);
                             cardsContainer.appendChild(descriptionContainer);
                         });
 
+                        /*
+                        showHideContainer = document.createElement("div");
+                        showHideContainer.classList.add("commands-search-results-show-hide-container");
+                        showHideContainer.textContent = "Show";
+                        showHideContainer.addEventListener("click", () => {
+                            switch (showHideContainer.textContent) {
+                                case "Show":
+                                    showHideContainer.textContent = "Hide";
+                                    cardsContainer.style.display = "flex";
+                                    break;
+
+                                case "Hide":
+                                    showHideContainer.textContent = "Show";
+                                    cardsContainer.style.display = "none";
+                                    break;
+                            }
+                        });
+                        */
+
                         dropdown.appendChild(header);
+                        // dropdown.appendChild(showHideContainer);
                         dropdown.appendChild(cardsContainer);
                     }
 
@@ -381,7 +427,7 @@
                         }
 
                         return true;
-                    }).map(x => ({ name: x.name, category: x.category })).sort((a, b) => a.name.localeCompare(b.name));
+                    }).map(x => ({ name: x.name, category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
 
                     if (category.length > 0) {
                         header = document.createElement("p");
@@ -406,7 +452,7 @@
 
                         var nameLetters = allCommands[idx].name.split("");
                         var inputLetters = input.toLowerCase().split("");
-                        var matches = letterRecursion(inputLetters, nameLetters, 0, 3);
+                        var matches = broadRecursion(inputLetters, nameLetters, 0, 3, "letters");
                         var formatted = "";
 
                         if (matches.length >= 3) {
@@ -418,7 +464,7 @@
                                 }
                             }
 
-                            letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category });
+                            letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
                         }
                     }
                     letters.sort((a, b) => a.name.localeCompare(b.name));
@@ -463,7 +509,7 @@
                         header = document.createElement("p");
                         header.classList.add("commands-search-results-header");
 
-                        header.textContent = `We searched far and wide for ${input}, but no matching commands were found. Try searching for something else.`;
+                        header.textContent = `We searched far and wide for "${input}", but no matching commands were found. Try searching for something else.`;
 
                         dropdown.appendChild(header);
                     }
