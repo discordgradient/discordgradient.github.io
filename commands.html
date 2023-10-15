@@ -312,7 +312,7 @@
                         header = document.createElement("p");
                         header.classList.add("commands-search-results-header");
 
-                        header.textContent = `${description.length} ${pluralize("command", description.length)} with 2 or more words from "${input}" in their description found:`;
+                        header.textContent = `${description.length} ${pluralize("command", description.length)} with containing the words "${input}" in their description found:`;
 
                         cardsContainer = document.createElement("div");
                         cardsContainer.classList.add("commands-search-results-cards-container-left");
