@@ -76,10 +76,15 @@ body {
 
 /* TOP NAV BAR */
 
+#nav-wrapper {
+    display: flex;
+    margin-top: 10px;
+}
+
 #nav-avatar {
     display: inline-block;
     width: 40px;
-    height: auto;
+    height: 40px;
     margin-left: 20px;
     margin-right: 20px;
     cursor: pointer;
@@ -458,6 +463,25 @@ body {
     border-radius: 10px;
 }
 
+.discord-button {
+    color: white;
+    font-family: "GG Sans Normal";
+    background-color: #5865f2;
+    font-size: 15px;
+    border: none;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    padding: 8px;
+    position: relative;
+    z-index: 9999;
+    transition: background-color 0.3s ease;
+}
+
+.discord-button:hover {
+    background-color: #3444ed;
+    cursor: pointer;
+}
+
 
 
 /* commands.html */
@@ -639,4 +663,103 @@ body {
 .commands-search-results-card-description b {
     font-family: "GG Sans Bold";
     font-weight: 300;
+}
+
+#commands-search-results-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#commands-search-results-overlay-info {
+    background-color: #4e4e4e;
+    border: none;
+    border-radius: 10px;
+    width: 80vw;
+    height: 80vh;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+#commands-search-results-overlay-header {
+    text-align: center;
+    color: white;
+    font-family: "GG Sans Normal";
+}
+
+#commands-search-results-overlay-title {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+#commands-search-results-overlay-aliases-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#commands-search-results-overlay-tag, #commands-search-results-overlay-aliases {
+    font-size: 20px;
+}
+
+#commands-search-results-overlay-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.commands-search-results-overlay-tag {
+    font-size: 20px;
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+#commands-search-results-overlay-table {
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+.commands-search-results-overlay-table-title {
+    padding-right: 80px;
+}
+
+.commands-search-results-overlay-table-title, .commands-search-results-overlay-table-content {
+    padding-bottom: 15px;
+}
+
+#commands-search-results-overlay-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background-color: transparent;
+}
+
+#commands-search-results-overlay-close img {
+    filter: invert(1);
+}
+
+#commands-search-results-overlay-close:hover {
+    cursor: pointer;
 }
