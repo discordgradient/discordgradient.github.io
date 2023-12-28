@@ -88,8 +88,9 @@
 
 
                 function searchCommands(input, searchButton) {
-                    var idx, jdx;
+                    var idx, jdx, kdx;
                     var exact, starts, contains, category, description, letters;
+                    var exactAlias, startsAlias, containsAlias, lettersAlias;
                     var resultsContainer = document.getElementById("commands-search-results");
                     var dropdown = document.createElement("div");
                     dropdown.setAttribute("id", "commands-search-results-dropdown");
@@ -175,9 +176,27 @@
                     }
 
 
+                    function stripBold(input) {
+                        return input.replace(/<b>|<\/b>/g, "");
+                    }
+
+
                     if (input.length == 1) {
-                        starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
+                        starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
                         starts.forEach(x => x.formatted = "<b>" + x.name[0] + "</b>" + x.name.slice(1));
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || starts.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase().startsWith(input.toLowerCase())) {
+                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx][0] + "</b>" + allCommands[idx].aliases[jdx].slice(1), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        starts.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
 
                         header = document.createElement("p");
                         header.classList.add("commands-search-results-header");
@@ -202,7 +221,20 @@
 
                         return (starts.length > 0) ? "starts" : "none";
                     } else {
-                        exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
+                        exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category, nsfw: x.nsfw }));
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase() == input.toLowerCase()) {
+                                    exact.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx] + "</b>", category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        exact.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
 
                         if (exact.length > 0) {
                             header = document.createElement("p");
@@ -221,8 +253,21 @@
 
                         exact = new Set(exact.map(x => x.name));
 
-                        starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
+                        starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
                         starts.forEach(x => x.formatted = "<b>" + x.name.slice(0, input.length) + "</b>" + x.name.slice(input.length));
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.has(allCommands[idx].name) || starts.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase().startsWith(input.toLowerCase())) {
+                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx].slice(0, input.length) + "</b>" + allCommands[idx].aliases[jdx].slice(input.length), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        starts.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
 
                         if (starts.length > 0) {
                             header = document.createElement("p");
@@ -241,7 +286,7 @@
 
                         starts = new Set(starts.map(x => x.name));
 
-                        contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
+                        contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
                         contains.forEach(x => {
                             var name = x.name.toLowerCase();
                             var inputLower = input.toLowerCase();
@@ -258,6 +303,32 @@
 
                             x.formatted = formatted;
                         });
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase().includes(input.toLowerCase()) || input.toLowerCase().includes(allCommands[idx].aliases[jdx])) {
+                                    var name = allCommands[idx].aliases[jdx].toLowerCase();
+                                    var inputLower = input.toLowerCase();
+                                    var formatted = "";
+                                    var i;
+
+                                    for (i = 0; i < name.length; i++) {
+                                        if (inputLower.includes(name[i])) {
+                                            formatted += `<b>${name[i]}</b>`;
+                                        } else {
+                                            formatted += name[i];
+                                        }
+                                    }
+
+                                    contains.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        contains.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
 
                         if (contains.length > 0) {
                             header = document.createElement("p");
@@ -400,7 +471,30 @@
                                 letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
                             }
                         }
-                        letters.sort((a, b) => a.name.localeCompare(b.name));
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.has(allCommands[idx].name) || category.has(allCommands[idx].name) || description.has(allCommands[idx].name) || letters.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                var nameLetters = allCommands[idx].aliases[jdx].split("");
+                                var inputLetters = input.toLowerCase().split("");
+                                var matches = broadRecursion(inputLetters, nameLetters, 0, 3, "letters");
+                                var formatted = "";
+
+                                if (matches.length >= 3) {
+                                    for (kdx = 0; kdx < nameLetters.length; kdx++) {
+                                        if (matches.includes(kdx)) {
+                                            formatted += `<b>${nameLetters[kdx]}</b>`;
+                                        } else {
+                                            formatted += nameLetters[kdx];
+                                        }
+                                    }
+
+                                    letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+                        letters.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
 
                         if (letters.length > 0) {
                             header = document.createElement("p");
