@@ -763,3 +763,51 @@ body {
 #commands-search-results-overlay-close:hover {
     cursor: pointer;
 }
+
+
+
+/* support.html */
+
+#support-title, #support-subtitle {
+    font-family: "GG Sans Normal";
+    color: white;
+}
+
+#support-title {
+    margin-top: 50px;
+    font-size: 40px;
+}
+
+#support-subtitle {
+    font-size: 25px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+#support-server-wrapper {
+    margin-top: 20px;
+}
+
+#support-server-invite {
+    cursor: pointer;
+    background-color: #5865f2;
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-right: 80px;
+    transition: background-color 0.3s ease;
+}
+
+#support-server-invite:hover {
+    background-color: #7f89f0;
+}
+
+#support-server-invite-icon {
+    width: 30px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 10px;
+}
