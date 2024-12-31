@@ -22,7 +22,7 @@
 
     <body>
         <div id="nav-wrapper">
-            <img src="static/avatar.png" alt="Gradient Avatar" id="nav-avatar">
+            <img src="static/avatar.png" alt="Gradient Avatar" id="nav-avatar" draggable="false">
 
             <nav id="top-nav">
                 <ul>
@@ -38,7 +38,7 @@
         <div id="home-wrapper">
             <div id="onload-wrapper">
                 <div id="home-title" class="centered-div">
-                    <img src="static/avatar.png" alt="Gradient Avatar" id="home-title-avatar">
+                    <img src="static/avatar.png" alt="Gradient Avatar" id="home-title-avatar" draggable="false">
                     <h1>Gradient</h1>
                     <h1 id="home-bot-tag">#8321</h1>
                 </div>
@@ -47,14 +47,14 @@
             
                 <div id="home-badges" class="centered-div">
                     <div class="home-badge-hover">
-                        <img src="static/badges/verified-bot.png" alt="Bot Tag" id="home-verified-bot-badge">
-                        <span class="home-badge-text" id="home-verified-bot-text">Verified Bot</span>
+                        <img src="static/badges/verified-app.png" alt="Bot Tag" id="home-verified-app-badge" draggable="false">
+                        <span class="home-badge-text" id="home-verified-app-text">Verified App</span>
                     </div>
             
                     <div class="home-badge-separator"></div>
             
                     <div class="home-badge-hover">
-                        <img src="static/badges/supports-commands.png" alt="Supports Commands" id="home-supports-commands-badge">
+                        <img src="static/badges/supports-commands.svg" alt="Supports Commands" id="home-supports-commands-badge" draggable="false">
                         <span class="home-badge-text" id="home-supports-commands-text">Supports Commands</span>
                     </div>
             
@@ -75,7 +75,7 @@
                     <a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands"
                         target="_blank" id="home-invite-link">
                         <button id="home-invite">
-                            <img src="static/discord-icon-white.png" alt="Add to Discord" id="home-invite-icon">
+                            <img src="static/discord-icon-white.png" alt="Add to Discord" id="home-invite-icon" draggable="false">
                             Add to Discord
                         </button>
                     </a>
@@ -112,6 +112,7 @@
 
                 var statusIcon = document.createElement("img");
                 statusIcon.setAttribute("id", "home-status-badge");
+                statusIcon.setAttribute("draggable", "false");
 
                 var statusHover = document.createElement("span");
                 statusHover.classList.add("home-badge-text");
