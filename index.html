@@ -35,52 +35,65 @@
             </nav>
         </div>
 
-        <div id="onload-wrapper">
-            <div id="home-title" class="centered-div">
-                <img src="static/avatar.png" alt="Gradient Avatar" id="home-title-avatar">
-                <h1>Gradient</h1>
-                <h1 id="home-bot-tag">#8321</h1>
+        <div id="home-wrapper">
+            <div id="onload-wrapper">
+                <div id="home-title" class="centered-div">
+                    <img src="static/avatar.png" alt="Gradient Avatar" id="home-title-avatar">
+                    <h1>Gradient</h1>
+                    <h1 id="home-bot-tag">#8321</h1>
+                </div>
+            
+                <div class="home-line-separator"></div>
+            
+                <div id="home-badges" class="centered-div">
+                    <div class="home-badge-hover">
+                        <img src="static/badges/verified-bot.png" alt="Bot Tag" id="home-verified-bot-badge">
+                        <span class="home-badge-text" id="home-verified-bot-text">Verified Bot</span>
+                    </div>
+            
+                    <div class="home-badge-separator"></div>
+            
+                    <div class="home-badge-hover">
+                        <img src="static/badges/supports-commands.png" alt="Supports Commands" id="home-supports-commands-badge">
+                        <span class="home-badge-text" id="home-supports-commands-text">Supports Commands</span>
+                    </div>
+            
+                    <div class="home-badge-separator"></div>
+            
+                    <div class="home-badge-hover" id="home-status">
+                        <div id="home-status-badge-loading"></div>
+                    </div>
+                </div>
+            
+                <div id="home-subtitle" class="centered-div">
+                    <h2>The one Discord bot to do it all.</h2>
+                </div>
             </div>
             
-            <div id="home-badges" class="centered-div">
-                <div class="home-badge-hover">
-                    <img src="static/badges/verified-bot.png" alt="Bot Tag" id="home-verified-bot-badge">
-                    <span class="home-badge-text" id="home-verified-bot-text">Verified Bot</span>
-                </div>
-
-                <div class="home-badge-separator"></div>
-
-                <div class="home-badge-hover">
-                    <img src="static/badges/supports-commands.png" alt="Supports Commands" id="home-supports-commands-badge">
-                    <span class="home-badge-text" id="home-supports-commands-text">Supports Commands</span>
-                </div>
-
-                <div class="home-badge-separator"></div>
-
-                <div class="home-badge-hover" id="home-status">
-                    <div id="home-status-badge-loading"></div>
-                </div>
-            </div>
+            <div id="onload-wrapper-delayed">
+                <div id="home-buttons" class="centered-div">
+                    <a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands"
+                        target="_blank" id="home-invite-link">
+                        <button id="home-invite">
+                            <img src="static/discord-icon-white.png" alt="Add to Discord" id="home-invite-icon">
+                            Add to Discord
+                        </button>
+                    </a>
             
-            <div id="home-subtitle" class="centered-div">
-                <h2>The one Discord bot to do it all.</h2>
+                    <div class="home-button-separator"></div>
+            
+                    <a href="about.html">
+                        <button id="home-more-info">See features</button>
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div id="onload-wrapper-delayed">
-            <div id="home-buttons" class="centered-div">
-                <a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands">
-                    <button id="home-invite">
-                        <img src="static/discord-icon-white.png" alt="Add to Discord" id="home-invite-icon">
-                        Add to Discord
-                    </button>
-                </a>
-            
-                <a href="about.html">
-                    <button id="home-more-info">See features</button>
-                </a>
+        <footer>
+            <div class="footer-content">
+                <p>Made with ❤️ by Wozard Studios</p>
             </div>
-        </div>
+        </footer>
 
 
 

@@ -46,19 +46,11 @@
 
 /* SCREEN SIZE ADJUSTMENTS */
 
-/*
-@media (max-width: 768px) {
-    #about-selection-container {
+@media (max-width: 650px) {
+    #home-title {
         flex-direction: column;
     }
-
-    #about-selection-right {
-        margin-left: 0;
-        margin-top: 20px;
-        max-width: 100%;
-    }
 }
-*/
 
 
 
@@ -70,6 +62,10 @@ body {
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 
 
@@ -78,15 +74,15 @@ body {
 
 #nav-wrapper {
     display: flex;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 #nav-avatar {
     display: inline-block;
     width: 40px;
     height: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 40px;
+    margin-right: 80px;
     cursor: pointer;
 }
 
@@ -94,7 +90,6 @@ body {
     display: inline-block;
     text-align: right;
     justify-content: space-between;
-    padding: 10px;
     width: 90%;
     z-index: 1;
 }
@@ -110,7 +105,7 @@ body {
     margin-right: 40px;
     color: white;
     font-family: "GG Sans Normal";
-    font-size: 20px;
+    font-size: 25px;
     text-decoration: none;
     position: relative;
     cursor: pointer;
@@ -119,7 +114,6 @@ body {
 #top-nav a {
     color: white;
     font-family: "GG Sans Normal";
-    font-size: 20px;
     text-decoration: none;
     position: relative;
 }
@@ -175,6 +169,13 @@ body {
     filter: blur(5px);
 }
 
+.footer-content {
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 20px;
+    margin-left: 20px;
+}
+
 
 
 /* home.html */
@@ -186,6 +187,7 @@ body {
     animation-duration: 1s;
     animation-fill-mode: forwards;
     animation-delay: 0.2s;
+    margin-top: 50px;
 }
 
 #onload-wrapper-delayed {
@@ -197,21 +199,30 @@ body {
     animation-delay: 1.5s;
 }
 
+.home-line-separator {
+    margin-top: 50px;
+}
+
 #home-title {
     color: white;
     font-family: "GG Sans Medium";
     font-size: 50px;
-    margin-top: 10px;
+    display: flex;
+    column-gap: 20px;
+}
+
+#home-title > * {
+    margin: 0;
+    padding: 0;
 }
 
 #home-title-avatar {
-    margin-right: 30px;
     width: 80px;
     height: auto;
+    line-height: 1;
 }
 
 #home-bot-tag {
-    margin-left: 20px;
     font-size: 50px;
     color: #c9c9c9;
 }
@@ -286,10 +297,17 @@ body {
     color: #c9c9c9;
     font-family: "GG Sans Normal";
     font-size: 28px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #home-buttons {
     margin-top: 20px;
+}
+
+.home-button-separator {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #home-invite {
@@ -301,8 +319,13 @@ body {
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
-    margin-right: 30px;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+#home-invite-link {
+    text-decoration: none;
 }
 
 #home-invite:hover {
