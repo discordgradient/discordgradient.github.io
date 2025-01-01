@@ -49,7 +49,7 @@
                         <h2 class="support-subtitle">Frequently Asked Questions</h2>
 
                         <div class="accordion-wrapper">
-                            <button class="accordion-button accordion-important">How do I file a support ticket?</button>
+                            <button class="accordion-button important-border">How do I file a support ticket?</button>
                             <div class="accordion-panel">
                                 <p class="accordion-text">There are a few ways to file a support ticket for bug reports and usage feedback:</p>
                                 <ul>
@@ -203,6 +203,7 @@
         <script>
             window.onload = () => {
                 setAccordions();
+                handleAnchors();
 
                 var textIcon = document.getElementById("support-feedback-message-icon");
                 var textArea = document.getElementById("support-feedback-message");

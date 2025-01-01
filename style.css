@@ -308,10 +308,6 @@ body {
     font-size: 20px;
 }
 
-.accordion-important {
-    border: 1px solid #ffe100;
-}
-
 .accordion-active, .accordion-button:hover {
     background-color: #5865f2;
 }
@@ -344,6 +340,36 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 0;
+}
+
+.important-border {
+    border: 1px solid #ffe100;
+}
+
+.updated-date {
+    color: #bebebe;
+    font-family: "GG Sans Normal";
+    font-size: 25px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.policy-title {
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.policy-details {
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 18px;
+}
+
+.policy-details a {
+    color: white;
 }
 
 
@@ -1107,6 +1133,31 @@ body {
     font-family: "GG Sans Normal";
     font-size: 20px;
     column-gap: 15px;
+}
+
+
+
+/* terms.html */
+
+#terms-title,
+.terms-subtitle {
+    font-family: "GG Sans Normal";
+    color: white;
+}
+
+#terms-title {
+    margin-top: 30px;
+    margin-bottom: 0;
+    font-size: 40px;
+    text-align: center;
+}
+
+.terms-subtitle {
+    font-size: 30px;
+    margin-top: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 
