@@ -2,22 +2,27 @@
 
 @font-face {
     font-family: "GG Sans Normal";
-    src: url("static/gg-sans/gg_sans_Normal.ttf") format("truetype");
+    src: url("static/fonts/gg_sans_Normal.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "GG Sans Medium";
-    src: url("static/gg-sans/gg_sans_Medium.ttf") format("truetype");
+    src: url("static/fonts/gg_sans_Medium.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "GG Sans Bold";
-    src: url("static/gg-sans/gg_sans_Bold.ttf") format("truetype");
+    src: url("static/fonts/gg_sans_Bold.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "GG Sans Extrabold";
-    src: url("static/gg-sans/gg_sans_Extrabold.ttf") format("truetype");
+    src: url("static/fonts/gg_sans_Extrabold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Orbitron Normal";
+    src: url("static/fonts/Orbitron-Regular.ttf") format("truetype");
 }
 
 
@@ -58,6 +63,10 @@
 
 @media (max-width: 650px) {
     #home-title {
+        flex-direction: column;
+    }
+
+    #home-commands-wrapper {
         flex-direction: column;
     }
 
@@ -238,6 +247,10 @@ body {
     color: white;
 }
 
+.dark-separator {
+    color: #aaaaaa;
+}
+
 
 
 /* home.html */
@@ -349,12 +362,47 @@ body {
     animation: loading-spin 1s linear infinite;
 }
 
-#home-subtitle {
+#home-subtitle, #home-commands-wrapper {
     color: #c9c9c9;
     font-family: "GG Sans Normal";
+}
+
+#home-subtitle {
     font-size: 28px;
     padding-left: 20px;
     padding-right: 20px;
+}
+
+#home-subtitle > * {
+    margin-bottom: 20px;
+}
+
+#home-commands-wrapper {
+    font-size: 22px;
+    padding-left: 20px;
+    padding-right: 20px;
+    column-gap: 10px;
+}
+
+#home-commands-wrapper > * {
+    margin-top: 0;
+}
+
+#home-commands-count {
+    font-family: "Orbitron Normal";
+}
+
+#home-commands-text, #home-commands-card {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 20px;
+}
+
+#home-commands-card {
+    color: white;
+    min-height: 30px;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 #home-buttons {
@@ -551,6 +599,8 @@ body {
 #commands-subtitle {
     font-family: "GG Sans Normal";
     color: white;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #commands-title {

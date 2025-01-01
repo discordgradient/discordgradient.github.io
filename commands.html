@@ -73,35 +73,20 @@
         
         <footer>
             <div class="footer-content onload-fade-in-delayed">
-                <p>Made with ❤️ by Wozard Studios. &copy; 2025</p>
-                <p><a href="terms.html">Terms</a> | <a href="privacy.html">Privacy</a></p>
+                <p>Made with ❤️ by jeremium <span class="dark-separator">|</span> &copy; 2025</p>
+                <p><a href="terms.html">Terms</a> <span class="dark-separator">&</span> <a href="privacy.html">Privacy</a></p>
             </div>
         </footer>
         
 
 
-        <script src="static/helpers/command-list.js"></script>
+        <script src="static/helpers/constants.js"></script>
         <script src="static/helpers/helpers.js"></script>
 
         <script>
             window.onload = () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const fill = urlParams.get("fill");
-
-
-                const categoryConstants = [
-                    { category: "configuration", emoji: "⚙️", color: "#4c3791", textColor: "#bebebe" },
-                    { category: "economy", emoji: "💰", color: "#bdad44", textColor: "#4e4e4e" },
-                    { category: "fun", emoji: "😄", color: "#96457f", textColor: "#bebebe" },
-                    { category: "games", emoji: "🎮", color: "#913a3a", textColor: "#bebebe" },
-                    { category: "images", emoji: "📷", color: "#753f9e", textColor: "#bebebe" },
-                    { category: "moderation", emoji: "🛡️", color: "#8f5e2e", textColor: "#bebebe" },
-                    { category: "music", emoji: "🎵", color: "#2d8767", textColor: "#bebebe" },
-                    { category: "sciences", emoji: "🧪", color: "#37782f", textColor: "#bebebe" },
-                    { category: "statistics", emoji: "📊", color: "#3a8791", textColor: "#bebebe" },
-                    { category: "text", emoji: "🆗", color: "#879126", textColor: "#4e4e4e" },
-                    { category: "utility", emoji: "🛠️", color: "#3a6391", textColor: "#bebebe" },
-                ];
 
 
                 function searchCommands(input, searchButton) {

@@ -69,6 +69,11 @@
                     <h2>The one Discord bot to do it all.</h2>
                 </div>
             </div>
+
+            <div id="home-commands-wrapper" class="centered-div onload-fade-in-delayed">
+                <h3 id="home-commands-text">Ready for anything with <span id="home-commands-count">0</span> commands</h3>
+                <div id="home-commands-card"></div>
+            </div>
             
             <div id="home-onload-delayed">
                 <div id="home-buttons" class="centered-div">
@@ -91,15 +96,23 @@
 
         <footer>
             <div class="footer-content onload-fade-in-delayed">
-                <p>Made with ❤️ by Wozard Studios. &copy; 2025</p>
-                <p><a href="terms.html">Terms</a> | <a href="privacy.html">Privacy</a></p>
+                <p>Made with ❤️ by jeremium <span class="dark-separator">|</span> &copy; 2025</p>
+                <p><a href="terms.html">Terms</a> <span class="dark-separator">&</span> <a href="privacy.html">Privacy</a></p>
             </div>
         </footer>
 
 
 
+        <script src="static/helpers/constants.js"></script>
+
         <script>
-            window.onload = async () => {
+            window.onload = () => {
+                getServiceStatus();
+                updateCommandCounter();
+            }
+
+
+            async function getServiceStatus() {
                 var status;
 
                 try {
@@ -155,6 +168,102 @@
                         homeStatus.appendChild(statusIcon);
                         homeStatus.appendChild(statusHover);
                     }, 2000);
+                }
+            }
+
+
+            function updateCommandCounter() {
+                var commandWrapper = document.getElementById("home-commands-wrapper");
+
+                commandWrapper.addEventListener("animationend", () => {
+                    var commandCounter = document.getElementById("home-commands-count");
+                    var commands = 0;
+
+                    var countInterval = setInterval(() => {
+                        if (allCommands.length == commands) {
+                            clearInterval(countInterval);
+                            displayCommands(true);
+                        } else if (allCommands.length - commands >= 10) {
+                            commands += 10;
+                            commandCounter.innerHTML = commands;
+                        } else if (allCommands.length - commands < 10) {
+                            commands++;
+                            commandCounter.innerHTML = commands;
+                        }
+                    }, 40);
+                });
+            }
+
+
+            function displayCommands(first) {
+                if (first) {
+                    var commandText = document.getElementById("home-commands-text");
+                    var writeText = ", including ", lettersWritten = 0;
+                    var writeInterval = setInterval(() => {
+                        if (lettersWritten == writeText.length) {
+                            clearInterval(writeInterval);
+
+                            var currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
+                            while (currentCommand.nsfw || currentCommand.category == "creator") {
+                                currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
+                            }
+
+                            writeCommand(currentCommand, 1);
+                        } else {
+                            commandText.innerHTML += writeText[lettersWritten];
+                            lettersWritten++;
+                        }
+                    }, 100);
+                } else {
+                    var currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
+                    while (currentCommand.nsfw || currentCommand.category == "creator") {
+                        currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
+                    }
+
+                    writeCommand(currentCommand, 1);
+                }
+            }
+
+
+            function writeCommand(command, direction) {
+                var commandText = document.getElementById("home-commands-card");
+                var commandStyle = categoryConstants.find(x => x.category == command.category).color;
+                var writeInterval, lettersWritten;
+
+                switch (direction) {
+                    case 1:
+                        commandText.style.backgroundColor = commandStyle;
+                        lettersWritten = 0;
+                        writeInterval = setInterval(() => {
+                            if (lettersWritten == command.name.length) {
+                                clearInterval(writeInterval);
+                                setTimeout(() => {
+                                    writeCommand(command, -1);
+                                }, 1700);
+                            } else {
+                                commandText.innerHTML += command.name[lettersWritten];
+                                lettersWritten++;
+                            }
+                        }, 50);
+
+                        break;
+
+                    case -1:
+                        lettersWritten = 0;
+                        writeInterval = setInterval(() => {
+                            if (lettersWritten == command.name.length) {
+                                commandText.style.backgroundColor = "#2c2c34";
+                                clearInterval(writeInterval);
+                                setTimeout(() => {
+                                    displayCommands(false);
+                                }, 1000);
+                            } else {
+                                commandText.innerHTML = commandText.innerHTML.slice(0, -1);
+                                lettersWritten++;
+                            }
+                        }, 50);
+
+                        break;
                 }
             }
         </script>
