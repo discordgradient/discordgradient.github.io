@@ -24,6 +24,16 @@
 
 /* KEYFRAMES */
 
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes home-float-up {
     from {
         opacity: 0;
@@ -52,6 +62,10 @@
     }
 
     #about-wrapper {
+        flex-direction: column;
+    }
+
+    #support-server-wrapper {
         flex-direction: column;
     }
 }
@@ -122,7 +136,8 @@ body {
     position: relative;
 }
 
-#top-nav li::after, #top-nav a::after {
+#top-nav li::after,
+#top-nav a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -153,10 +168,16 @@ body {
     animation-delay: 0.2s;
 }
 
-#onload-wrapper-delayed {
+.onload-fade-in {
     opacity: 0;
-    transform: translateY(50px);
-    animation-name: home-float-up;
+    animation-name: fade-in;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.onload-fade-in-delayed {
+    opacity: 0;
+    animation-name: fade-in;
     animation-duration: 1s;
     animation-fill-mode: forwards;
     animation-delay: 1.5s;
@@ -168,12 +189,14 @@ body {
     align-items: center;
 }
 
-.card-orange, .card-blue {
+.card-orange,
+.card-blue {
     border-radius: 5px;
     padding: 8px 12px;
 }
 
-.card-orange a, .card-blue a {
+.card-orange a,
+.card-blue a {
     color: white;
 }
 
@@ -194,13 +217,39 @@ body {
 .footer-content {
     color: white;
     font-family: "GG Sans Normal";
-    font-size: 20px;
+    font-size: 18px;
+    background-color: rgb(77, 107, 78);
+    border: 1px solid rgb(6, 158, 12);
+    border-radius: 5px;
+    margin-top: 30px;
     margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-content p {
+    margin: 0;
+    padding: 0;
+}
+
+.footer-content a {
+    color: white;
 }
 
 
 
 /* home.html */
+
+#home-onload-delayed {
+    opacity: 0;
+    transform: translateY(50px);
+    animation-name: home-float-up;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-delay: 1.5s;
+}
 
 #home-wrapper {
     margin-top: 40px;
@@ -218,7 +267,7 @@ body {
     column-gap: 20px;
 }
 
-#home-title > * {
+#home-title>* {
     margin: 0;
     padding: 0;
 }
@@ -437,6 +486,7 @@ body {
     opacity: 0;
     transition: opacity 0.5s ease, transform 0.5s ease;
     transform: translateY(50px);
+    padding-left: 20px;
     padding-right: 20px;
 }
 
@@ -497,7 +547,8 @@ body {
 
 /* commands.html */
 
-#commands-title, #commands-subtitle {
+#commands-title,
+#commands-subtitle {
     font-family: "GG Sans Normal";
     color: white;
 }
@@ -576,25 +627,20 @@ body {
 }
 
 #commands-search-results {
-    max-width: 140vh;
     margin: 0 auto;
     border-radius: 15px;
-    position: relative;
 }
 
 #commands-search-results-dropdown {
     background-color: #4e4e4e;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: auto;
     border-radius: 15px;
     border: 1px solid #cacaca;
     margin-top: 25px;
+    max-width: 80vw;
 }
 
-.commands-search-results-header, .commands-search-results-card {
+.commands-search-results-header,
+.commands-search-results-card {
     width: auto;
     padding-left: 10px;
     padding-right: 10px;
@@ -720,7 +766,8 @@ body {
     padding-right: 20px;
 }
 
-#commands-search-results-overlay-tag, #commands-search-results-overlay-aliases {
+#commands-search-results-overlay-tag,
+#commands-search-results-overlay-aliases {
     font-size: 20px;
 }
 
@@ -755,7 +802,8 @@ body {
     padding-right: 80px;
 }
 
-.commands-search-results-overlay-table-title, .commands-search-results-overlay-table-content {
+.commands-search-results-overlay-table-title,
+.commands-search-results-overlay-table-content {
     padding-bottom: 15px;
 }
 
@@ -779,24 +827,30 @@ body {
 
 /* support.html */
 
-#support-title, #support-subtitle {
+#support-title,
+#support-subtitle {
     font-family: "GG Sans Normal";
     color: white;
 }
 
 #support-title {
-    margin-top: 50px;
+    margin-top: 40px;
+    margin-bottom: 0;
     font-size: 40px;
 }
 
 #support-subtitle {
     font-size: 25px;
-    padding-left: 80px;
-    padding-right: 80px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #support-server-wrapper {
     margin-top: 20px;
+    display: flex;
+    column-gap: 40px;
+    row-gap: 20px;
 }
 
 #support-server-invite {
@@ -808,8 +862,9 @@ body {
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
-    margin-right: 80px;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
 #support-server-invite:hover {
@@ -821,4 +876,8 @@ body {
     height: auto;
     vertical-align: middle;
     margin-right: 10px;
+}
+
+#support-server-link {
+    text-decoration: none;
 }
