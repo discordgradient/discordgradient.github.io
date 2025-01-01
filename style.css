@@ -21,8 +21,8 @@
 }
 
 @font-face {
-    font-family: "Orbitron Normal";
-    src: url("static/fonts/Orbitron-Regular.ttf") format("truetype");
+    font-family: "Source Code Pro Normal";
+    src: url("static/fonts/SourceCodePro-Regular.ttf") format("truetype");
 }
 
 
@@ -54,28 +54,6 @@
 @keyframes loading-spin {
     to {
         transform: rotate(360deg);
-    }
-}
-
-
-
-/* SCREEN SIZE ADJUSTMENTS */
-
-@media (max-width: 650px) {
-    #home-title {
-        flex-direction: column;
-    }
-
-    #home-commands-wrapper {
-        flex-direction: column;
-    }
-
-    #about-wrapper {
-        flex-direction: column;
-    }
-
-    #support-server-wrapper {
-        flex-direction: column;
     }
 }
 
@@ -168,6 +146,17 @@ body {
 
 /* GENERAL USE */
 
+.dark-separator {
+    color: #aaaaaa;
+}
+
+.code-text {
+    background-color: black;
+    color: white;
+    font-family: "Source Code Pro Normal";
+    font-size: inherit;
+}
+
 #onload-wrapper {
     opacity: 0;
     transform: translateY(50px);
@@ -247,8 +236,114 @@ body {
     color: white;
 }
 
-.dark-separator {
-    color: #aaaaaa;
+#content-and-on-this-page-wrapper {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 30px;
+    margin: 30px 20px;
+}
+
+#content-wrapper {
+    flex: 1;
+}
+
+#on-this-page-wrapper {
+    color: white;
+    font-family: "GG Sans Normal";
+    margin: 0;
+    border-radius: 5px;
+    padding: 15px 15px;
+    background-color: rgba(148, 187, 238, 0.3);
+    border: 1px solid rgb(0, 162, 255);
+    align-self: flex-start;
+    position: sticky;
+    top: 30px;
+    overflow: hidden;
+}
+
+#on-this-page-title {
+    margin: 0;
+    font-size: 25px;
+}
+
+#on-this-page-wrapper ul {
+    list-style: none;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 15px;
+    padding: 0;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    white-space: nowrap;
+}
+
+#on-this-page-wrapper a {
+    color: white;
+}
+
+.content-separator {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: none;
+    height: 3px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.accordion-button {
+    cursor: pointer;
+    padding: 10px 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    transition: background-color 0.4s, border-radius 0s;
+    background-color: #2c2c34;
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 20px;
+}
+
+.accordion-important {
+    border: 1px solid #ffe100;
+}
+
+.accordion-active, .accordion-button:hover {
+    background-color: #5865f2;
+}
+
+.accordion-button::after {
+    content: "+";
+    float: right;
+}
+
+.accordion-active::after {
+    content: "-";
+}
+
+.accordion-panel {
+    padding: 0 18px;
+    overflow: hidden;
+    max-height: 0;
+    background-color: rgb(84, 84, 84);
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 20px;
+    border-radius: 0 0 10px 10px;
+}
+
+.accordion-panel a {
+    color: white;
+}
+
+.accordion-text {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0;
 }
 
 
@@ -389,7 +484,7 @@ body {
 }
 
 #home-commands-count {
-    font-family: "Orbitron Normal";
+    font-family: "Source Code Pro Normal";
 }
 
 #home-commands-text, #home-commands-card {
@@ -606,6 +701,7 @@ body {
 #commands-title {
     margin-top: 50px;
     font-size: 40px;
+    text-align: center;
 }
 
 #commands-subtitle {
@@ -878,22 +974,32 @@ body {
 /* support.html */
 
 #support-title,
-#support-subtitle {
+.support-subtitle {
     font-family: "GG Sans Normal";
     color: white;
 }
 
 #support-title {
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 0;
     font-size: 40px;
+    text-align: center;
 }
 
-#support-subtitle {
-    font-size: 25px;
-    text-align: center;
-    padding-left: 20px;
-    padding-right: 20px;
+.support-subtitle {
+    font-size: 30px;
+    margin-top: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.support-text {
+    font-family: "GG Sans Normal";
+    font-size: 20px;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #support-server-wrapper {
@@ -901,6 +1007,7 @@ body {
     display: flex;
     column-gap: 40px;
     row-gap: 20px;
+    align-items: self-start;
 }
 
 #support-server-invite {
@@ -930,4 +1037,114 @@ body {
 
 #support-server-link {
     text-decoration: none;
+}
+
+#support-feedback {
+    margin-left: 20px;
+    margin-right: 20px;
+    color: white;
+    font-family: "GG Sans Normal";
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.support-feedback-input {
+    display: flex;
+    flex-direction: row;
+}
+
+.support-feedback-icon {
+    text-align: center;
+    padding: 10px;
+    background-color: #00a2ff;
+    font-size: 24px;
+    border-radius: 8px 0 0 8px;
+}
+
+.support-feedback-field {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: "GG Sans Normal";
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 0 8px 8px 0;
+    border-left: none;
+    border-right: 2px solid transparent;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+}
+
+.support-feedback-field:focus {
+    outline: none;
+    border-right: 2px solid #00a2ff;
+    border-top: 2px solid #00a2ff;
+    border-bottom: 2px solid #00a2ff;
+}
+
+#support-feedback-submit {
+    cursor: pointer;
+    background-color: #00a2ff;
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 18px;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+
+#support-feedback-submit:hover {
+    background-color: #187fbb;
+}
+
+#support-feedback-submitted {
+    color: white;
+    font-family: "GG Sans Normal";
+    font-size: 20px;
+    column-gap: 15px;
+}
+
+
+
+/* SCREEN SIZE ADJUSTMENTS */
+
+@media (max-width: 650px) {
+    #home-title {
+        flex-direction: column;
+    }
+
+    #home-commands-wrapper {
+        flex-direction: column;
+    }
+
+    #about-wrapper {
+        flex-direction: column;
+    }
+
+    #support-server-wrapper {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    #content-and-on-this-page-wrapper {
+        flex-direction: column;
+    }
+
+    #on-this-page-wrapper {
+        order: 1;
+        position: static;
+        margin-bottom: 30px;
+    }
+
+    #content-wrapper {
+        order: 2;
+    }
 }

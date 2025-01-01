@@ -180,7 +180,7 @@
                     var commands = 0;
 
                     var countInterval = setInterval(() => {
-                        if (allCommands.length == commands) {
+                        if (allCommands.length <= commands) {
                             clearInterval(countInterval);
                             displayCommands(true);
                         } else if (allCommands.length - commands >= 10) {
@@ -196,50 +196,41 @@
 
 
             function displayCommands(first) {
+                var currentCommand;
+
                 if (first) {
-                    var commandText = document.getElementById("home-commands-text");
-                    var writeText = ", including ", lettersWritten = 0;
-                    var writeInterval = setInterval(() => {
-                        if (lettersWritten == writeText.length) {
-                            clearInterval(writeInterval);
-
-                            var currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
-                            while (currentCommand.nsfw || currentCommand.category == "creator") {
-                                currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
-                            }
-
-                            writeCommand(currentCommand, 1);
-                        } else {
-                            commandText.innerHTML += writeText[lettersWritten];
-                            lettersWritten++;
-                        }
-                    }, 100);
+                    currentCommand = { name: ", including" };
                 } else {
                     var currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
                     while (currentCommand.nsfw || currentCommand.category == "creator") {
                         currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
                     }
-
-                    writeCommand(currentCommand, 1);
                 }
+
+                writeCommand(currentCommand, 1, first);
             }
 
 
-            function writeCommand(command, direction) {
-                var commandText = document.getElementById("home-commands-card");
-                var commandStyle = categoryConstants.find(x => x.category == command.category).color;
+            function writeCommand(command, direction, first) {
+                var commandText = first ? document.getElementById("home-commands-text") : document.getElementById("home-commands-card");
+                var commandStyle = command.category ? categoryConstants.find(x => x.category == command.category).color : null;
                 var writeInterval, lettersWritten;
 
                 switch (direction) {
                     case 1:
-                        commandText.style.backgroundColor = commandStyle;
+                        if (commandStyle) commandText.style.backgroundColor = commandStyle;
                         lettersWritten = 0;
                         writeInterval = setInterval(() => {
                             if (lettersWritten == command.name.length) {
                                 clearInterval(writeInterval);
-                                setTimeout(() => {
-                                    writeCommand(command, -1);
-                                }, 1700);
+
+                                if (first) {
+                                    displayCommands(false);
+                                } else {
+                                    setTimeout(() => {
+                                        writeCommand(command, -1);
+                                    }, 1700);
+                                }
                             } else {
                                 commandText.innerHTML += command.name[lettersWritten];
                                 lettersWritten++;
@@ -256,7 +247,7 @@
                                 clearInterval(writeInterval);
                                 setTimeout(() => {
                                     displayCommands(false);
-                                }, 1000);
+                                }, 900);
                             } else {
                                 commandText.innerHTML = commandText.innerHTML.slice(0, -1);
                                 lettersWritten++;

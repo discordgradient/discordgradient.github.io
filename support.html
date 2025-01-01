@@ -18,6 +18,7 @@
 
         <link rel="icon" href="static/avatar.png" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
 
     <body>
@@ -39,22 +40,152 @@
 
         <div id="onload-wrapper">
             <div class="centered-div">
-                <h1 id="support-title">Support Server</h1>
+                <h1 id="support-title">Support</h1>
             </div>
 
-            <div class="centered-div">
-                <h2 id="support-subtitle">Join the official support server for Gradient, a community where users help each other use the bot and suggest features/improvements to the developers.</h2>
-            </div>
+            <div id="content-and-on-this-page-wrapper">
+                <div id="content-wrapper">
+                    <section id="faq">
+                        <h2 class="support-subtitle">Frequently Asked Questions</h2>
 
-            <div id="support-server-wrapper" class="centered-div">
-                <a href="https://discord.gg/jxrEf5p" id="support-server-link" target="_blank">
-                    <button id="support-server-invite">
-                        <img src="static/discord-icon-white.png" alt="Join server" id="support-server-invite-icon">
-                        Join server
-                    </button>
-                </a>
+                        <div class="accordion-wrapper">
+                            <button class="accordion-button accordion-important">How do I file a support ticket?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">There are a few ways to file a support ticket for bug reports and usage feedback:</p>
+                                <ul>
+                                    <li>Use the <span class="code-text">ticket</span> command and follow the given prompts. &#40;in a server where Gradient is present, or in a DM with the bot&#41;</li>
+                                    <li>Send an email to <a href="mailto:wozardstudios@gmail.com" target="_blank">wozardstudios@gmail.com</a> with a detailed description of the bug or feedback.</li>
+                                    <li>Submit the <a href="#send-feedback">feedback form</a> below.</li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">How do I use a command that requires parameters?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">Follow these tips for supplying parameters for commands that require them:</p>
+                                <ul>
+                                    <li>Command parameters surrounded by &lt;&gt; are required.</li>
+                                    <li>Command parameters surrounded by [] are optional.</li>
+                                    <li>Command parameters surrounded by "" are literal.</li>
+                                    <li>Grouped command parameters separated by / require only one of the parameters in the group.</li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">Why are slash commands not implemented?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">Due to Discord's limit for the number of slash commands that can be registered by a single bot, only a portion of
+                                the bot's commands can be ported. For consistency, all commands will remain prefix-based.</p>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">Why is the bot is not responding to my commands?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">There are a few reasons why this may be happening:</p>
+                                <ol>
+                                    <li>The bot is offline. You can tell if the bot's status icon is gray, or the bot has no activity in its profile.<br>
+                                    If this is not an issue with <a href="https://discordstatus.com" target="_blank">Discord's Gateway/API services</a>, please file a support ticket.</li>
+                                    <li>The command is disabled, either by Wozard Studios, a developer, or a moderator of your server. The category that the command is in
+                                    may also be disabled.</li>
+                                    <li>The bot has run into an error while executing the command. Please file a support ticket if this happens.</li>
+                                    <li>The command does not exist, or the alias that you're using does not exist. If you think that an alias should be added,
+                                    please file a support ticket.</li>
+                                </ol>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">Why is the bot lagging when responding to my commands?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">There are a few reasons why this may be happening:</p>
+                                <ol>
+                                    <li>The bot is restarting with a new update/bugfix. It takes time for the bot to connect to Discord every time it restarts,
+                                    so please be patient.</li>
+                                    <li>Discord's Gateway/API services may be degraded. To check, first try to use the <span class="code-text">ping</span> command to check for Discord's
+                                    Gateway and message pings. For more information, go to <a href="https://discordstatus.com" target="_blank">Discord's status page</a>.</li>
+                                    <li>You have run into a bug, or the bot has an internal error. You can file a support ticket using the <span class="code-text">ticket</span> command in the
+                                    case of a bug, or check the bot's status page for more information in the case of an internal error.</li>
+                                    <li>The bot's host server is having a high latency. This usually will not happen, but please file a support ticket if this issue occurs.</li>
+                                </ol>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">Why am I not getting a response from my attempt(s) to contact Wozard Studios?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">Please be patient. Usually, you will receive an initial response from your support tickets 24 hours after they are filed.</p>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">Why did my in-progress command/service stop suddenly?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">&#40;Note: This includes (but is not limited to) active minigames and music playback.&#41;</p>
+                                <p class="accordion-text">There may be a few reasons as to why this might be happening:</p>
+                                <ol>
+                                    <li>The bot is restarting with a new update/bugfix.</li>
+                                    <li>The bot has gone offline.</li>
+                                    <li>You have a poor connection to Discord.</li>
+                                </ol>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">How can I become a Gradient Premium user?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">Gradient Premium is only awarded to friendly and supportive users of the bot and is NOT obtainable through monetary
+                                transactions. There is no fixed criteria for acquiring Gradient Premium, and all awards are decided on a case-to-case
+                                basis by Wozard Studios.</p>
+                            </div>
+                            <hr>
+                            <button class="accordion-button">How did you make the bot?</button>
+                            <div class="accordion-panel">
+                                <p class="accordion-text">The bot is written in JavaScript using a custom version of Discord.js and the stable version of <a href="https://nodejs.org/en" target="_blank">Node.js</a>.</p>
+                            </div>
+                        </div>
+                    </section>
 
-                <iframe src="https://discord.com/widget?id=658122178713223190&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-same-origin allow-scripts"></iframe>
+                    <hr class="content-separator">
+                    
+                    <section id="support-server">
+                        <h2 class="support-subtitle">Support Server</h2>
+
+                        <p class="support-text">Have a question that isn't in the FAQ, or want to provide feedback? Join the official support server for Gradient, a community where
+                        users share usage knowledge with each other and suggest improvements to the developers.</p>
+                        
+                        <div id="support-server-wrapper" class="centered-div">
+                            <a href="https://discord.gg/jxrEf5p" id="support-server-link" target="_blank">
+                                <button id="support-server-invite">
+                                    <img src="static/discord-icon-white.png" alt="Join server" id="support-server-invite-icon">
+                                    Join server
+                                </button>
+                            </a>
+                        
+                            <iframe src="https://discord.com/widget?id=658122178713223190&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-same-origin allow-scripts"></iframe>
+                        </div>
+                    </section>
+
+                    <hr class="content-separator">
+
+                    <section id="send-feedback">
+                        <h2 class="support-subtitle">Send Feedback</h2>
+
+                        <form id="support-feedback" onsubmit="return supportFormSubmit()">
+                            <div class="support-feedback-input">
+                                <span class="material-icons support-feedback-icon">mail</span>
+                                <input type="email" class="support-feedback-field" name="feedback-email" placeholder="Email" required>
+                            </div>
+
+                            <div class="support-feedback-input">
+                                <span id="support-feedback-message-icon" class="material-icons support-feedback-icon">comment</span>
+                                <textarea id="support-feedback-message" class="support-feedback-field" name="feedback-message" placeholder="Feedback" required></textarea>
+                            </div>
+
+                            <button type="submit" id="support-feedback-submit">
+                                <span class="material-icons">send</span>
+                                Send
+                            </button>
+                        </form>
+                    </section>
+                </div>
+
+                <div id="on-this-page-wrapper">
+                    <p id="on-this-page-title">On this page</p>
+                    <ul>
+                        <li><a href="#faq">Frequently Asked Questions</a></li>
+                        <li><a href="#support-server">Support Server</a></li>
+                        <li><a href="#send-feedback">Send Feedback</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -64,5 +195,50 @@
                 <p><a href="terms.html">Terms</a> <span class="dark-separator">&</span> <a href="privacy.html">Privacy</a></p>
             </div>
         </footer>
+
+
+
+        <script src="static/helpers/helpers.js"></script>
+
+        <script>
+            window.onload = () => {
+                setAccordions();
+
+                var textIcon = document.getElementById("support-feedback-message-icon");
+                var textArea = document.getElementById("support-feedback-message");
+                textArea.addEventListener("input", function() {
+                    textArea.style.height = "auto";
+                    if (textArea.scrollHeight > textIcon.offsetHeight) {
+                        textArea.style.height = textArea.scrollHeight + "px";
+                    } else {
+                        textArea.style.height = textIcon.offsetHeight + "px";
+                    }
+                });
+            }
+
+
+            function supportFormSubmit() {
+                var supportForm = document.getElementById("support-feedback");
+                if (supportForm) supportForm.remove();
+
+                var feedbackSection = document.getElementById("send-feedback");
+
+                var centeredDiv = document.createElement("div");
+                centeredDiv.classList.add("centered-div");
+                centeredDiv.setAttribute("id", "support-feedback-submitted");
+
+                var submittedIcon = document.createElement("span");
+                submittedIcon.classList.add("material-icons");
+                submittedIcon.innerHTML = "check_circle";
+
+                var submittedText = document.createElement("p");
+                submittedText.innerHTML = "Feedback submitted successfully. Thank you.";
+                submittedText.style.margin = "0";
+
+                centeredDiv.appendChild(submittedIcon);
+                centeredDiv.appendChild(submittedText);
+                feedbackSection.appendChild(centeredDiv);
+            }
+        </script>
     </body>
 </html>
