@@ -35,3 +35,28 @@ function handleAnchors() {
         history.replaceState(null, null, window.location.pathname);
     });
 }
+
+
+function setNavDropdown() {
+    var navDropdownArea = document.getElementById("top-nav-dropdown");
+    var navContent = document.getElementById("top-nav-dropdown-content");
+
+    navDropdownArea.addEventListener("click", event => {
+        event.stopPropagation();
+
+        if (navContent.style.display) {
+            navContent.style.display = null;
+            navDropdownArea.classList.remove("nav-active");
+        } else {
+            navContent.style.display = "block";
+            navDropdownArea.classList.add("nav-active");
+        }
+    });
+
+    document.addEventListener("click", () => {
+        if (navContent.style.display == "block") {
+            navContent.style.display = null;
+            navDropdownArea.classList.remove("nav-active");
+        }
+    });
+}

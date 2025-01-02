@@ -108,23 +108,60 @@ body {
 #top-nav li {
     display: inline-block;
     margin-right: 40px;
+    position: relative;
+    cursor: pointer;
     color: white;
     font-family: "GG Sans Normal";
     font-size: 25px;
-    text-decoration: none;
-    position: relative;
-    cursor: pointer;
+}
+
+#top-nav a, #top-nav button {
+    color: white;
 }
 
 #top-nav a {
-    color: white;
-    font-family: "GG Sans Normal";
     text-decoration: none;
-    position: relative;
 }
 
-#top-nav li::after,
-#top-nav a::after {
+#top-nav button {
+    font-family: inherit;
+    font-size: inherit;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+#top-nav span {
+    color: white;
+}
+
+#top-nav-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #2c2c34;
+    border: 1px solid #cacaca;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    z-index: 1;
+}
+
+#top-nav-dropdown-content a {
+    color: #7edbff;
+    text-decoration: underline !important;
+}
+
+#top-nav-dropdown-content>* {
+    white-space: nowrap;
+}
+
+#top-nav li::after {
     content: "";
     position: absolute;
     left: 0;
@@ -137,8 +174,7 @@ body {
     transition: transform 0.3s ease;
 }
 
-#top-nav li.nav-active::after,
-#top-nav a:hover::after {
+#top-nav li.nav-active::after, #top-nav li:hover::after {
     transform: scaleX(1);
 }
 
@@ -416,7 +452,6 @@ body {
 #home-title {
     color: white;
     font-family: "GG Sans Medium";
-    font-size: 50px;
     display: flex;
     column-gap: 20px;
 }
@@ -430,6 +465,10 @@ body {
     width: 80px;
     height: auto;
     line-height: 1;
+}
+
+#home-bot-name {
+    font-size: 100px;
 }
 
 #home-bot-tag {
@@ -1170,6 +1209,10 @@ body {
 @media (max-width: 650px) {
     #home-title {
         flex-direction: column;
+    }
+
+    #home-bot-name {
+        font-size: 90px;
     }
 
     #home-commands-wrapper {

@@ -18,6 +18,7 @@
 
         <link rel="icon" href="static/avatar.png" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
 
     <body>
@@ -30,7 +31,14 @@
                     <li><a href="commands.html">Commands</a></li>
                     <li><a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands" target="_blank">Invite</a></li>
                     <li><a href="support.html">Support</a></li>
-                    <li><a href="premium.html">Premium</a></li>
+                    <li id="top-nav-dropdown">
+                        <button>More</button>
+                        <span class="material-icons">arrow_drop_down</span>
+
+                        <div id="top-nav-dropdown-content">
+                            <a href="premium.html">Premium</a>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -39,7 +47,7 @@
             <div id="onload-wrapper">
                 <div id="home-title" class="centered-div">
                     <img src="static/avatar.png" alt="Gradient Avatar" id="home-title-avatar" draggable="false">
-                    <h1>Gradient</h1>
+                    <h1 id="home-bot-name">Gradient</h1>
                     <h1 id="home-bot-tag">#8321</h1>
                 </div>
             
@@ -103,12 +111,14 @@
 
 
 
-        <script src="static/helpers/constants.js"></script>
+        <script src="static/scripts/constants.js"></script>
+        <script src="static/scripts/helpers.js"></script>
 
         <script>
             window.onload = () => {
                 getServiceStatus();
                 updateCommandCounter();
+                setNavDropdown();
             }
 
 
