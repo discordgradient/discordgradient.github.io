@@ -50,27 +50,15 @@
                     <h1 id="home-bot-name">Gradient</h1>
                     <h1 id="home-bot-tag">#8321</h1>
                 </div>
-            
-                <div class="home-line-separator"></div>
-            
-                <div id="home-badges" class="centered-div">
-                    <div class="home-badge-hover">
-                        <img src="static/badges/verified-app.png" alt="Bot Tag" id="home-verified-app-badge" draggable="false">
-                        <span class="home-badge-text" id="home-verified-app-text">Verified App</span>
-                    </div>
-            
-                    <div class="home-badge-separator"></div>
-            
-                    <div class="home-badge-hover">
-                        <img src="static/badges/supports-commands.svg" alt="Supports Commands" id="home-supports-commands-badge" draggable="false">
-                        <span class="home-badge-text" id="home-supports-commands-text">Supports Commands</span>
-                    </div>
-            
-                    <div class="home-badge-separator"></div>
-            
-                    <div class="home-badge-hover" id="home-status">
-                        <div id="home-status-badge-loading"></div>
-                    </div>
+
+                <div id="home-badges">
+                    <div class="home-badge-text" id="home-verified-app-text">Verified App</div>
+                    <div class="home-badge-text" id="home-supports-commands-text">Supports Commands</div>
+                    <div class="home-badge-text" id="home-status-text">Loading Status...</div>
+
+                    <img src="static/badges/verified-app.png" alt="Bot Tag" id="home-verified-app-badge" draggable="false">
+                    <img src="static/badges/supports-commands.svg" alt="Supports Commands" id="home-supports-commands-badge" draggable="false">
+                    <div id="home-status-badge-loading"></div>
                 </div>
             
                 <div id="home-subtitle" class="centered-div">
@@ -116,9 +104,34 @@
 
         <script>
             window.onload = () => {
+                setBadgeHovers();
                 getServiceStatus();
                 updateCommandCounter();
                 setNavDropdown();
+            }
+
+
+            function setBadgeHovers() {
+                var verifiedAppBadge = document.getElementById("home-verified-app-badge");
+                var supportsCommandsBadge = document.getElementById("home-supports-commands-badge");
+                var statusBadge = document.getElementById("home-status-badge");
+
+                var verifiedAppText = document.getElementById("home-verified-app-text");
+                var supportsCommandsText = document.getElementById("home-supports-commands-text");
+
+                verifiedAppBadge.addEventListener("mouseover", () => {
+                    verifiedAppText.style.visibility = "visible";
+                });
+                verifiedAppBadge.addEventListener("mouseout", () => {
+                    verifiedAppText.style.visibility = "hidden";
+                });
+
+                supportsCommandsBadge.addEventListener("mouseover", () => {
+                    supportsCommandsText.style.visibility = "visible";
+                });
+                supportsCommandsBadge.addEventListener("mouseout", () => {
+                    supportsCommandsText.style.visibility = "hidden";
+                });
             }
 
 
@@ -132,15 +145,13 @@
                     status = undefined;
                 }
 
-                var homeStatus = document.getElementById("home-status");
+                var homeStatus = document.getElementById("home-badges");
 
                 var statusIcon = document.createElement("img");
                 statusIcon.setAttribute("id", "home-status-badge");
                 statusIcon.setAttribute("draggable", "false");
 
-                var statusHover = document.createElement("span");
-                statusHover.classList.add("home-badge-text");
-                statusHover.setAttribute("id", "home-status-text");
+                var statusHover = document.getElementById("home-status-text");
 
                 if (status && status.status) {
                     setTimeout(() => {
@@ -164,7 +175,13 @@
                         statusHover.textContent = statusIcon.alt;
 
                         homeStatus.appendChild(statusIcon);
-                        homeStatus.appendChild(statusHover);
+
+                        statusIcon.addEventListener("mouseover", () => {
+                            statusHover.style.visibility = "visible";
+                        });
+                        statusIcon.addEventListener("mouseout", () => {
+                            statusHover.style.visibility = "hidden";
+                        });
                     }, 2000);
                 } else {
                     setTimeout(() => {
@@ -176,7 +193,13 @@
                         statusHover.textContent = statusIcon.alt;
 
                         homeStatus.appendChild(statusIcon);
-                        homeStatus.appendChild(statusHover);
+
+                        statusIcon.addEventListener("mouseover", () => {
+                            statusHover.style.visibility = "visible";
+                        });
+                        statusIcon.addEventListener("mouseout", () => {
+                            statusHover.style.visibility = "hidden";
+                        });
                     }, 2000);
                 }
             }
