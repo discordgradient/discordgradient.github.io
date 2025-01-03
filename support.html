@@ -166,17 +166,17 @@
 
                         <form id="support-feedback" onsubmit="return supportFormSubmit()">
                             <div class="support-feedback-input">
-                                <span class="material-icons support-feedback-icon">mail</span>
+                                <img src="static/material-icons/mail.svg" alt="Email" class="support-feedback-icon" draggable="false">
                                 <input type="email" class="support-feedback-field" name="feedback-email" placeholder="Email" required>
                             </div>
 
                             <div class="support-feedback-input">
-                                <span id="support-feedback-message-icon" class="material-icons support-feedback-icon">comment</span>
+                                <img src="static/material-icons/comment.svg" alt="Message" class="support-feedback-icon" id="support-feedback-message-icon" draggable="false">
                                 <textarea id="support-feedback-message" class="support-feedback-field" name="feedback-message" placeholder="Feedback" required></textarea>
                             </div>
 
                             <button type="submit" id="support-feedback-submit">
-                                <span class="material-icons">send</span>
+                                <img src="static/material-icons/send.svg" alt="Send" draggable="false">
                                 Send
                             </button>
                         </form>
@@ -211,14 +211,20 @@
                 setAccordions();
                 handleAnchors();
 
-                var textIcon = document.getElementById("support-feedback-message-icon");
                 var textArea = document.getElementById("support-feedback-message");
-                textArea.addEventListener("input", function() {
+                var textIcon = document.getElementById("support-feedback-message-icon");
+
+                var initialHeight = textArea.offsetHeight;
+                textArea.addEventListener("input", () => {
                     textArea.style.height = "auto";
-                    if (textArea.scrollHeight > textIcon.offsetHeight) {
+                    textIcon.style.height = "auto";
+
+                    if (textArea.scrollHeight > initialHeight) {
                         textArea.style.height = textArea.scrollHeight + "px";
+                        textIcon.style.height = (textArea.scrollHeight - 20) + "px";
                     } else {
-                        textArea.style.height = textIcon.offsetHeight + "px";
+                        textArea.style.height = initialHeight + "px";
+                        textIcon.style.height = (initialHeight - 20) + "px";
                     }
                 });
 
