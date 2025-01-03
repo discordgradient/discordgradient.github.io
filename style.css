@@ -537,6 +537,7 @@ body {
 #home-status-badge-loading {
     border: 6px solid #2c2c34;
     border-top: 6px solid white;
+    border-right: 6px solid white;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -690,10 +691,6 @@ body {
     height: 60px;
 }
 
-.about-selection-button:hover {
-    background-color: #8a8a8a !important;
-}
-
 .about-selection-emoji {
     font-size: 20px;
     margin-bottom: 2px;
@@ -801,7 +798,10 @@ body {
 
 #commands-search-bar {
     margin-top: 40px;
-    position: relative;
+}
+
+#commands-search-suggestions {
+    display: none;
 }
 
 #commands-search-bar input[type="text"] {
@@ -825,6 +825,10 @@ body {
     outline: none;
 }
 
+#commands-search-bar input[type="text"]::-webkit-calendar-picker-indicator {
+    display: none !important;
+}
+
 #commands-search-button {
     margin-left: 30px;
     border-radius: 50%;
@@ -832,7 +836,9 @@ body {
     background-color: #4e4e4e;
     width: 50px;
     height: 50px;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #commands-search-button img {
@@ -840,25 +846,11 @@ body {
 }
 
 #commands-search-loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
+    border: 2px solid #4e4e4e;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
     width: 20px;
     height: 20px;
-}
-
-#commands-search-loading::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 5%;
-    width: 70%;
-    height: 70%;
-    border: 2px solid white;
-    border-top-color: #4e4e4e;
     border-radius: 50%;
     animation: loading-spin 1s linear infinite;
 }

@@ -4,9 +4,6 @@ const allCommands = [
     { name: "8ball", description: "Ask a question, and the 8ball will answer it.", aliases: ["8-ball", "eightball", "eight-ball"], usage: "8ball <question>", example: "8ball Is Gradient the best bot?", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
     { name: "gamer", description: "The gamer rate machine will decide how gamer you are.", aliases: ["gamerrate", "gamer-rate", "howgamer", "how-gamer"], usage: "gamer [user/object]", example: "gamer WozardLozard\ngamer A random object", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
     { name: "dank", description: "The dank rate machine will decide how dank you are.", aliases: ["dankrate", "dank-rate", "howdank", "how-dank"], usage: "dank [user/object]", example: "dank WozardLozard\ndank A random object", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
-    // { name: "straight", description: "The straight rate machine will decide how straight you are.", aliases: ["straightrate", "straight-rate", "howstraight", "how-straight"], usage: "straight [user/object]", example: "straight WozardLozard\nstraight A random object", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
-    // { name: "gay", description: "The gay rate machine will decide how gay you are.", aliases: ["gayrate", "gay-rate", "howgay", "how-gay", "gae", "gaerate", "gae-rate", "howgae", "how-gae"], usage: "gay [user/object]", example: "gay WozardLozard\ngay A random object", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
-    // { name: "lesbian", description: "The lesbian rate machine will decide how lesbian you are.", aliases: ["lesbianrate", "lesbian-rate", "howlesbian", "how-lesbian"], usage: "lesbian [user/object]", example: "lesbian WozardLozard\nlesbian A random object", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
     { name: "waifu", description: "The waifu rate machine will decide how waifu you are.", aliases: ["waifurate", "waifu-rate", "howwaifu", "how-waifu"], usage: "waifu [user/object]", example: "waifu WozardLozard\nwaifu A random object", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: true },
     { name: "mock", description: "Mocks a phrase of your choice.", aliases: [], usage: "mock <phrase>", example: "mock A random phrase", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
     { name: "lottery", description: "Prompts you to input a prize, the number of winners, and the duration. Then, starts the lottery/giveaway based on your selections. Please ensure that I have the `Read Message History` permission.", aliases: ["giveaway", "give-away"], usage: "lottery", example: "lottery", cooldown: "2 secs", premium: true, category: "fun", disable: true, nsfw: false },
@@ -22,7 +19,6 @@ const allCommands = [
     { name: "gif", description: "Search for a GIF from Tenor.", aliases: ["tenor"], usage: "gif <query>", example: "gif dog", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
     { name: "history", description: "Gets an event, birth, and death from this day in history.", aliases: ["todayinhistory", "today-in-history"], usage: "history", example: "history", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
     { name: "hogwarts", description: "Determines your Hogwarts house in the fictional universe of Harry Potter using the official data from Pottermore.", aliases: [], usage: "hogwarts", example: "hogwarts", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
-    // { name: "lungus", description: "Praise the lungus!", aliases: ["sugnul"], usage: "lungus", example: "lungus", cooldown: "2 secs", premium: false, category: "fun", disable: true, nsfw: false },
     { name: "beemovie", description: "Gets the Bee Movie script and allows you to browse through it.", aliases: ["bee-movie"], usage: "beemovie", example: "beemovie", cooldown: "2 secs", premium: true, category: "fun", disable: true, nsfw: false },
 
     // MODERATION COMMANDS
@@ -85,7 +81,6 @@ const allCommands = [
     { name: "battleship", description: "Try to uncover three hidden ships on a 7x7 board!", aliases: ["battle-ship"], usage: "battleship [\"guide\"]", example: "battleship\nbattleship guide", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "bottleflip", description: "Flips a bottle and try to get the highest flipping streak!", aliases: ["bottle-flip", "bf"], usage: "bottleflip [\"default\"/\"caps\"]", example: "bottleflip\nbottleflip default\nbottleflip caps", cooldown: "2 secs", premium: true, category: "games", disable: true, nsfw: false },
     { name: "rockpaperscissors", description: "Try to beat me in this classic rock paper scissors game!", aliases: ["rock-paper-scissors", "rps"], usage: "rockpaperscissors <\"rock\"/\"paper\"/\"scissors\">", example: "rockpaperscissors rock\nrockpaperscissors paper\nrockpaperscissors scissors", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
-    // { name: "roulette", description: "Plays Russian Roulette with the number of bullets specified.", aliases: [], usage: "roulette [number of bullets]", example: "roulette 1\nroulette 6", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: true },
     { name: "dicegame", description: "See if you can roll higher than me with dice of your choosing.", aliases: ["dice-game"], usage: "dicegame <number of sides>", example: "dicegame 6\ndicegame 20", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "soccer", description: "Try to kick the ball past a moving goalkeeper!", aliases: ["football"], usage: "soccer", example: "soccer", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "archery", description: "Try to hit a moving target with your arrow!", aliases: [], usage: "archery", example: "archery", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
@@ -93,7 +88,6 @@ const allCommands = [
     { name: "dodgeball", description: "Try to dodge the ball thrown at you!", aliases: ["dodge-ball"], usage: "dodgeball", example: "dodgeball", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "baseball", description: "Try to hit the ball at the correct time for a home run!", aliases: ["base-ball"], usage: "baseball", example: "baseball", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "basketball", description: "Try to sink the ball into a moving net!", aliases: ["basket-ball"], usage: "basketball", example: "basketball", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
-    // { name: "fruitgame", description: "Try to guess the correct fruit based on the clue that you're given!", aliases: ["fruit-game", "fruits", "fruit", "fruitguess", "fruit-guess"], usage: "fruitgame", example: "fruitgame", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "trivia", description: "Try to get the correct answer to a random question.", aliases: ["triv", "quiz"], usage: "trivia", example: "trivia", cooldown: "30 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "matching", description: "Memorize the colors corresponding to three words, then see if you can get the correct color to one of the words!", aliases: [], usage: "matching", example: "matching", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
     { name: "captcha", description: "Try to determine the text that is displayed in the Captcha-style image presented!", aliases: ["notarobot", "not-a-robot"], usage: "captcha [\"colorblind\"]", example: "captcha\ncaptcha colorblind", cooldown: "2 secs", premium: false, category: "games", disable: true, nsfw: false },
@@ -360,7 +354,6 @@ const allCommands = [
     { name: "recognize", description: "Searches for a song using a snippet of its lyrics or a snippet of its audio.", aliases: ["recognise", "recognizetrack", "recognize-track", "recognisetrack", "recognise-track", "trackrecognize", "track-recognize", "trackrecognise", "track-recognise"], usage: "recognize <\"lyrics\"/\"audio\"> [query]", example: "recognize lyrics Guilty feet have got no rhythm\nrecognize audio", cooldown: "2 secs", premium: true, category: "music", disable: true, nsfw: false },
 
     // IMAGE COMMANDS
-    // { name: "gayify", description: "Gayifies your profile picture, another user's profile picture, or an image.", aliases: [], usage: "gayify [user/image URL]", example: "gayify\ngayify @WozardLozard\ngayify https://an-image-site.com/image.png", cooldown: "2 secs", premium: false, category: "images", disable: true, nsfw: false },
     { name: "invert", description: "Inverts the colors of your profile picture, another user's profile picture, or an image.", aliases: [], usage: "invert [user/image URL]", example: "invert\ninvert @WozardLozard\ninvert https://an-image-site.com/image.png", cooldown: "2 secs", premium: false, category: "images", disable: true, nsfw: false },
     { name: "magik", description: "Slightly warps your profile picture, another user's profile picture, or an image.", aliases: [], usage: "magik [user/image URL]", example: "magik\nmagik @WozardLozard\nmagik https://an-image-site.com/image.png", cooldown: "2 secs", premium: false, category: "images", disable: true, nsfw: false },
     { name: "sepia", description: "Applies the sepia effect to your profile picture, another user's profile picture, or an image.", aliases: [], usage: "sepia [user/image URL]", example: "sepia\nsepia @WozardLozard\nsepia https://an-image-site.com/image.png", cooldown: "2 secs", premium: false, category: "images", disable: true, nsfw: false },
@@ -512,19 +505,4 @@ const allCommands = [
     { name: "poststatistics", description: "Posts the bot's statistics (eg. server count) to external platforms. Creator use only.", aliases: ["post-statistics", "poststats", "post-stats"], usage: "poststatistics", example: "poststatistics", cooldown: "2 secs", premium: false, category: "creator", disable: false, nsfw: false },
     { name: "logoff", description: "Logs the bot off from Discord's Gateway. Creator use only.", aliases: ["log-off", "logout", "log-out"], usage: "logoff", example: "logoff", cooldown: "2 secs", premium: false, category: "creator", disable: false, nsfw: false },
     { name: "restart", description: "Reconnects the bot to Discord's Gateway. Creator use only.", aliases: ["reboot"], usage: "restart", example: "restart", cooldown: "2 secs", premium: false, category: "creator", disable: false, nsfw: false },
-];
-
-
-const categoryConstants = [
-    { category: "configuration", emoji: "⚙️", color: "#4c3791", textColor: "#bebebe" },
-    { category: "economy", emoji: "💰", color: "#bdad44", textColor: "#4e4e4e" },
-    { category: "fun", emoji: "😄", color: "#96457f", textColor: "#bebebe" },
-    { category: "games", emoji: "🎮", color: "#913a3a", textColor: "#bebebe" },
-    { category: "images", emoji: "📷", color: "#753f9e", textColor: "#bebebe" },
-    { category: "moderation", emoji: "🛡️", color: "#8f5e2e", textColor: "#bebebe" },
-    { category: "music", emoji: "🎵", color: "#2d8767", textColor: "#bebebe" },
-    { category: "sciences", emoji: "🧪", color: "#37782f", textColor: "#bebebe" },
-    { category: "statistics", emoji: "📊", color: "#3a8791", textColor: "#bebebe" },
-    { category: "text", emoji: "🆗", color: "#879126", textColor: "#4e4e4e" },
-    { category: "utility", emoji: "🛠️", color: "#3a6391", textColor: "#bebebe" },
 ];

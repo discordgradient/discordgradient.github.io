@@ -89,7 +89,8 @@
         
 
 
-        <script src="static/scripts/constants.js"></script>
+        <script src="static/scripts/categoryConstants.js"></script>
+        <script src="static/scripts/commandConstants.js"></script>
         <script src="static/scripts/helpers.js"></script>
 
         <script>
@@ -452,7 +453,7 @@
                             header.classList.add("commands-search-results-header");
 
                             if (input.toLowerCase() != "premium") {
-                                header.textContent = `Looking for the ${category.length} ${pluralize("command", category.length)} in the ${category[0].category} category?`;
+                                header.textContent = `Looking for the ${category.length} ${pluralize("command", category.length)} in the ${titleCase(category[0].category)} category?`;
                             } else {
                                 header.textContent = `Looking for the ${category.length} Premium ${pluralize("command", category.length)}?`;
                             }
@@ -711,9 +712,6 @@
                     var searchInput = document.getElementById("commands-search-input");
                     if (searchInput.value.length > 0) {
                         searchStatus = searchCommands(searchInput.value, searchButton);
-                        document.getElementById("commands-search-suggestions").style.display = "none";
-                    } else {
-                        document.getElementById("commands-search-suggestions").style.display = "block";
                     }
 
                     timeout = setTimeout(() => {

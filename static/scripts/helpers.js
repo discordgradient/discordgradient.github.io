@@ -6,6 +6,25 @@ function pluralize(word, amount) {
 }
 
 
+function titleCase(str) {
+    return str.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
+}
+
+
+function hexToRgb(hex, opacity) {
+    hex = hex.replace("#", "");
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+
+    if (!opacity) {
+        return `rgb(${r}, ${g}, ${b})`;
+    } else {
+        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+}
+
+
 function setAccordions() {
     var accButton = document.getElementsByClassName("accordion-button");
     var i;

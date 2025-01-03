@@ -156,8 +156,6 @@
                                     Join server
                                 </button>
                             </a>
-                        
-                            <iframe src="https://discord.com/widget?id=658122178713223190&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-same-origin allow-scripts"></iframe>
                         </div>
                     </section>
 
@@ -223,6 +221,17 @@
                         textArea.style.height = textIcon.offsetHeight + "px";
                     }
                 });
+
+                var discordWidget = document.createElement("iframe");
+                discordWidget.src = "https://discord.com/widget?id=658122178713223190&theme=dark";
+                discordWidget.width = "350";
+                discordWidget.height = "500";
+                discordWidget.allowtransparency = "true";
+                discordWidget.frameborder = "0";
+                discordWidget.sandbox = "allow-same-origin allow-scripts";
+                discordWidget.style.border = "none";
+                discordWidget.style.outline = "none";
+                document.getElementById("support-server-wrapper").appendChild(discordWidget);
             }
 
 

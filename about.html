@@ -119,6 +119,7 @@
 
 
 
+        <script src="static/scripts/categoryConstants.js"></script>
         <script src="static/scripts/helpers.js"></script>
 
         <script>
@@ -222,6 +223,24 @@
                 var i, selectedView, timeout, currentView, foundView;
                 var viewWrapper, categoryWrapper, categoryText, categoryTitle, categoryDescription, categoryCard, discordButton, imageContainer, image;
 
+                for (let viewIdx = 0; viewIdx < views.length; viewIdx++) {
+                    views[viewIdx].button.addEventListener("click", () => {
+                        changeViews(views[viewIdx].name.toLowerCase());
+                    });
+
+                    views[viewIdx].button.addEventListener("mouseover", () => {
+                        views[viewIdx].button.style.backgroundColor = hexToRgb(categoryConstants.find(x => x.category == views[viewIdx].name.toLowerCase()).color, 0.5);
+                    });
+
+                    views[viewIdx].button.addEventListener("mouseout", () => {
+                        if (currentView != views[viewIdx].name.toLowerCase()) {
+                            views[viewIdx].button.style.backgroundColor = "#4e4e4e";
+                        } else {
+                            views[viewIdx].button.style.backgroundColor = categoryConstants.find(x => x.category == views[viewIdx].name.toLowerCase()).color;
+                        }
+                    });
+                }
+
                 function changeViews(viewName) {
                     if (timeout) clearTimeout(timeout);
 
@@ -283,7 +302,7 @@
 
                         for (i = 0; i < views.length; i++) {
                             if (views[i].name.toLowerCase() == viewName) {
-                                views[i].button.style.backgroundColor = "#5865f2";
+                                views[i].button.style.backgroundColor = categoryConstants.find(x => x.category == views[i].name.toLowerCase()).color;
                             } else {
                                 views[i].button.style.backgroundColor = "#4e4e4e";
                             }
@@ -298,44 +317,6 @@
                         }
                     }
                 }
-
-
-                configurationButton.addEventListener("click", () => {
-                    changeViews("configuration");
-                });
-                economyButton.addEventListener("click", () => {
-                    changeViews("economy");
-                });
-                funButton.addEventListener("click", () => {
-                    changeViews("fun");
-                });
-                gamesButton.addEventListener("click", () => {
-                    changeViews("games");
-                });
-                imagesButton.addEventListener("click", () => {
-                    changeViews("images");
-                });
-                moderationButton.addEventListener("click", () => {
-                    changeViews("moderation");
-                });
-                musicButton.addEventListener("click", () => {
-                    changeViews("music");
-                });
-                sciencesButton.addEventListener("click", () => {
-                    changeViews("sciences");
-                });
-                statisticsButton.addEventListener("click", () => {
-                    changeViews("statistics");
-                });
-                textButton.addEventListener("click", () => {
-                    changeViews("text");
-                });
-                utilityButton.addEventListener("click", () => {
-                    changeViews("utility");
-                });
-                premiumButton.addEventListener("click", () => {
-                    changeViews("premium");
-                });
             }
         </script>
     </body>
