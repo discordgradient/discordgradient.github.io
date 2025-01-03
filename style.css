@@ -16,11 +16,6 @@
 }
 
 @font-face {
-    font-family: "GG Sans Extrabold";
-    src: url("static/fonts/gg_sans_Extrabold.ttf") format("truetype");
-}
-
-@font-face {
     font-family: "Source Code Pro Normal";
     src: url("static/fonts/SourceCodePro-Regular.ttf") format("truetype");
 }
@@ -458,7 +453,7 @@ body {
 
 #home-title-avatar {
     width: 80px;
-    height: auto;
+    height: 80px;
     line-height: 1;
 }
 
@@ -496,12 +491,12 @@ body {
 
 #home-supports-commands-badge {
     width: 60px;
-    height: auto;
+    height: 60px;
 }
 
 #home-status-badge {
     width: 50px;
-    height: auto;
+    height: 50px;
 }
 
 .home-badge-hover {
@@ -1140,7 +1135,7 @@ body {
 .support-feedback-icon {
     text-align: center;
     padding: 10px;
-    background-color: #00a2ff;
+    background-color: #007CC2;
     font-size: 24px;
     border-radius: 8px 0 0 8px;
 }
@@ -1160,14 +1155,14 @@ body {
 
 .support-feedback-field:focus {
     outline: none;
-    border-right: 2px solid #00a2ff;
-    border-top: 2px solid #00a2ff;
-    border-bottom: 2px solid #00a2ff;
+    border-right: 2px solid #007CC2;
+    border-top: 2px solid #007CC2;
+    border-bottom: 2px solid #007CC2;
 }
 
 #support-feedback-submit {
     cursor: pointer;
-    background-color: #00a2ff;
+    background-color: #007CC2;
     color: white;
     font-family: "GG Sans Normal";
     font-size: 18px;
@@ -1182,7 +1177,7 @@ body {
 }
 
 #support-feedback-submit:hover {
-    background-color: #187fbb;
+    background-color: #4b8eb5;
 }
 
 #support-feedback-submitted {

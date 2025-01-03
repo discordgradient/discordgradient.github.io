@@ -18,7 +18,7 @@
 
         <link rel="icon" href="static/avatar.png" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&text=arrow_drop_down,mail,comment,send,check_circle">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&text=mail,comment,send,check_circle">
     </head>
 
     <body>
@@ -31,11 +31,11 @@
                 <ul>
                     <li><a href="about.html">About</a></li>
                     <li><a href="commands.html">Commands</a></li>
-                    <li><a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands" target="_blank">Invite</a></li>
+                    <li><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands" target="_blank">Invite</a></li>
                     <li class="nav-active">Support</li>
                     <li id="top-nav-dropdown">
                         <button>More</button>
-                        <span class="material-icons">arrow_drop_down</span>
+                        <img src="static/material-icons/dropdown.svg" alt="Dropdown" id="top-nav-dropdown-icon" draggable="false">
                     
                         <div id="top-nav-dropdown-content">
                             <a href="premium.html">Premium</a>
@@ -89,7 +89,7 @@
                                 <ol>
                                     <li>The bot is offline. You can tell if the bot's status icon is gray, or the bot has no activity in its profile.<br>
                                     If this is not an issue with <a href="https://discordstatus.com" target="_blank">Discord's Gateway/API services</a>, please file a support ticket.</li>
-                                    <li>The command is disabled, either by the development team, a developer, or a moderator of your server. The category that the command is in
+                                    <li>The command is disabled, either by the development team or a moderator of your server. The category that the command is in
                                     may also be disabled.</li>
                                     <li>The bot has run into an error while executing the command. Please file a support ticket if this happens.</li>
                                     <li>The command does not exist, or the alias that you're using does not exist. If you think that an alias should be added,
@@ -229,6 +229,7 @@
                 discordWidget.allowtransparency = "true";
                 discordWidget.frameborder = "0";
                 discordWidget.sandbox = "allow-same-origin allow-scripts";
+                discordWidget.title = "Discord widget";
                 discordWidget.style.border = "none";
                 discordWidget.style.outline = "none";
                 document.getElementById("support-server-wrapper").appendChild(discordWidget);

@@ -22,5 +22,5 @@ app.get("/commands", (req, res) => {
 });
 
 app.get("/invite", (req, res) => {
-    res.redirect("https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands");
+    res.redirect("https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands");
 });
