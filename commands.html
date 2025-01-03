@@ -18,6 +18,7 @@
     
         <link rel="icon" href="static/avatar.png" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&text=arrow_drop_down">
     </head>
 
     <body>
@@ -32,7 +33,14 @@
                     <li class="nav-active">Commands</li>
                     <li><a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands" target="_blank">Invite</a></li>
                     <li><a href="support.html">Support</a></li>
-                    <li><a href="premium.html">Premium</a></li>
+                    <li id="top-nav-dropdown">
+                        <button>More</button>
+                        <span class="material-icons">arrow_drop_down</span>
+                    
+                        <div id="top-nav-dropdown-content">
+                            <a href="premium.html">Premium</a>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -61,6 +69,7 @@
                     <option value="Statistics"></option>
                     <option value="Text"></option>
                     <option value="Utility"></option>
+                    <option value="Premium"></option>
                 </datalist>
 
                 <button id="commands-search-button">
@@ -87,6 +96,8 @@
             window.onload = () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const fill = urlParams.get("fill");
+
+                setNavDropdown();
 
 
                 function searchCommands(input, searchButton) {
@@ -421,6 +432,7 @@
 
                         category = allCommands.filter(x => {
                             if (x.category == "creator") return false;
+                            if (input.toLowerCase() == "premium" && x.premium) return true;
 
                             var categoryLetters = x.category.split("");
                             var inputLetters = input.toLowerCase().split("");
@@ -439,7 +451,11 @@
                             header = document.createElement("p");
                             header.classList.add("commands-search-results-header");
 
-                            header.textContent = `Looking for the ${category.length} ${pluralize("command", category.length)} in the ${category[0].category} category?`;
+                            if (input.toLowerCase() != "premium") {
+                                header.textContent = `Looking for the ${category.length} ${pluralize("command", category.length)} in the ${category[0].category} category?`;
+                            } else {
+                                header.textContent = `Looking for the ${category.length} Premium ${pluralize("command", category.length)}?`;
+                            }
 
                             cardsContainer = document.createElement("div");
                             cardsContainer.classList.add("commands-search-results-cards-container");

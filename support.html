@@ -18,7 +18,7 @@
 
         <link rel="icon" href="static/avatar.png" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&text=arrow_drop_down,mail,comment,send,check_circle">
     </head>
 
     <body>
@@ -33,7 +33,14 @@
                     <li><a href="commands.html">Commands</a></li>
                     <li><a href="https://discord.com/api/oauth2/authorize?client_id=683053587215024213&scope=bot+applications.commands" target="_blank">Invite</a></li>
                     <li class="nav-active">Support</li>
-                    <li><a href="premium.html">Premium</a></li>
+                    <li id="top-nav-dropdown">
+                        <button>More</button>
+                        <span class="material-icons">arrow_drop_down</span>
+                    
+                        <div id="top-nav-dropdown-content">
+                            <a href="premium.html">Premium</a>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -202,6 +209,7 @@
 
         <script>
             window.onload = () => {
+                setNavDropdown();
                 setAccordions();
                 handleAnchors();
 
