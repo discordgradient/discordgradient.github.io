@@ -54,7 +54,7 @@
                         <h2 class="support-subtitle">Frequently Asked Questions</h2>
 
                         <div class="accordion-wrapper">
-                            <button class="accordion-button important-border">How do I file a support ticket?</button>
+                            <button class="accordion-button important-border" id="support-ticket-faq">How do I file a support ticket?</button>
                             <div class="accordion-panel">
                                 <p class="accordion-text">There are a few ways to file a support ticket for bug reports and usage feedback:</p>
                                 <ul>
@@ -86,12 +86,12 @@
                                 <p class="accordion-text">There are a few reasons why this may be happening:</p>
                                 <ol>
                                     <li>The bot is offline. You can tell if the bot's status icon is gray, or the bot has no activity in its profile.<br>
-                                    If this is not an issue with <a href="https://discordstatus.com" target="_blank">Discord's Gateway/API services</a>, please file a support ticket.</li>
+                                    If this is not an issue with <a href="https://discordstatus.com" target="_blank">Discord's Gateway/API services</a>, please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a>.</li>
                                     <li>The command is disabled, either by the development team or a moderator of your server. The category that the command is in
                                     may also be disabled.</li>
-                                    <li>The bot has run into an error while executing the command. Please file a support ticket if this happens.</li>
+                                    <li>The bot has run into an error while executing the command. Please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a> if this happens.</li>
                                     <li>The command does not exist, or the alias that you're using does not exist. If you think that an alias should be added,
-                                    please file a support ticket.</li>
+                                    please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a>.</li>
                                 </ol>
                             </div>
                             <hr>
@@ -105,7 +105,7 @@
                                     Gateway and message pings. For more information, go to <a href="https://discordstatus.com" target="_blank">Discord's status page</a>.</li>
                                     <li>You have run into a bug, or the bot has an internal error. You can file a support ticket using the <span class="code-text">ticket</span> command in the
                                     case of a bug, or check the bot's status page for more information in the case of an internal error.</li>
-                                    <li>The bot's host server is having a high latency. This usually will not happen, but please file a support ticket if this issue occurs.</li>
+                                    <li>The bot's host server is having a high latency. This usually will not happen, but please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a> if this issue occurs.</li>
                                 </ol>
                             </div>
                             <hr>
@@ -207,9 +207,14 @@
 
         <script>
             window.onload = () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const faq = urlParams.get("faq");
+
+
                 setNavDropdown();
                 setAccordions();
                 handleAnchors();
+
 
                 var textArea = document.getElementById("support-feedback-message");
                 var textIcon = document.getElementById("support-feedback-message-icon");
@@ -228,35 +233,60 @@
                     }
                 });
 
+
                 var discordWidget = document.getElementById("discord-widget");
                 discordWidget.src = discordWidget.getAttribute("data-src");
-            }
 
 
-            function supportFormSubmit() {
-                var supportForm = document.getElementById("support-feedback");
-                if (supportForm) supportForm.remove();
+                function supportFormSubmit() {
+                    var supportForm = document.getElementById("support-feedback");
+                    if (supportForm) supportForm.remove();
 
-                var feedbackSection = document.getElementById("send-feedback");
+                    var feedbackSection = document.getElementById("send-feedback");
 
-                var centeredDiv = document.createElement("div");
-                centeredDiv.classList.add("centered-div");
-                centeredDiv.setAttribute("id", "support-feedback-submitted");
+                    var centeredDiv = document.createElement("div");
+                    centeredDiv.classList.add("centered-div");
+                    centeredDiv.setAttribute("id", "support-feedback-submitted");
 
-                var submittedIcon = document.createElement("img");
-                submittedIcon.src = "static/material-icons/check_circle.svg";
-                submittedIcon.alt = "Submitted";
-                submittedIcon.draggable = false;
-                submittedIcon.style.width = "24px";
-                submittedIcon.style.height = "24px";
+                    var submittedIcon = document.createElement("img");
+                    submittedIcon.src = "static/material-icons/check_circle.svg";
+                    submittedIcon.alt = "Submitted";
+                    submittedIcon.draggable = false;
+                    submittedIcon.style.width = "24px";
+                    submittedIcon.style.height = "24px";
 
-                var submittedText = document.createElement("p");
-                submittedText.innerHTML = "Feedback submitted successfully. Thank you.";
-                submittedText.style.margin = "0";
+                    var submittedText = document.createElement("p");
+                    submittedText.innerHTML = "Feedback submitted successfully. Thank you.";
+                    submittedText.style.margin = "0";
 
-                centeredDiv.appendChild(submittedIcon);
-                centeredDiv.appendChild(submittedText);
-                feedbackSection.appendChild(centeredDiv);
+                    centeredDiv.appendChild(submittedIcon);
+                    centeredDiv.appendChild(submittedText);
+                    feedbackSection.appendChild(centeredDiv);
+                }
+
+
+                if (faq) {
+                    openFaq("support-ticket-faq");
+                    document.getElementById("support-ticket-faq").scrollIntoView();
+                    history.replaceState(null, null, window.location.pathname);
+                }
+
+                var supportTicketLinks = document.querySelectorAll(".support-ticket-link");
+                supportTicketLinks.forEach(link => {
+                    link.addEventListener("click", () => {
+                        openFaq("support-ticket-faq");
+                    });
+                });
+
+                function openFaq(faqId) {
+                    var faqButton = document.getElementById(faqId);
+                    if (faqButton) {
+                        var faqPanel = faqButton.nextElementSibling;
+                        if (faqPanel && !faqPanel.style.maxHeight) {
+                            faqButton.click();
+                        }
+                    }
+                }
             }
         </script>
     </body>

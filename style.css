@@ -243,6 +243,8 @@ body {
     animation-name: home-float-up;
     animation-duration: 1s;
     animation-fill-mode: forwards;
+    animation-delay: 0.1s;
+    will-change: opacity, transform;
 }
 
 .onload-fade-in {
@@ -404,7 +406,7 @@ body {
     padding: 0 18px;
     overflow: hidden;
     max-height: 0;
-    background-color: rgb(84, 84, 84);
+    background-color: #545454;
     color: white;
     font-family: "GG Sans Normal";
     font-size: 20px;
