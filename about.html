@@ -29,7 +29,6 @@
             <nav id="top-nav">
                 <ul>
                     <li class="nav-active">About</li>
-                    <li><a href="commands.html">Commands</a></li>
                     <li><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands" target="_blank">Invite</a></li>
                     <li><a href="support.html">Support</a></li>
                     <li id="top-nav-dropdown">
@@ -44,15 +43,27 @@
             </nav>
         </div>
 
-        <div id="about-wrapper">
-            <div id="about-selection-container">
-                <div id="onload-wrapper">
+        <div id="onload-wrapper">
+            <div id="about-switch-wrapper">
+                <p>Feature Explorer</p>
+                <label class="switch">
+                    <input type="checkbox" id="about-switch-input">
+                    <span class="slider"></span>
+                </label>
+                <p>Command Documentation</p>
+            </div>
+
+
+
+            <div id="about-wrapper">
+                <div id="about-selection-container">
                     <div id="about-selection-title">
-                        <h2 id="about-selection-title-header">Feature explorer</h2>
-                        <p id="about-selection-title-description">One bot, 12 different powerful categories to meet all of the needs of you and your server.</p>
-                        <p class="card-blue">📖  See detailed command docs <a href="commands.html">here</a>.</p>
+                        <h2 id="about-selection-title-header">Feature Explorer</h2>
+                        <p id="about-selection-title-description">One bot, 12 different powerful categories to meet all of the needs of you
+                            and your server.</p>
+                        <p class="card-blue">📖 See detailed command docs <a href="#" onclick="document.getElementById('about-switch-input').click();">here</a>.</p>
                     </div>
-            
+                    
                     <div id="about-selection-grid">
                         <div class="about-selection-button" id="about-selection-configuration">
                             <span class="about-selection-emoji">⚙️</span>
@@ -104,9 +115,47 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="about-category-view"></div>
             </div>
-            
-            <div id="about-category-view"></div>
+
+
+
+            <div id="commands-wrapper">
+                <div class="centered-div">
+                    <h1 id="commands-title">Command Documentation</h1>
+                </div>
+                
+                <div class="centered-div">
+                    <p id="commands-subtitle">Browse the entire list of Gradient's commands by category, or simply by searching.</p>
+                </div>
+                
+                <div id="commands-search-bar" class="centered-div">
+                    <input type="text" placeholder="Find a command by name, category, or description..." autocomplete="off"
+                        id="commands-search-input" list="commands-search-suggestions">
+                
+                    <datalist id="commands-search-suggestions">
+                        <option value="Configuration"></option>
+                        <option value="Economy"></option>
+                        <option value="Fun"></option>
+                        <option value="Games"></option>
+                        <option value="Images"></option>
+                        <option value="Moderation"></option>
+                        <option value="Music"></option>
+                        <option value="Sciences"></option>
+                        <option value="Statistics"></option>
+                        <option value="Text"></option>
+                        <option value="Utility"></option>
+                        <option value="Premium"></option>
+                    </datalist>
+                
+                    <button id="commands-search-button">
+                        <img src="static/material-icons/search.svg" alt="Search" draggable="false">
+                    </button>
+                </div>
+                
+                <div id="commands-search-results" class="centered-div"></div>
+            </div>
         </div>
 
         <footer>
@@ -119,11 +168,37 @@
 
 
         <script src="static/scripts/categoryConstants.js"></script>
+        <script src="static/scripts/allCommands.js"></script>
         <script src="static/scripts/helpers.js"></script>
 
         <script>
             window.onload = () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const fill = urlParams.get("fill");
+
                 setNavDropdown();
+
+
+                var aboutSwitchPos = 0;
+
+                function changePage(aboutSwitchPos) {
+                    switch (aboutSwitchPos) {
+                        case 0:
+                            document.getElementById("about-wrapper").style.display = "flex";
+                            document.getElementById("commands-wrapper").style.display = "none";
+                            break;
+
+                        case 1:
+                            document.getElementById("about-wrapper").style.display = "none";
+                            document.getElementById("commands-wrapper").style.display = "block";
+                            break;
+                    }
+                }
+
+                document.getElementById("about-switch-input").addEventListener("click", () => {
+                    aboutSwitchPos = (aboutSwitchPos == 0) ? 1 : 0;
+                    changePage(aboutSwitchPos);
+                });
 
 
                 // ABOUT SELECTION BUTTONS
@@ -269,8 +344,8 @@
                         }
                         discordButton = document.createElement("button");
                         discordButton.classList.add("discord-button");
-                        discordButton.innerHTML = "View " + foundView.name.toLowerCase() + " commands";
-                        discordButton.onclick = () => window.location.href = "commands.html?fill=" + foundView.name;
+                        discordButton.innerHTML = "View " + foundView.name + " commands";
+                        discordButton.onclick = () => window.location.href = "about.html?fill=" + foundView.name;
 
                         imageContainer = document.createElement("div");
                         imageContainer.classList.add("about-category-image-container");
@@ -300,14 +375,10 @@
                         }, 100);
 
                         for (i = 0; i < views.length; i++) {
-                            if (views[i].name.toLowerCase() == viewName) {
-                                views[i].button.style.backgroundColor = categoryConstants.find(x => x.category == views[i].name.toLowerCase()).color;
-                            } else {
+                            if (currentView != views[i].name.toLowerCase()) {
                                 views[i].button.style.backgroundColor = "#4e4e4e";
                             }
                         }
-
-                        // <p class="card-orange">ℹ️   Learn more about Gradient Premium <a href="premium.html">here</a>.</p>
                     } else {
                         currentView = undefined;
 
@@ -315,6 +386,687 @@
                             views[i].button.style.backgroundColor = "#4e4e4e";
                         }
                     }
+                }
+
+
+
+                function searchCommands(input, searchButton) {
+                    var idx, jdx, kdx;
+                    var exact, starts, contains, category, description, letters;
+                    var exactAlias, startsAlias, containsAlias, lettersAlias;
+                    var resultsContainer = document.getElementById("commands-search-results");
+                    var dropdown = document.createElement("div");
+                    dropdown.setAttribute("id", "commands-search-results-dropdown");
+                    var header, cardsContainer, showHideContainer;
+
+
+                    function generateCards(cardsContainer, filtered, hasDescription = false) {
+                        filtered.forEach(x => {
+                            var resultCard = document.createElement("div");
+                            resultCard.innerHTML = x.formatted || x.name;
+                            resultCard.classList.add("commands-search-results-card");
+                            resultCard.setAttribute("title", `category: ${x.category}`);
+                            if (x.nsfw) {
+                                resultCard.classList.add("blurred");
+                            } else {
+                                resultCard.addEventListener("click", () => {
+                                    openCard(allCommands.find(y => y.name == x.name));
+                                });
+                            }
+
+                            resultCard.style.backgroundColor = categoryConstants.find(y => y.category == x.category).color;
+
+                            if (!hasDescription) {
+                                cardsContainer.appendChild(resultCard);
+                            } else {
+                                var descriptionContainer = document.createElement("div");
+                                var resultCardDescription = document.createElement("div");
+
+                                descriptionContainer.classList.add("commands-search-results-description-container");
+
+                                resultCardDescription.innerHTML = x.description;
+                                resultCardDescription.classList.add("commands-search-results-card-description");
+
+                                if (x.nsfw) {
+                                    resultCard.classList.add("blurred");
+                                    resultCardDescription.classList.add("blurred");
+                                }
+
+                                descriptionContainer.appendChild(resultCard);
+                                descriptionContainer.appendChild(resultCardDescription);
+                                cardsContainer.appendChild(descriptionContainer);
+                            }
+                        });
+                    }
+
+
+                    function broadRecursion(inputText, givenText, offset, minimumMatches, mode) {
+                        var i, j = 0, matches = [];
+
+                        for (i = 0; i < givenText.length && j < inputText.length; i++) {
+                            switch (mode) {
+                                case "letters":
+                                    if (givenText[i] == inputText[j]) {
+                                        j++;
+                                        if (offset > 0) {
+                                            matches.push(i + offset - 1);
+                                        } else {
+                                            matches.push(i);
+                                        }
+                                    }
+
+                                    break;
+
+                                case "words":
+                                    if (givenText[i] == inputText[j] || givenText[i] == inputText[j] + "s" || givenText[i] + "s" == inputText[j]) {
+                                        j++;
+                                        if (offset > 0) {
+                                            matches.push(i + offset - 1);
+                                        } else {
+                                            matches.push(i);
+                                        }
+                                    }
+
+                                    break;
+                            }
+                        }
+
+                        if (j < minimumMatches && inputText.length > minimumMatches) {
+                            return broadRecursion(inputText.slice(1), offset + 1, minimumMatches, mode);
+                        } else {
+                            return matches;
+                        }
+                    }
+
+
+                    function stripBold(input) {
+                        return input.replace(/<b>|<\/b>/g, "");
+                    }
+
+
+                    if (input.length == 1) {
+                        starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
+                        starts.forEach(x => x.formatted = "<b>" + x.name[0] + "</b>" + x.name.slice(1));
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || starts.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase().startsWith(input.toLowerCase())) {
+                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx][0] + "</b>" + allCommands[idx].aliases[jdx].slice(1), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        starts.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
+
+                        header = document.createElement("p");
+                        header.classList.add("commands-search-results-header");
+
+                        if (starts.length > 0) {
+                            header.textContent = `${starts.length} ${pluralize("command", starts.length)} starting with "${input}" found:`;
+
+                            cardsContainer = document.createElement("div");
+                            cardsContainer.classList.add("commands-search-results-cards-container");
+
+                            generateCards(cardsContainer, starts);
+
+                            dropdown.appendChild(header);
+                            dropdown.appendChild(cardsContainer);
+                        } else {
+                            header.textContent = `We searched far and wide for ${input}, but no matching commands were found. Try searching for something else.`;
+
+                            dropdown.appendChild(header);
+                        }
+
+                        resultsContainer.appendChild(dropdown);
+
+                        return (starts.length > 0) ? "starts" : "none";
+                    } else {
+                        exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category, nsfw: x.nsfw }));
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase() == input.toLowerCase()) {
+                                    exact.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx] + "</b>", category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        exact.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
+
+                        if (exact.length > 0) {
+                            header = document.createElement("p");
+                            header.classList.add("commands-search-results-header");
+
+                            header.textContent = `Exact match:`;
+
+                            cardsContainer = document.createElement("div");
+                            cardsContainer.classList.add("commands-search-results-cards-container");
+
+                            generateCards(cardsContainer, exact);
+
+                            dropdown.appendChild(header);
+                            dropdown.appendChild(cardsContainer);
+                        }
+
+                        exact = new Set(exact.map(x => x.name));
+
+                        starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
+                        starts.forEach(x => x.formatted = "<b>" + x.name.slice(0, input.length) + "</b>" + x.name.slice(input.length));
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.has(allCommands[idx].name) || starts.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase().startsWith(input.toLowerCase())) {
+                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx].slice(0, input.length) + "</b>" + allCommands[idx].aliases[jdx].slice(input.length), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        starts.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
+
+                        if (starts.length > 0) {
+                            header = document.createElement("p");
+                            header.classList.add("commands-search-results-header");
+
+                            header.textContent = `${starts.length} ${pluralize("command", starts.length)} starting with "${input}" found:`;
+
+                            cardsContainer = document.createElement("div");
+                            cardsContainer.classList.add("commands-search-results-cards-container");
+
+                            generateCards(cardsContainer, starts);
+
+                            dropdown.appendChild(header);
+                            dropdown.appendChild(cardsContainer);
+                        }
+
+                        starts = new Set(starts.map(x => x.name));
+
+                        contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
+                        contains.forEach(x => {
+                            var name = x.name.toLowerCase();
+                            var inputLower = input.toLowerCase();
+                            var formatted = "";
+                            var i;
+
+                            for (i = 0; i < name.length; i++) {
+                                if (inputLower.includes(name[i])) {
+                                    formatted += `<b>${name[i]}</b>`;
+                                } else {
+                                    formatted += name[i];
+                                }
+                            }
+
+                            x.formatted = formatted;
+                        });
+
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                if (allCommands[idx].aliases[jdx].toLowerCase().includes(input.toLowerCase()) || input.toLowerCase().includes(allCommands[idx].aliases[jdx])) {
+                                    var name = allCommands[idx].aliases[jdx].toLowerCase();
+                                    var inputLower = input.toLowerCase();
+                                    var formatted = "";
+                                    var i;
+
+                                    for (i = 0; i < name.length; i++) {
+                                        if (inputLower.includes(name[i])) {
+                                            formatted += `<b>${name[i]}</b>`;
+                                        } else {
+                                            formatted += name[i];
+                                        }
+                                    }
+
+                                    contains.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+
+                        contains.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
+                        
+                        if (contains.length > 0) {
+                            header = document.createElement("p");
+                            header.classList.add("commands-search-results-header");
+
+                            header.textContent = `${contains.length} command ${pluralize("name", contains.length)} containing "${input}" found:`;
+
+                            cardsContainer = document.createElement("div");
+                            cardsContainer.classList.add("commands-search-results-cards-container");
+
+                            generateCards(cardsContainer, contains);
+
+                            dropdown.appendChild(header);
+                            dropdown.appendChild(cardsContainer);
+                        }
+
+                        contains = new Set(contains.map(x => x.name));
+
+                        description = [];
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.has(allCommands[idx].name) || allCommands[idx].category == "creator") continue;
+
+                            var descriptionOriginal = allCommands[idx].description.replace(/[\n\\/]+/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                            var descriptionWords = allCommands[idx].description.toLowerCase().replace(/[\n\\/]+/g, " ").replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                            var inputWords = input.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, "").split(" ");
+                            var matches = broadRecursion(inputWords, descriptionWords, 0, 2, "words");
+                            var formatted = [];
+
+                            if (matches.length >= 2) {
+                                for (jdx = 0; jdx < descriptionOriginal.length; jdx++) {
+                                    if (matches.includes(jdx)) {
+                                        formatted.push(`<b>${descriptionOriginal[jdx]}</b>`);
+                                    } else {
+                                        formatted.push(descriptionOriginal[jdx]);
+                                    }
+                                }
+
+                                description.push({ name: allCommands[idx].name, description: formatted.join(" "), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, matchCount: matches.length });
+                            }
+                        }
+                        description.sort((a, b) => {
+                            if (a.matchCount > b.matchCount) {
+                                return -1;
+                            } else if (a.matchCount < b.matchCount) {
+                                return 1;
+                            } else {
+                                return a.name.localeCompare(b.name);
+                            }
+                        });
+
+                        if (description.length > 0) {
+                            header = document.createElement("p");
+                            header.classList.add("commands-search-results-header");
+
+                            header.textContent = `${description.length} ${pluralize("command", description.length)} with containing the words "${input}" in their description found:`;
+
+                            cardsContainer = document.createElement("div");
+                            cardsContainer.classList.add("commands-search-results-cards-container-left");
+                            // cardsContainer.style.display = "none";
+
+                            generateCards(cardsContainer, description, true);
+
+                            /*
+                            showHideContainer = document.createElement("div");
+                            showHideContainer.classList.add("commands-search-results-show-hide-container");
+                            showHideContainer.textContent = "Show";
+                            showHideContainer.addEventListener("click", () => {
+                                switch (showHideContainer.textContent) {
+                                    case "Show":
+                                        showHideContainer.textContent = "Hide";
+                                        cardsContainer.style.display = "flex";
+                                        break;
+    
+                                    case "Hide":
+                                        showHideContainer.textContent = "Show";
+                                        cardsContainer.style.display = "none";
+                                        break;
+                                }
+                            });
+                            */
+
+                            dropdown.appendChild(header);
+                            // dropdown.appendChild(showHideContainer);
+                            dropdown.appendChild(cardsContainer);
+                        }
+
+                        description = new Set(description.map(x => x.name));
+
+                        category = allCommands.filter(x => {
+                            if (x.category == "creator") return false;
+                            if (input.toLowerCase() == "premium" && x.premium) return true;
+
+                            var categoryLetters = x.category.split("");
+                            var inputLetters = input.toLowerCase().split("");
+                            var i;
+
+                            if (inputLetters.length > categoryLetters.length) return false;
+
+                            for (i = 0; i < categoryLetters.length / 2; i++) {
+                                if (inputLetters[i] != categoryLetters[i]) return false;
+                            }
+
+                            return true;
+                        }).map(x => ({ name: x.name, category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
+
+                        if (category.length > 0) {
+                            header = document.createElement("p");
+                            header.classList.add("commands-search-results-header");
+
+                            if (input.toLowerCase() != "premium") {
+                                header.textContent = `Looking for the ${category.length} ${pluralize("command", category.length)} in the ${titleCase(category[0].category)} category?`;
+                            } else {
+                                header.textContent = `Looking for the ${category.length} Premium ${pluralize("command", category.length)}?`;
+                            }
+
+                            cardsContainer = document.createElement("div");
+                            cardsContainer.classList.add("commands-search-results-cards-container");
+
+                            generateCards(cardsContainer, category);
+
+                            dropdown.appendChild(header);
+                            dropdown.appendChild(cardsContainer);
+                        }
+
+                        category = new Set(category.map(x => x.name));
+
+                        letters = [];
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.has(allCommands[idx].name) || category.has(allCommands[idx].name) || description.has(allCommands[idx].name) || allCommands[idx].category == "creator") continue;
+
+                            var nameLetters = allCommands[idx].name.split("");
+                            var inputLetters = input.toLowerCase().split("");
+                            var matches = broadRecursion(inputLetters, nameLetters, 0, 3, "letters");
+                            var formatted = "";
+
+                            if (matches.length >= 3) {
+                                for (jdx = 0; jdx < nameLetters.length; jdx++) {
+                                    if (matches.includes(jdx)) {
+                                        formatted += `<b>${nameLetters[jdx]}</b>`;
+                                    } else {
+                                        formatted += nameLetters[jdx];
+                                    }
+                                }
+
+                                letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                            }
+                        }
+                        for (idx = 0; idx < allCommands.length; idx++) {
+                            if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.has(allCommands[idx].name) || category.has(allCommands[idx].name) || description.has(allCommands[idx].name) || letters.find(x => x.name == allCommands[idx].name)) continue;
+
+                            for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
+                                var nameLetters = allCommands[idx].aliases[jdx].split("");
+                                var inputLetters = input.toLowerCase().split("");
+                                var matches = broadRecursion(inputLetters, nameLetters, 0, 3, "letters");
+                                var formatted = "";
+
+                                if (matches.length >= 3) {
+                                    for (kdx = 0; kdx < nameLetters.length; kdx++) {
+                                        if (matches.includes(kdx)) {
+                                            formatted += `<b>${nameLetters[kdx]}</b>`;
+                                        } else {
+                                            formatted += nameLetters[kdx];
+                                        }
+                                    }
+
+                                    letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                }
+                            }
+                        }
+                        letters.sort((a, b) => stripBold(a.formatted).localeCompare(stripBold(b.formatted)));
+
+                        if (letters.length > 0) {
+                            header = document.createElement("p");
+                            header.classList.add("commands-search-results-header");
+
+                            header.textContent = `${letters.length} ${pluralize("command", letters.length)} containing 3 or more letters from "${input}" found:`;
+
+                            cardsContainer = document.createElement("div");
+                            cardsContainer.classList.add("commands-search-results-cards-container");
+                            cardsContainer.style.display = "none";
+
+                            generateCards(cardsContainer, letters);
+
+                            showHideContainer = document.createElement("div");
+                            showHideContainer.classList.add("commands-search-results-show-hide-container");
+                            showHideContainer.textContent = "Show";
+                            showHideContainer.addEventListener("click", () => {
+                                switch (showHideContainer.textContent) {
+                                    case "Show":
+                                        showHideContainer.textContent = "Hide";
+                                        cardsContainer.style.display = "flex";
+                                        break;
+
+                                    case "Hide":
+                                        showHideContainer.textContent = "Show";
+                                        cardsContainer.style.display = "none";
+                                        break;
+                                }
+                            });
+
+                            dropdown.appendChild(header);
+                            dropdown.appendChild(showHideContainer);
+                            dropdown.appendChild(cardsContainer);
+                        }
+
+                        letters = new Set(letters.map(x => x.name));
+
+                        if (exact.size == 0 && starts.size == 0 && contains.size == 0 && description.size == 0 && category.size == 0 && letters.size == 0) {
+                            header = document.createElement("p");
+                            header.classList.add("commands-search-results-header");
+
+                            header.textContent = `We searched far and wide for "${input}", but no matching commands were found. Try searching for something else.`;
+
+                            dropdown.appendChild(header);
+                        }
+
+                        resultsContainer.appendChild(dropdown);
+
+                        return (exact.size > 0) ? "exact" : (starts.size > 0) ? "starts" : (contains.size > 0) ? "contains" : (description.size > 0) ? "description" : (category.size > 0) ? "category" : (letters.size > 0) ? "letters" : "none";
+                    }
+                }
+
+
+                function openCard(command) {
+                    var i;
+                    var overlay = document.createElement("div");
+                    var overlayInfo = document.createElement("div");
+                    var overlayHeader = document.createElement("div");
+                    var commandTitle = document.createElement("p");
+                    var commandTags = document.createElement("div");
+                    var categoryTag = document.createElement("div");
+                    var infoTable = document.createElement("table");
+                    var closeButton = document.createElement("button");
+                    var closeIcon = document.createElement("img");
+
+                    overlay.setAttribute("id", "commands-search-results-overlay");
+                    overlayInfo.setAttribute("id", "commands-search-results-overlay-info");
+
+                    overlayHeader.setAttribute("id", "commands-search-results-overlay-header");
+
+                    commandTitle.setAttribute("id", "commands-search-results-overlay-title");
+                    commandTitle.innerHTML = `<b>${command.name}</b>`;
+
+                    if (command.aliases.length > 0) {
+                        var commandAliases = document.createElement("div");
+                        var aliasTag = document.createElement("div");
+                        var aliasList = document.createElement("div");
+
+                        commandAliases.setAttribute("id", "commands-search-results-overlay-aliases-container");
+
+                        aliasTag.classList.add("commands-search-results-overlay-tag");
+                        aliasTag.style.backgroundColor = "#d1d1d1";
+                        aliasTag.style.color = "#4e4e4e";
+                        aliasTag.innerHTML = "💡 A.K.A.";
+
+                        aliasList.setAttribute("id", "commands-search-results-overlay-aliases");
+                        aliasList.innerHTML = command.aliases.join(", ");
+
+                        commandAliases.appendChild(aliasTag);
+                        commandAliases.appendChild(aliasList);
+                    }
+
+                    commandTags.setAttribute("id", "commands-search-results-overlay-tags-container");
+
+                    categoryTag.classList.add("commands-search-results-overlay-tag");
+                    categoryTag.style.backgroundColor = categoryConstants.find(x => x.category == command.category).color;
+                    categoryTag.style.color = categoryConstants.find(x => x.category == command.category).textColor;
+                    categoryTag.innerHTML = `${categoryConstants.find(x => x.category == command.category).emoji} ${command.category.charAt(0).toUpperCase()}${command.category.slice(1)}`;
+
+                    commandTags.appendChild(categoryTag);
+
+                    if (command.premium) {
+                        var premiumTag = document.createElement("div");
+                        premiumTag.classList.add("commands-search-results-overlay-tag");
+                        premiumTag.style.backgroundColor = "#ffb700";
+                        premiumTag.style.color = "#4e4e4e";
+                        premiumTag.innerHTML = "⭐ Premium";
+
+                        commandTags.appendChild(premiumTag);
+                    }
+
+                    infoTable.setAttribute("id", "commands-search-results-overlay-table");
+                    infoTable.style.borderCollapse = "collapse";
+                    infoTable.style.border = "1px solid #cacaca";
+                    var tableData = [
+                        { title: "Description", content: command.description.replace(/\n/g, "<br>") },
+                        { title: "Usage", content: `.${command.usage.split("\n").join("<br>.")}` },
+                        { title: "Examples", content: `.${command.example.split("\n").join("<br>.")}` },
+                        { title: "Cooldown", content: command.cooldown },
+                    ];
+                    for (i = 0; i < tableData.length; i++) {
+                        var row = document.createElement("tr");
+
+                        var title = document.createElement("td");
+                        title.classList.add("commands-search-results-overlay-table-title");
+                        title.textContent = tableData[i].title;
+
+                        var content = document.createElement("td");
+                        content.classList.add("commands-search-results-overlay-table-content");
+                        content.innerHTML = tableData[i].content;
+
+                        row.appendChild(title);
+                        row.appendChild(content);
+                        infoTable.appendChild(row);
+                    }
+                    var cells = infoTable.getElementsByTagName("td");
+                    for (i = 0; i < cells.length; i++) {
+                        cells[i].style.border = "1px solid #cacaca";
+                        cells[i].style.paddingLeft = "20px";
+                        cells[i].style.paddingRight = "20px";
+                        cells[i].style.paddingTop = "10px";
+                        cells[i].style.paddingBottom = "10px";
+                    }
+
+                    closeButton.setAttribute("id", "commands-search-results-overlay-close");
+                    closeIcon.alt = "Close";
+                    closeIcon.src = "static/material-icons/close.svg";
+                    closeButton.appendChild(closeIcon);
+
+                    overlayHeader.appendChild(commandTitle);
+                    if (command.aliases.length > 0) overlayHeader.appendChild(commandAliases);
+                    overlayHeader.appendChild(commandTags);
+                    overlayInfo.appendChild(closeButton);
+                    overlayInfo.appendChild(overlayHeader);
+                    overlayInfo.appendChild(infoTable);
+                    overlay.appendChild(overlayInfo);
+                    document.body.appendChild(overlay);
+
+                    overlay.addEventListener("click", () => {
+                        overlay.remove();
+                    });
+                    closeButton.onclick = () => {
+                        overlay.remove();
+                    }
+                    overlayInfo.addEventListener("click", event => {
+                        event.stopPropagation();
+                    });
+                }
+
+
+                var timeout, searchStatus;
+
+                function onInput() {
+                    clearTimeout(timeout);
+
+                    const searchButton = document.getElementById("commands-search-button");
+
+                    var searchIcon = searchButton.querySelector("img");
+                    if (searchIcon) {
+                        searchButton.removeChild(searchIcon);
+                    }
+
+                    var searchSpinner = document.getElementById("commands-search-loading");
+                    if (!searchSpinner) {
+                        searchSpinner = document.createElement("div");
+                        searchSpinner.setAttribute("id", "commands-search-loading");
+
+                        searchButton.appendChild(searchSpinner);
+
+                        searchButton.style.backgroundColor = "#4e4e4e";
+                    }
+
+                    var previousResult = document.getElementById("commands-search-results-dropdown");
+                    if (previousResult) previousResult.remove();
+
+                    var searchInput = document.getElementById("commands-search-input");
+                    if (searchInput.value.length > 0) {
+                        searchStatus = searchCommands(searchInput.value, searchButton);
+                    }
+
+                    timeout = setTimeout(() => {
+                        searchSpinner.remove();
+
+                        searchInput = document.getElementById("commands-search-input");
+
+                        searchIcon = document.createElement("img");
+                        searchIcon.alt = "Search";
+
+                        if (searchInput.value.length > 0) {
+                            switch (searchStatus) {
+                                case "exact":
+                                    searchIcon.src = "static/material-icons/exact.svg";
+                                    searchButton.style.backgroundColor = "#21851d";
+                                    break;
+
+                                case "starts":
+                                    searchIcon.src = "static/material-icons/start.svg";
+                                    searchButton.style.backgroundColor = "#21851d";
+                                    break;
+
+                                case "contains":
+                                    searchIcon.src = "static/material-icons/contains.svg";
+                                    searchButton.style.backgroundColor = "#ebb52f";
+                                    break;
+
+                                case "description":
+                                    searchIcon.src = "static/material-icons/description.svg";
+                                    searchButton.style.backgroundColor = "#8bb548";
+                                    break;
+
+                                case "category":
+                                    searchIcon.src = "static/material-icons/category.svg";
+                                    searchButton.style.backgroundColor = "#3756c4";
+                                    break;
+
+                                case "letters":
+                                    searchIcon.src = "static/material-icons/letters.svg";
+                                    searchButton.style.backgroundColor = "#c77834";
+                                    break;
+
+                                case "none":
+                                    searchIcon.src = "static/material-icons/unknown.svg";
+                                    searchButton.style.backgroundColor = "#4e4e4e";
+                                    break;
+                            }
+                        } else {
+                            searchIcon.src = "static/material-icons/search.svg";
+                            searchButton.style.backgroundColor = "#4e4e4e";
+                        }
+
+                        searchButton.appendChild(searchIcon);
+                    }, 1000);
+                }
+
+                document.getElementById("commands-search-bar").addEventListener("input", onInput);
+
+                if (fill) {
+                    document.getElementById("about-switch-input").click();
+                    document.getElementById("commands-search-input").value = fill;
+                    history.replaceState(null, null, window.location.pathname);
+                    onInput();
+                } else {
+                    document.getElementById("about-wrapper").style.display = "flex";
+                    document.getElementById("commands-wrapper").style.display = "none";
                 }
             }
         </script>
