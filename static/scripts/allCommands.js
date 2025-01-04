@@ -506,3 +506,5 @@ const allCommands = [
     { name: "logoff", description: "Logs the bot off from Discord's Gateway. Creator use only.", aliases: ["log-off", "logout", "log-out"], usage: "logoff", example: "logoff", cooldown: "2 secs", premium: false, category: "creator", disable: false, nsfw: false },
     { name: "restart", description: "Reconnects the bot to Discord's Gateway. Creator use only.", aliases: ["reboot"], usage: "restart", example: "restart", cooldown: "2 secs", premium: false, category: "creator", disable: false, nsfw: false },
 ];
+
+console.log(allCommands.slice(400).map(x => ({ name: x.name, category: x.category, nsfw: x.nsfw })));

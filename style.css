@@ -185,6 +185,9 @@ body {
     color: white;
     font-family: "Source Code Pro Normal";
     font-size: inherit;
+    padding: 0 5px;
+    border: none;
+    border-radius: 5px;
 }
 
 #onload-wrapper {
@@ -567,6 +570,10 @@ body {
 }
 
 #home-commands-count {
+    background-color: black;
+    padding: 0 5px;
+    border: none;
+    border-radius: 5px;
     font-family: "Source Code Pro Normal";
 }
 
@@ -585,11 +592,8 @@ body {
 
 #home-buttons {
     margin-top: 10px;
-}
-
-.home-button-separator {
-    margin-left: 20px;
-    margin-right: 20px;
+    column-gap: 40px;
+    row-gap: 20px;
 }
 
 #home-invite {
@@ -1210,6 +1214,10 @@ body {
     }
 
     #home-commands-wrapper {
+        flex-direction: column;
+    }
+
+    #home-buttons {
         flex-direction: column;
     }
 

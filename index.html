@@ -80,8 +80,6 @@
                         </button>
                     </a>
             
-                    <div class="home-button-separator"></div>
-            
                     <a href="about.html">
                         <button id="home-more-info">See features</button>
                     </a>
@@ -99,7 +97,7 @@
 
 
         <script src="static/scripts/categoryConstants.js"></script>
-        <script src="static/scripts/commandConstants.js"></script>
+        <script src="static/scripts/flattenedCommands.js"></script>
         <script src="static/scripts/helpers.js"></script>
 
         <script>
@@ -213,13 +211,13 @@
                     var commands = 0;
 
                     var countInterval = setInterval(() => {
-                        if (allCommands.length <= commands) {
+                        if (flattenedCommands.length <= commands) {
                             clearInterval(countInterval);
                             displayCommands(true);
-                        } else if (allCommands.length - commands >= 10) {
+                        } else if (flattenedCommands.length - commands >= 10) {
                             commands += 10;
                             commandCounter.innerHTML = commands;
-                        } else if (allCommands.length - commands < 10) {
+                        } else if (flattenedCommands.length - commands < 10) {
                             commands++;
                             commandCounter.innerHTML = commands;
                         }
@@ -234,9 +232,9 @@
                 if (first) {
                     currentCommand = { name: ", including" };
                 } else {
-                    var currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
+                    currentCommand = flattenedCommands[Math.floor(Math.random() * flattenedCommands.length)];
                     while (currentCommand.nsfw || currentCommand.category == "creator") {
-                        currentCommand = allCommands[Math.floor(Math.random() * allCommands.length)];
+                        currentCommand = flattenedCommands[Math.floor(Math.random() * flattenedCommands.length)];
                     }
                 }
 
