@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="description" content="The one Discord bot to do it all, with 12 categories and 450+ commands.">
+        
+        <title>Gradient Discord Bot | Acknowledgements</title>
+        
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZSMY4F19RP"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-ZSMY4F19RP');
+        </script>
+        
+        <link rel="icon" href="static/avatar.webp" type="image/x-icon">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div id="nav-wrapper">
+            <a href="index.html">
+                <img src="static/avatar.webp" alt="Gradient Avatar" id="nav-avatar">
+            </a>
+        
+            <nav id="top-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands" target="_blank">Invite</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li id="top-nav-dropdown">
+                        <button>More</button>
+                        <img src="static/material-icons/dropdown.svg" alt="Dropdown" id="top-nav-dropdown-icon"
+                            draggable="false">
+        
+                        <div id="top-nav-dropdown-content">
+                            <p>Acknowledgements</p>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="onload-wrapper">
+            <div class="centered-div">
+                <h1 id="policy-title">Acknowledgements</h1>
+            </div>
+
+            <div id="content-and-on-this-page-wrapper">
+                <div id="content-wrapper">
+                    <p class="updated-date">A big thank-you to all the people and technologies that made this project possible.</p>
+
+                    <hr class="content-separator">
+
+                    <h3 class="policy-header" id="people">People</h3>
+                    <p class="policy-details">Contributors:</p>
+                    <ul class="policy-details">
+                        <li>notkostis</li>
+                        <li>aggammer</li>
+                    </ul>
+
+                    <hr class="content-separator">
+
+                    <h3 class="policy-header" id="engines">Engines</h3>
+                    <ul class="policy-details">
+                        <li><a href="https://nodejs.org/en" target="_blank">Node.js</a></li>
+                        <li><a href="https://npmjs.com" target="_blank">NPM</a></li>
+                    </ul>
+
+                    <hr class="content-separator">
+
+                    <h3 class="policy-header" id="libraries">Open Source Libraries</h3>
+                    <p class="policy-details">More details about all libraries used can be found on <a href="https://npmjs.com" target="_blank">NPM</a>.</p>
+                    <p class="policy-details">Discord API:</p>
+                    <ul class="policy-details">
+                        <li>@wozardlozard/discord.js</li>
+                    </ul>
+                    <p class="policy-details">Database:</p>
+                    <ul class="policy-details">
+                        <li>mongoose</li>
+                        <li>mongoose-encryption</li>
+                    </ul>
+                    <p class="policy-details">Image manipulation:</p>
+                    <ul class="policy-details">
+                        <li>canvas</li>
+                        <li>qrcode</li>
+                        <li>@wozardlozard/colorthief</li>
+                    </ul>
+                    <p class="policy-details">Web fetching:</p>
+                    <ul class="policy-details">
+                        <li>cheerio</li>
+                        <li>node-spotify-api</li>
+                        <li>node-superfetch</li>
+                        <li>twisted</li>
+                    </ul>
+                    <p class="policy-details">Numerical calculation:</p>
+                    <ul class="policy-details">
+                        <li>decimal.js</li>
+                        <li>mathjs</li>
+                        <li>nerdamer</li>
+                    </ul>
+                    <p class="policy-details">Music playback:</p>
+                    <ul class="policy-details">
+                        <li>libsodium-wrappers</li>
+                        <li>prism-media</li>
+                        <li>ytpl</li>
+                        <li>ytsr</li>
+                        <li>@discordjs/opus</li>
+                        <li>@discordjs/voice</li>
+                        <li>@distube/ytdl-core</li>
+                    </ul>
+                    <p class="policy-details">Miscellaneous:</p>
+                    <ul class="policy-details">
+                        <li>dotenv</li>
+                        <li>eslint</li>
+                    </ul>
+                </div>
+
+                <div id="on-this-page-wrapper">
+                    <p id="on-this-page-title">On this page</p>
+                    <ul>
+                        <li><a href="#people">People</a></li>
+                        <li><a href="#engines">Engines</a></li>
+                        <li><a href="#libraries">Open Source Libraries</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="static/scripts/helpers.js"></script>
+
+        <script>
+            window.onload = () => {
+                setNavDropdown();
+                handleAnchors();
+            }
+        </script>
+    </body>
+</html>

@@ -151,7 +151,8 @@ body {
     text-decoration: underline !important;
 }
 
-#top-nav-dropdown-content>* {
+#top-nav-dropdown-content > * {
+    margin: 0;
     white-space: nowrap;
 }
 
