@@ -67,15 +67,41 @@ function setNavDropdown() {
             navContent.style.display = null;
             navDropdownArea.classList.remove("nav-active");
         } else {
-            navContent.style.display = "block";
+            navContent.style.display = "inline-block";
             navDropdownArea.classList.add("nav-active");
+
+            if (window.innerWidth > 650) {
+                navContent.style.position = "absolute";
+                navContent.style.float = null;
+                navContent.style.right = "40px";
+                navContent.style.zIndex = "1";
+            } else {
+                navContent.style.position = "relative";
+                navContent.style.float = "right";
+                navContent.style.right = null;
+                navContent.style.zIndex = null;
+            }
         }
     });
 
     document.addEventListener("click", () => {
-        if (navContent.style.display == "block") {
+        if (navContent.style.display) {
             navContent.style.display = null;
             navDropdownArea.classList.remove("nav-active");
         }
     });
+
+
+    var navMobile = document.getElementById("top-nav-mobile");
+    var navUl = document.getElementById("top-nav-list");
+
+    if (navMobile) {
+        navMobile.addEventListener("click", () => {
+            if (!navUl.classList.contains("top-nav-mobile-active")) {
+                navUl.classList.add("top-nav-mobile-active");
+            } else {
+                navUl.classList.remove("top-nav-mobile-active");
+            }
+        });
+    }
 }

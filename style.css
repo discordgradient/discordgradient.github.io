@@ -72,41 +72,46 @@ body {
 /* TOP NAV BAR */
 
 #nav-wrapper {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 0;
+    color: white;
+    font-family: "GG Sans Normal";
+}
+
+#nav-main-row {
     display: flex;
-    margin-top: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #nav-avatar {
-    display: inline-block;
     width: 40px;
     height: 40px;
-    margin-left: 40px;
-    margin-right: 80px;
     cursor: pointer;
+    vertical-align: middle;
 }
 
-#top-nav {
-    display: inline-block;
-    text-align: right;
-    justify-content: space-between;
-    width: 90%;
-    z-index: 1;
-}
-
-#top-nav ul {
+#top-nav-list {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: row;
+    column-gap: 40px;
 }
 
-#top-nav li {
-    display: inline-block;
-    margin-right: 40px;
+.top-nav-item {
+    display: block;
     position: relative;
     cursor: pointer;
-    color: white;
-    font-family: "GG Sans Normal";
     font-size: 25px;
+}
+
+#top-nav-mobile {
+    cursor: pointer;
 }
 
 #top-nav a, #top-nav button {
@@ -134,21 +139,16 @@ body {
 
 #top-nav-dropdown-content {
     display: none;
-    position: absolute;
-    right: 0;
     background-color: #2c2c34;
     border: 1px solid #cacaca;
     font-size: 18px;
-    text-align: left;
     border-radius: 5px;
     padding: 10px;
     margin-top: 10px;
-    z-index: 1;
 }
 
 #top-nav-dropdown-content a {
     color: #7edbff;
-    text-decoration: underline !important;
 }
 
 #top-nav-dropdown-content > * {
@@ -156,7 +156,11 @@ body {
     white-space: nowrap;
 }
 
-#top-nav li::after {
+#top-nav-mobile {
+    display: none;
+}
+
+.top-nav-item::after {
     content: "";
     position: absolute;
     left: 0;
@@ -169,7 +173,7 @@ body {
     transition: transform 0.3s ease;
 }
 
-#top-nav li.nav-active::after, #top-nav li:hover::after {
+.top-nav-item.nav-active::after, .top-nav-item:hover::after {
     transform: scaleX(1);
 }
 
@@ -1276,9 +1280,32 @@ body {
 
 
 
-/* SCREEN SIZE ADJUSTMENTS */
+/* MOBILE SCREEN SIZE ADJUSTMENTS */
 
 @media (max-width: 650px) {
+    .top-nav-item {
+        display: none;
+    }
+
+    #top-nav-mobile {
+        display: flex;
+        order: -1;
+    }
+
+    #top-nav-list.top-nav-mobile-active {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    #top-nav-list.top-nav-mobile-active .top-nav-item {
+        display: block;
+    }
+
+    #top-nav-list.top-nav-mobile-active #nav-wrapper {
+        align-items: flex-start;
+    }
+
     #home-title {
         flex-direction: column;
     }
