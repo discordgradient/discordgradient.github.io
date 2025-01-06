@@ -340,10 +340,10 @@
                         categoryText.classList.add("about-category-text");
                         categoryTitle = document.createElement("h2");
                         categoryTitle.classList.add("about-category-title");
-                        categoryTitle.innerHTML = foundView.name;
+                        categoryTitle.textContent = foundView.name;
                         categoryDescription = document.createElement("p");
                         categoryDescription.classList.add("about-category-description");
-                        categoryDescription.innerHTML = foundView.description;
+                        categoryDescription.textContent = foundView.description;
                         if (foundView.card) {
                             categoryCard = document.createElement("p");
                             categoryCard.classList.add("card-orange");
@@ -351,7 +351,7 @@
                         }
                         discordButton = document.createElement("button");
                         discordButton.classList.add("discord-button");
-                        discordButton.innerHTML = "View " + foundView.name + " commands";
+                        discordButton.textContent = "View " + foundView.name + " commands";
                         discordButton.onclick = () => window.location.href = "about.html?fill=" + foundView.name;
 
                         imageContainer = document.createElement("div");
@@ -602,41 +602,25 @@
 
                         contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
                         contains.forEach(x => {
-                            var name = x.name.toLowerCase();
-                            var inputLower = input.toLowerCase();
-                            var formatted = "";
-                            var i;
-
-                            for (i = 0; i < name.length; i++) {
-                                if (inputLower.includes(name[i])) {
-                                    formatted += `<b>${name[i]}</b>`;
-                                } else {
-                                    formatted += name[i];
-                                }
+                            if (input.toLowerCase().includes(x.name)) {
+                                x.formatted = `<b>${x.name}</b>`;
+                            } else {
+                                var inputLower = input.toLowerCase();
+                                x.formatted = x.name.replaceAll(inputLower, `<b>${inputLower}</b>`);
                             }
-
-                            x.formatted = formatted;
                         });
 
                         for (idx = 0; idx < allCommands.length; idx++) {
                             if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.has(allCommands[idx].name) || starts.has(allCommands[idx].name) || contains.find(x => x.name == allCommands[idx].name)) continue;
 
                             for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
-                                if (allCommands[idx].aliases[jdx].toLowerCase().includes(input.toLowerCase()) || input.toLowerCase().includes(allCommands[idx].aliases[jdx])) {
-                                    var name = allCommands[idx].aliases[jdx].toLowerCase();
+                                if (allCommands[idx].aliases[jdx].toLowerCase().includes(input.toLowerCase())) {
                                     var inputLower = input.toLowerCase();
-                                    var formatted = "";
-                                    var i;
-
-                                    for (i = 0; i < name.length; i++) {
-                                        if (inputLower.includes(name[i])) {
-                                            formatted += `<b>${name[i]}</b>`;
-                                        } else {
-                                            formatted += name[i];
-                                        }
-                                    }
-
+                                    var formatted = allCommands[idx].aliases[jdx].replaceAll(inputLower, `<b>${inputLower}</b>`);
                                     contains.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    break;
+                                } else if (input.toLowerCase().includes(allCommands[idx].aliases[jdx])) {
+                                    contains.push({ name: allCommands[idx].name, formatted: `<b>${allCommands[idx].aliases[jdx]}</b>`, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
                                     break;
                                 }
                             }
@@ -897,10 +881,10 @@
                         aliasTag.classList.add("commands-search-results-overlay-tag");
                         aliasTag.style.backgroundColor = "#d1d1d1";
                         aliasTag.style.color = "#4e4e4e";
-                        aliasTag.innerHTML = "💡 A.K.A.";
+                        aliasTag.textContent = "💡 A.K.A.";
 
                         aliasList.setAttribute("id", "commands-search-results-overlay-aliases");
-                        aliasList.innerHTML = command.aliases.join(", ");
+                        aliasList.textContent = command.aliases.join(", ");
 
                         commandAliases.appendChild(aliasTag);
                         commandAliases.appendChild(aliasList);
@@ -911,7 +895,7 @@
                     categoryTag.classList.add("commands-search-results-overlay-tag");
                     categoryTag.style.backgroundColor = categoryConstants.find(x => x.category == command.category).color;
                     categoryTag.style.color = categoryConstants.find(x => x.category == command.category).textColor;
-                    categoryTag.innerHTML = `${categoryConstants.find(x => x.category == command.category).emoji} ${command.category.charAt(0).toUpperCase()}${command.category.slice(1)}`;
+                    categoryTag.textContent = `${categoryConstants.find(x => x.category == command.category).emoji} ${command.category.charAt(0).toUpperCase()}${command.category.slice(1)}`;
 
                     commandTags.appendChild(categoryTag);
 
@@ -920,7 +904,7 @@
                         premiumTag.classList.add("commands-search-results-overlay-tag");
                         premiumTag.style.backgroundColor = "#ffb700";
                         premiumTag.style.color = "#4e4e4e";
-                        premiumTag.innerHTML = "⭐ Premium";
+                        premiumTag.textContent = "⭐ Premium";
 
                         commandTags.appendChild(premiumTag);
                     }

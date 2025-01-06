@@ -221,10 +221,10 @@
                             displayCommands(true);
                         } else if (flattenedCommands.length - commands >= 10) {
                             commands += 10;
-                            commandCounter.innerHTML = commands;
+                            commandCounter.textContent = commands;
                         } else if (flattenedCommands.length - commands < 10) {
                             commands++;
-                            commandCounter.innerHTML = commands;
+                            commandCounter.textContent = commands;
                         }
                     }, 40);
                 });
@@ -259,7 +259,7 @@
                     case 1:
                         if (categoryFound) {
                             commandText.style.backgroundColor = categoryFound.color;
-                            commandText.innerHTML = categoryFound.emoji + " ";
+                            commandText.textContent = categoryFound.emoji + " ";
                         }
 
                         lettersWritten = 0;
@@ -277,7 +277,12 @@
                                     }, 1700);
                                 }
                             } else {
-                                commandText.innerHTML += command.name[lettersWritten];
+                                if (first) {
+                                    commandText.innerHTML += command.name[lettersWritten];
+                                } else {
+                                    commandText.textContent += command.name[lettersWritten];
+                                }
+                                
                                 lettersWritten++;
                             }
                         }, 50);
@@ -289,14 +294,14 @@
                         writeInterval = setInterval(() => {
                             if (lettersWritten == command.name.length) {
                                 commandText.style.backgroundColor = "#2c2c34";
-                                commandText.innerHTML = "";
+                                commandText.textContent = "";
 
                                 clearInterval(writeInterval);
                                 setTimeout(() => {
                                     displayCommands(false);
                                 }, 900);
                             } else {
-                                commandText.innerHTML = commandText.innerHTML.slice(0, -1);
+                                commandText.textContent = commandText.textContent.slice(0, -1);
                                 lettersWritten++;
                             }
                         }, 50);
