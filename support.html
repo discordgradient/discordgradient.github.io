@@ -202,10 +202,8 @@
                                         Join server
                                     </button>
                                 </a>
-                
-                                <iframe id="discord-widget" data-src="https://discord.com/widget?id=658122178713223190&theme=dark"
-                                    width="350" height="500" allowtransparency="true" frameborder="0"
-                                    sandbox="allow-same-origin allow-scripts" loading="lazy" title="Discord widget"></iframe>
+
+                                <button id="support-server-widget">See server preview</button>
                             </div>
                         </section>
                 
@@ -265,7 +263,7 @@
                             <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (1/4)</div>
                             <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/1-1.webp" alt="Step 1-1" loading="lazy">
+                                <img alt="Step 1-1">
                                 <p class="slideshow-text">Click the dropdown button next to the server name.</p>
                             </div>
                         </div>
@@ -274,7 +272,7 @@
                             <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (2/4)</div>
                             <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/1-2.webp" alt="Step 1-2" loading="lazy">
+                                <img alt="Step 1-2">
                                 <p class="slideshow-text">Click the "Server Settings" button.</p>
                             </div>
                         </div>
@@ -283,7 +281,7 @@
                             <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (3/4)</div>
                             <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/1-3.webp" alt="Step 1-3" loading="lazy">
+                                <img alt="Step 1-3">
                                 <p class="slideshow-text">Click the "Roles" button once you are in Server Settings.</p>
                             </div>
                         </div>
@@ -292,7 +290,7 @@
                             <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (4/4)</div>
                             <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/1-4.webp" alt="Step 1-4" loading="lazy">
+                                <img alt="Step 1-4">
                                 <p class="slideshow-text">Order the roles so that the role called "Gradient" is above all roles that you want
                                 it to be able to moderate.<br><br>
                                 In this example, moderation commands can be used for users with the Member and Subscriber roles, but
@@ -306,7 +304,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/2-1.webp" alt="Step 2-1" loading="lazy">
+                                <img data-src="static/getting-started-images/2-1.webp" alt="Step 2-1">
                                 <p class="slideshow-text">Click the gear icon next to a channel in which you want to use the bot to open Channel Settings.</p>
                             </div>
                         </div>
@@ -316,7 +314,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/2-2.webp" alt="Step 2-2" loading="lazy">
+                                <img data-src="static/getting-started-images/2-2.webp" alt="Step 2-2">
                                 <p class="slideshow-text">Click the "Permissions" button once you are in the Channel Settings.</p>
                             </div>
                         </div>
@@ -326,7 +324,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/2-3.webp" alt="Step 2-3" loading="lazy">
+                                <img data-src="static/getting-started-images/2-3.webp" alt="Step 2-3">
                                 <p class="slideshow-text">Click the small plus icon and select the role called "Gradient".</p>
                             </div>
                         </div>
@@ -336,7 +334,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img src="static/getting-started-images/2-4.webp" alt="Step 2-4" loading="lazy">
+                                <img data-src="static/getting-started-images/2-4.webp" alt="Step 2-4">
                                 <p class="slideshow-text">Ensure that the green check mark is selected for all the permissions you want Gradient to have, then press the "Save
                                 Changes" button.<br><br>
                                 Tip: Gradient requires the ability to read messages, send messages, and embed links at all times. Other permissions are
@@ -393,8 +391,19 @@
                 });
 
 
-                var discordWidget = document.getElementById("discord-widget");
-                discordWidget.src = discordWidget.getAttribute("data-src");
+                var supportWidgetButton = document.getElementById("support-server-widget");
+                supportWidgetButton.addEventListener("click", () => {
+                    var discordWidget = document.createElement("iframe");
+                    discordWidget.src = "https://discord.com/widget?id=658122178713223190&theme=dark";
+                    discordWidget.width = "350";
+                    discordWidget.height = "500";
+                    discordWidget.frameBorder = "0";
+                    discordWidget.sandbox = "allow-same-origin allow-scripts";
+                    discordWidget.title = "Discord widget";
+
+                    supportWidgetButton.remove();
+                    document.getElementById("support-server-wrapper").appendChild(discordWidget);
+                });
 
 
                 var supportTicketLinks = document.querySelectorAll(".support-ticket-link");

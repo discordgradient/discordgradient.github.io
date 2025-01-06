@@ -126,8 +126,15 @@ function setSwitch(input, pages, displays) {
 
 
 function setSlideShow(prevId, nextId) {
+    const slideImgs = [
+        "static/getting-started-images/1-1.webp", "static/getting-started-images/1-2.webp", "static/getting-started-images/1-3.webp", "static/getting-started-images/1-4.webp",
+        "static/getting-started-images/2-1.webp", "static/getting-started-images/2-2.webp", "static/getting-started-images/2-3.webp", "static/getting-started-images/2-4.webp",
+    ];
+
     var slideIndex = 0, newSlideIndex;
     var slides = document.querySelectorAll(".slideshow-slide");
+    var dotWrapper = document.getElementById("slideshow-dot-wrapper");
+    var allDots = [];
 
     showSlide(slideIndex, null);
 
@@ -143,17 +150,48 @@ function setSlideShow(prevId, nextId) {
     });
 
     function showSlide(curr, prev) {
-        if (prev) {
+        var slideImg, currSlide;
+
+        if (prev != null) {
             slides.item(prev).style.display = "none";
-            slides.item(curr).style.display = "block";
+
+            currSlide = slides.item(curr);
+            currSlide.style.display = "block";
+            slideImg = currSlide.querySelector("img");
+            if (slideImg && !slideImg.hasAttribute("src")) {
+                slideImg.setAttribute("src", slideImgs[curr]);
+            }
+
+            allDots[prev].classList.remove("slideshow-dot-active");
+            allDots[curr].classList.add("slideshow-dot-active");
         } else {
             slides.forEach((slide, i) => {
                 if (i == curr) {
                     slide.style.display = "block";
+                    slideImg = slide.querySelector("img");
+                    if (slideImg && !slideImg.hasAttribute("src")) {
+                        slideImg.setAttribute("src", slideImgs[curr]);
+                    }
                 } else {
                     slide.style.display = "none";
                 }
-            })
+
+                var slideDot = document.createElement("span");
+                slideDot.classList.add("slideshow-dot");
+                if (i == 0) slideDot.classList.add("slideshow-dot-active");
+
+                allDots.push(slideDot);
+                dotWrapper.appendChild(slideDot);
+            });
+
+            for (let dotIdx = 0; dotIdx < allDots.length; dotIdx++) {
+                allDots[dotIdx].addEventListener("click", () => {
+                    showSlide(dotIdx, slideIndex);
+                    allDots[dotIdx].classList.add("slideshow-dot-active");
+                    allDots[slideIndex].classList.remove("slideshow-dot-active");
+                    slideIndex = dotIdx;
+                });
+            }
         }
     }
 }

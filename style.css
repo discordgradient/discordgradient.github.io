@@ -567,6 +567,24 @@ body {
     margin-bottom: 0;
 }
 
+#slideshow-dot-wrapper {
+    margin-top: 30px;
+    column-gap: 8px;
+}
+
+.slideshow-dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.slideshow-dot:hover, .slideshow-dot-active {
+    background-color: #717171;
+}
+
 
 
 /* home.html */
@@ -1236,9 +1254,8 @@ body {
     align-items: self-start;
 }
 
-#support-server-invite {
+#support-server-invite, #support-server-widget {
     cursor: pointer;
-    background-color: #5865f2;
     color: white;
     font-family: "GG Sans Normal";
     font-size: 20px;
@@ -1246,12 +1263,24 @@ body {
     border-radius: 20px;
     padding: 10px 20px;
     transition: background-color 0.3s ease;
+}
+
+#support-server-invite {
+    background-color: #5865f2;
     display: flex;
     align-items: center;
 }
 
 #support-server-invite:hover {
     background-color: #7f89f0;
+}
+
+#support-server-widget {
+    background-color: #4e4e4e;
+}
+
+#support-server-widget:hover {
+    background-color: #6a6a6a;
 }
 
 #support-server-invite-icon {
