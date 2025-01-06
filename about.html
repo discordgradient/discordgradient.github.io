@@ -50,7 +50,7 @@
         </div>
 
         <div id="onload-wrapper">
-            <div id="about-switch-wrapper">
+            <div id="switch-wrapper">
                 <p>Feature Explorer</p>
                 <label class="switch">
                     <input type="checkbox" id="about-switch-input">
@@ -182,30 +182,10 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const fill = urlParams.get("fill");
 
+                
                 setNavDropdown();
                 handleAnchors();
-
-
-                var aboutSwitchPos = 0;
-
-                function changePage(aboutSwitchPos) {
-                    switch (aboutSwitchPos) {
-                        case 0:
-                            document.getElementById("about-wrapper").style.display = "flex";
-                            document.getElementById("commands-wrapper").style.display = "none";
-                            break;
-
-                        case 1:
-                            document.getElementById("about-wrapper").style.display = "none";
-                            document.getElementById("commands-wrapper").style.display = "block";
-                            break;
-                    }
-                }
-
-                document.getElementById("about-switch-input").addEventListener("click", () => {
-                    aboutSwitchPos = (aboutSwitchPos == 0) ? 1 : 0;
-                    changePage(aboutSwitchPos);
-                });
+                setSwitch("about-switch-input", ["about-wrapper", "commands-wrapper"], [["flex", "none"], ["block", "none"]]);
 
 
                 // ABOUT SELECTION BUTTONS

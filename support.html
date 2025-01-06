@@ -50,152 +50,302 @@
         </div>
 
         <div id="onload-wrapper">
-            <div class="centered-div">
-                <h1 id="support-title">Support</h1>
+            <div id="switch-wrapper">
+                <p>Help Center</p>
+                <label class="switch">
+                    <input type="checkbox" id="support-switch-input">
+                    <span class="slider"></span>
+                </label>
+                <p>Getting Started</p>
+            </div>
+            
+
+
+            <div id="help-wrapper">
+                <div class="centered-div">
+                    <h1 class="support-title">Help Center</h1>
+                </div>
+                
+                <div id="content-and-on-this-page-wrapper">
+                    <div id="content-wrapper">
+                        <section id="faq">
+                            <h2 class="support-subtitle">Frequently Asked Questions</h2>
+                
+                            <div class="accordion-wrapper">
+                                <button class="accordion-button important-border" id="support-ticket-faq">How do I file a support
+                                    ticket?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">There are a few ways to file a support ticket for bug reports and usage
+                                        feedback:</p>
+                                    <ul>
+                                        <li>Use the <span class="code-text">ticket</span> command and follow the given prompts. &#40;in
+                                            a server where Gradient is present, or in a DM with the bot&#41;</li>
+                                        <li>Send an email to <a href="mailto:wozardstudios@gmail.com"
+                                                target="_blank">wozardstudios@gmail.com</a> with a detailed description of the bug or
+                                            feedback.</li>
+                                        <li>Submit the <a href="#send-feedback">feedback form</a> below.</li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">How do I use a command that requires parameters?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">Follow these tips for supplying parameters for commands that require them:
+                                    </p>
+                                    <ul>
+                                        <li>Command parameters surrounded by &lt;&gt; are required.</li>
+                                        <li>Command parameters surrounded by [] are optional.</li>
+                                        <li>Command parameters surrounded by "" are literal.</li>
+                                        <li>Grouped command parameters separated by / require only one of the parameters in the group.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">Why are slash commands not implemented?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">Due to Discord's limit for the number of slash commands that can be
+                                        registered by a single bot, only a portion of
+                                        the bot's commands can be ported. For consistency, all commands will remain prefix-based.</p>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">Why is the bot is not responding to my commands?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">There are a few reasons why this may be happening:</p>
+                                    <ol>
+                                        <li>The bot is offline. You can tell if the bot's status icon is gray, or the bot has no
+                                            activity in its profile.<br>
+                                            If this is not an issue with <a href="https://discordstatus.com" target="_blank">Discord's
+                                                Gateway/API services</a>, please <a href="#support-ticket-faq"
+                                                class="support-ticket-link">file a support ticket</a>.</li>
+                                        <li>The command is disabled, either by the development team or a moderator of your server. The
+                                            category that the command is in
+                                            may also be disabled.</li>
+                                        <li>The bot has run into an error while executing the command. Please <a
+                                                href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a> if this
+                                            happens.</li>
+                                        <li>The command does not exist, or the alias that you're using does not exist. If you think that
+                                            an alias should be added,
+                                            please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a>.
+                                        </li>
+                                    </ol>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">Why is the bot lagging when responding to my commands?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">There are a few reasons why this may be happening:</p>
+                                    <ol>
+                                        <li>The bot is restarting with a new update/bugfix. It takes time for the bot to connect to
+                                            Discord every time it restarts,
+                                            so please be patient.</li>
+                                        <li>Discord's Gateway/API services may be degraded. To check, first try to use the <span
+                                                class="code-text">ping</span> command to check for Discord's
+                                            Gateway and message pings. For more information, go to <a href="https://discordstatus.com"
+                                                target="_blank">Discord's status page</a>.</li>
+                                        <li>You have run into a bug, or the bot has an internal error. You can file a support ticket
+                                            using the <span class="code-text">ticket</span> command in the
+                                            case of a bug, or check the bot's status page for more information in the case of an
+                                            internal error.</li>
+                                        <li>The bot's host server is having a high latency. This usually will not happen, but please <a
+                                                href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a> if this
+                                            issue occurs.</li>
+                                    </ol>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">Why am I not getting a response from my attempt(s) to contact the
+                                    development team?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">Please be patient. Usually, you will receive an initial response for your
+                                        support tickets 24 hours after they are filed.</p>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">Why did my in-progress command/service stop suddenly?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">&#40;Note: This includes (but is not limited to) active minigames and
+                                        music playback.&#41;</p>
+                                    <p class="accordion-text">There may be a few reasons as to why this might be happening:</p>
+                                    <ol>
+                                        <li>The bot is restarting with a new update/bugfix.</li>
+                                        <li>The bot has gone offline.</li>
+                                        <li>You have a poor connection to Discord.</li>
+                                    </ol>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">How can I become a Gradient Premium user?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">Gradient Premium is only awarded to friendly and supportive users of the
+                                        bot and is NOT obtainable through monetary
+                                        transactions. There is no fixed criteria for acquiring Gradient Premium, and all awards are
+                                        decided on a case-to-case
+                                        basis by the development team.</p>
+                                </div>
+                                <hr>
+                                <button class="accordion-button">How did you make the bot?</button>
+                                <div class="accordion-panel">
+                                    <p class="accordion-text">The bot is written in JavaScript using a customized branch of Discord.js
+                                        and the stable version of <a href="https://nodejs.org/en" target="_blank">Node.js</a>.</p>
+                                </div>
+                            </div>
+                        </section>
+                
+                        <hr class="content-separator">
+                
+                        <section id="support-server">
+                            <h2 class="support-subtitle">Support Server</h2>
+                
+                            <p class="support-text">Have a question that isn't in the FAQ, or want to provide feedback? Join the
+                                official support server for Gradient, a community where
+                                users share usage knowledge with each other and suggest improvements to the developers.</p>
+                
+                            <div id="support-server-wrapper" class="centered-div">
+                                <a href="https://discord.gg/jxrEf5p" id="support-server-link" target="_blank">
+                                    <button id="support-server-invite">
+                                        <img src="static/discord-icon-white.webp" alt="Join server" id="support-server-invite-icon">
+                                        Join server
+                                    </button>
+                                </a>
+                
+                                <iframe id="discord-widget" data-src="https://discord.com/widget?id=658122178713223190&theme=dark"
+                                    width="350" height="500" allowtransparency="true" frameborder="0"
+                                    sandbox="allow-same-origin allow-scripts" loading="lazy" title="Discord widget"></iframe>
+                            </div>
+                        </section>
+                
+                        <hr class="content-separator">
+                
+                        <section id="send-feedback">
+                            <h2 class="support-subtitle">Send Feedback</h2>
+                
+                            <form id="support-feedback" onsubmit="return supportFormSubmit()">
+                                <div class="support-feedback-input">
+                                    <img src="static/material-icons/mail.svg" alt="Email" class="support-feedback-icon"
+                                        draggable="false">
+                                    <input type="email" class="support-feedback-field" name="feedback-email" placeholder="Email"
+                                        required>
+                                </div>
+                
+                                <div class="support-feedback-input">
+                                    <img src="static/material-icons/comment.svg" alt="Message" class="support-feedback-icon"
+                                        id="support-feedback-message-icon" draggable="false">
+                                    <textarea id="support-feedback-message" class="support-feedback-field" name="feedback-message"
+                                        placeholder="Feedback" required></textarea>
+                                </div>
+                
+                                <button type="submit" id="support-feedback-submit">
+                                    <img src="static/material-icons/send.svg" alt="Send" draggable="false">
+                                    Send
+                                </button>
+                            </form>
+                        </section>
+                    </div>
+                
+                    <div id="on-this-page-wrapper">
+                        <p id="on-this-page-title">On this page</p>
+                        <ul>
+                            <li><a href="#faq">Frequently Asked Questions</a></li>
+                            <li><a href="#support-server">Support Server</a></li>
+                            <li><a href="#send-feedback">Send Feedback</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <div id="content-and-on-this-page-wrapper">
-                <div id="content-wrapper">
-                    <section id="faq">
-                        <h2 class="support-subtitle">Frequently Asked Questions</h2>
 
-                        <div class="accordion-wrapper">
-                            <button class="accordion-button important-border" id="support-ticket-faq">How do I file a support ticket?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">There are a few ways to file a support ticket for bug reports and usage feedback:</p>
-                                <ul>
-                                    <li>Use the <span class="code-text">ticket</span> command and follow the given prompts. &#40;in a server where Gradient is present, or in a DM with the bot&#41;</li>
-                                    <li>Send an email to <a href="mailto:wozardstudios@gmail.com" target="_blank">wozardstudios@gmail.com</a> with a detailed description of the bug or feedback.</li>
-                                    <li>Submit the <a href="#send-feedback">feedback form</a> below.</li>
-                                </ul>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">How do I use a command that requires parameters?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">Follow these tips for supplying parameters for commands that require them:</p>
-                                <ul>
-                                    <li>Command parameters surrounded by &lt;&gt; are required.</li>
-                                    <li>Command parameters surrounded by [] are optional.</li>
-                                    <li>Command parameters surrounded by "" are literal.</li>
-                                    <li>Grouped command parameters separated by / require only one of the parameters in the group.</li>
-                                </ul>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">Why are slash commands not implemented?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">Due to Discord's limit for the number of slash commands that can be registered by a single bot, only a portion of
-                                the bot's commands can be ported. For consistency, all commands will remain prefix-based.</p>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">Why is the bot is not responding to my commands?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">There are a few reasons why this may be happening:</p>
-                                <ol>
-                                    <li>The bot is offline. You can tell if the bot's status icon is gray, or the bot has no activity in its profile.<br>
-                                    If this is not an issue with <a href="https://discordstatus.com" target="_blank">Discord's Gateway/API services</a>, please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a>.</li>
-                                    <li>The command is disabled, either by the development team or a moderator of your server. The category that the command is in
-                                    may also be disabled.</li>
-                                    <li>The bot has run into an error while executing the command. Please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a> if this happens.</li>
-                                    <li>The command does not exist, or the alias that you're using does not exist. If you think that an alias should be added,
-                                    please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a>.</li>
-                                </ol>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">Why is the bot lagging when responding to my commands?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">There are a few reasons why this may be happening:</p>
-                                <ol>
-                                    <li>The bot is restarting with a new update/bugfix. It takes time for the bot to connect to Discord every time it restarts,
-                                    so please be patient.</li>
-                                    <li>Discord's Gateway/API services may be degraded. To check, first try to use the <span class="code-text">ping</span> command to check for Discord's
-                                    Gateway and message pings. For more information, go to <a href="https://discordstatus.com" target="_blank">Discord's status page</a>.</li>
-                                    <li>You have run into a bug, or the bot has an internal error. You can file a support ticket using the <span class="code-text">ticket</span> command in the
-                                    case of a bug, or check the bot's status page for more information in the case of an internal error.</li>
-                                    <li>The bot's host server is having a high latency. This usually will not happen, but please <a href="#support-ticket-faq" class="support-ticket-link">file a support ticket</a> if this issue occurs.</li>
-                                </ol>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">Why am I not getting a response from my attempt(s) to contact the development team?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">Please be patient. Usually, you will receive an initial response for your support tickets 24 hours after they are filed.</p>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">Why did my in-progress command/service stop suddenly?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">&#40;Note: This includes (but is not limited to) active minigames and music playback.&#41;</p>
-                                <p class="accordion-text">There may be a few reasons as to why this might be happening:</p>
-                                <ol>
-                                    <li>The bot is restarting with a new update/bugfix.</li>
-                                    <li>The bot has gone offline.</li>
-                                    <li>You have a poor connection to Discord.</li>
-                                </ol>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">How can I become a Gradient Premium user?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">Gradient Premium is only awarded to friendly and supportive users of the bot and is NOT obtainable through monetary
-                                transactions. There is no fixed criteria for acquiring Gradient Premium, and all awards are decided on a case-to-case
-                                basis by the development team.</p>
-                            </div>
-                            <hr>
-                            <button class="accordion-button">How did you make the bot?</button>
-                            <div class="accordion-panel">
-                                <p class="accordion-text">The bot is written in JavaScript using a customized branch of Discord.js and the stable version of <a href="https://nodejs.org/en" target="_blank">Node.js</a>.</p>
-                            </div>
-                        </div>
-                    </section>
 
-                    <hr class="content-separator">
-                    
-                    <section id="support-server">
-                        <h2 class="support-subtitle">Support Server</h2>
-
-                        <p class="support-text">Have a question that isn't in the FAQ, or want to provide feedback? Join the official support server for Gradient, a community where
-                        users share usage knowledge with each other and suggest improvements to the developers.</p>
-                        
-                        <div id="support-server-wrapper" class="centered-div">
-                            <a href="https://discord.gg/jxrEf5p" id="support-server-link" target="_blank">
-                                <button id="support-server-invite">
-                                    <img src="static/discord-icon-white.webp" alt="Join server" id="support-server-invite-icon">
-                                    Join server
-                                </button>
-                            </a>
-
-                            <iframe id="discord-widget" data-src="https://discord.com/widget?id=658122178713223190&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-same-origin allow-scripts" loading="lazy" title="Discord widget"></iframe>
-                        </div>
-                    </section>
-
-                    <hr class="content-separator">
-
-                    <section id="send-feedback">
-                        <h2 class="support-subtitle">Send Feedback</h2>
-
-                        <form id="support-feedback" onsubmit="return supportFormSubmit()">
-                            <div class="support-feedback-input">
-                                <img src="static/material-icons/mail.svg" alt="Email" class="support-feedback-icon" draggable="false">
-                                <input type="email" class="support-feedback-field" name="feedback-email" placeholder="Email" required>
-                            </div>
-
-                            <div class="support-feedback-input">
-                                <img src="static/material-icons/comment.svg" alt="Message" class="support-feedback-icon" id="support-feedback-message-icon" draggable="false">
-                                <textarea id="support-feedback-message" class="support-feedback-field" name="feedback-message" placeholder="Feedback" required></textarea>
-                            </div>
-
-                            <button type="submit" id="support-feedback-submit">
-                                <img src="static/material-icons/send.svg" alt="Send" draggable="false">
-                                Send
-                            </button>
-                        </form>
-                    </section>
+            <div id="getting-started-wrapper">
+                <div class="centered-div">
+                    <h1 class="support-title">Getting Started</h1>
                 </div>
 
-                <div id="on-this-page-wrapper">
-                    <p id="on-this-page-title">On this page</p>
-                    <ul>
-                        <li><a href="#faq">Frequently Asked Questions</a></li>
-                        <li><a href="#support-server">Support Server</a></li>
-                        <li><a href="#send-feedback">Send Feedback</a></li>
-                    </ul>
+                <div id="slideshow-dot-wrapper" class="centered-div"></div>
+
+                <div id="getting-started-slideshow" class="slideshow-viewport centered-div">
+                    <p id="slideshow-prev">&#10094;</p>
+                    
+                    <div id="slideshow-slide-wrapper">
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (1/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/1-1.webp" alt="Step 1-1" loading="lazy">
+                                <p class="slideshow-text">Click the dropdown button next to the server name.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (2/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/1-2.webp" alt="Step 1-2" loading="lazy">
+                                <p class="slideshow-text">Click the "Server Settings" button.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (3/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/1-3.webp" alt="Step 1-3" loading="lazy">
+                                <p class="slideshow-text">Click the "Roles" button once you are in Server Settings.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 1: Configure the bot's role hierarchy (4/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ If you do not need to use the bot's moderation commands, skip to the next section.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/1-4.webp" alt="Step 1-4" loading="lazy">
+                                <p class="slideshow-text">Order the roles so that the role called "Gradient" is above all roles that you want
+                                it to be able to moderate.<br><br>
+                                In this example, moderation commands can be used for users with the Member and Subscriber roles, but
+                                moderation commands cannot be used on anyone with a role that's higher than Gradient. Therefore, Gradient
+                                cannot moderate users with the Bot, VIP, Admin, and Wozard roles.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 2: Configure the bot's permissions (1/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
+                            channels you would like to use it.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/2-1.webp" alt="Step 2-1" loading="lazy">
+                                <p class="slideshow-text">Click the gear icon next to a channel in which you want to use the bot to open Channel Settings.</p>
+                            </div>
+                        </div>
+
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 2: Configure the bot's permissions (2/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
+                            channels you would like to use it.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/2-2.webp" alt="Step 2-2" loading="lazy">
+                                <p class="slideshow-text">Click the "Permissions" button once you are in the Channel Settings.</p>
+                            </div>
+                        </div>
+
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 2: Configure the bot's permissions (3/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
+                            channels you would like to use it.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/2-3.webp" alt="Step 2-3" loading="lazy">
+                                <p class="slideshow-text">Click the small plus icon and select the role called "Gradient".</p>
+                            </div>
+                        </div>
+
+                        <div class="slideshow-slide">
+                            <div class="slideshow-header">Section 2: Configure the bot's permissions (4/4)</div>
+                            <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
+                            channels you would like to use it.</p>
+                            <div class="slideshow-row">
+                                <img src="static/getting-started-images/2-4.webp" alt="Step 2-4" loading="lazy">
+                                <p class="slideshow-text">Ensure that the green check mark is selected for all the permissions you want Gradient to have, then press the "Save
+                                Changes" button.<br><br>
+                                Tip: Gradient requires the ability to read messages, send messages, and embed links at all times. Other permissions are
+                                optional; enable them if you would like the bot to perform additional functionality, such as server moderation.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="slideshow-next">&#10095;</p>
                 </div>
             </div>
         </div>
@@ -215,11 +365,14 @@
             window.onload = () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const faq = urlParams.get("faq");
+                const setup = urlParams.get("setup");
 
 
                 setNavDropdown();
                 setAccordions();
                 handleAnchors();
+                setSwitch("support-switch-input", ["help-wrapper", "getting-started-wrapper"], [["block", "none"], ["block", "none"]]);
+                setSlideShow("slideshow-prev", "slideshow-next");
 
 
                 var textArea = document.getElementById("support-feedback-message");
@@ -244,39 +397,6 @@
                 discordWidget.src = discordWidget.getAttribute("data-src");
 
 
-                function supportFormSubmit() {
-                    var supportForm = document.getElementById("support-feedback");
-                    if (supportForm) supportForm.remove();
-
-                    var feedbackSection = document.getElementById("send-feedback");
-
-                    var centeredDiv = document.createElement("div");
-                    centeredDiv.classList.add("centered-div");
-                    centeredDiv.setAttribute("id", "support-feedback-submitted");
-
-                    var submittedIcon = document.createElement("img");
-                    submittedIcon.src = "static/material-icons/check_circle.svg";
-                    submittedIcon.alt = "Submitted";
-                    submittedIcon.draggable = false;
-                    submittedIcon.style.width = "24px";
-                    submittedIcon.style.height = "24px";
-
-                    var submittedText = document.createElement("p");
-                    submittedText.textContent = "Feedback submitted successfully. Thank you.";
-                    submittedText.style.margin = "0";
-
-                    centeredDiv.appendChild(submittedIcon);
-                    centeredDiv.appendChild(submittedText);
-                    feedbackSection.appendChild(centeredDiv);
-                }
-
-
-                if (faq) {
-                    openFaq("support-ticket-faq");
-                    document.getElementById("support-ticket-faq").scrollIntoView();
-                    history.replaceState(null, null, window.location.pathname);
-                }
-
                 var supportTicketLinks = document.querySelectorAll(".support-ticket-link");
                 supportTicketLinks.forEach(link => {
                     link.addEventListener("click", () => {
@@ -284,13 +404,54 @@
                     });
                 });
 
-                function openFaq(faqId) {
-                    var faqButton = document.getElementById(faqId);
-                    if (faqButton) {
-                        var faqPanel = faqButton.nextElementSibling;
-                        if (faqPanel && !faqPanel.style.maxHeight) {
-                            faqButton.click();
-                        }
+                if (setup) {
+                    document.getElementById("support-switch-input").click();
+                    history.replaceState(null, null, window.location.pathname);
+                } else {
+                    if (faq) {
+                        openFaq("support-ticket-faq");
+                        document.getElementById("support-ticket-faq").scrollIntoView();
+                        history.replaceState(null, null, window.location.pathname);
+                    }
+
+                    document.getElementById("help-wrapper").style.display = "block";
+                    document.getElementById("getting-started-wrapper").style.display = "none";
+                }
+            }
+
+
+            function supportFormSubmit() {
+                var supportForm = document.getElementById("support-feedback");
+                if (supportForm) supportForm.remove();
+
+                var feedbackSection = document.getElementById("send-feedback");
+
+                var centeredDiv = document.createElement("div");
+                centeredDiv.classList.add("centered-div");
+                centeredDiv.setAttribute("id", "support-feedback-submitted");
+
+                var submittedIcon = document.createElement("img");
+                submittedIcon.src = "static/material-icons/check_circle.svg";
+                submittedIcon.alt = "Submitted";
+                submittedIcon.draggable = false;
+                submittedIcon.style.width = "24px";
+                submittedIcon.style.height = "24px";
+
+                var submittedText = document.createElement("p");
+                submittedText.textContent = "Feedback submitted successfully. Thank you.";
+                submittedText.style.margin = "0";
+
+                centeredDiv.appendChild(submittedIcon);
+                centeredDiv.appendChild(submittedText);
+                feedbackSection.appendChild(centeredDiv);
+            }
+
+            function openFaq(faqId) {
+                var faqButton = document.getElementById(faqId);
+                if (faqButton) {
+                    var faqPanel = faqButton.nextElementSibling;
+                    if (faqPanel && !faqPanel.style.maxHeight) {
+                        faqButton.click();
                     }
                 }
             }

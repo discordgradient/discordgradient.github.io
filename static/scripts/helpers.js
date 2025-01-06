@@ -105,3 +105,55 @@ function setNavDropdown() {
         });
     }
 }
+
+
+function setSwitch(input, pages, displays) {
+    var switchPos = 0;
+    var inputElement = document.getElementById(input);
+    var i, pageElements = [];
+
+    for (i = 0; i < pages.length; i++) {
+        pageElements.push(document.getElementById(pages[i]));
+    }
+
+    inputElement.addEventListener("click", () => {
+        switchPos = (switchPos == 0) ? 1 : 0;
+
+        pageElements[switchPos].style.display = displays[switchPos][0];
+        pageElements[1 - switchPos].style.display = displays[1 - switchPos][1];
+    });
+}
+
+
+function setSlideShow(prevId, nextId) {
+    var slideIndex = 0, newSlideIndex;
+    var slides = document.querySelectorAll(".slideshow-slide");
+
+    showSlide(slideIndex, null);
+
+    document.getElementById(prevId).addEventListener("click", () => {
+        newSlideIndex = slideIndex == 0 ? slides.length - 1 : slideIndex - 1;
+        showSlide(newSlideIndex, slideIndex);
+        slideIndex = newSlideIndex;
+    });
+    document.getElementById(nextId).addEventListener("click", () => {
+        newSlideIndex = slideIndex == slides.length - 1 ? 0 : slideIndex + 1;
+        showSlide(newSlideIndex, slideIndex);
+        slideIndex = newSlideIndex;
+    });
+
+    function showSlide(curr, prev) {
+        if (prev) {
+            slides.item(prev).style.display = "none";
+            slides.item(curr).style.display = "block";
+        } else {
+            slides.forEach((slide, i) => {
+                if (i == curr) {
+                    slide.style.display = "block";
+                } else {
+                    slide.style.display = "none";
+                }
+            })
+        }
+    }
+}
