@@ -507,12 +507,12 @@ body {
 }
 
 .slideshow-viewport {
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 60px;
     margin-right: 60px;
     color: white;
     font-family: "GG Sans Normal";
-    column-gap: 30px;
+    column-gap: 25px;
     align-items: flex-start;
 }
 
@@ -565,10 +565,21 @@ body {
     font-size: 30px;
     margin-top: 10px;
     margin-bottom: 0;
+    padding: 0 5px;
+    transition: background-color 0.2s;
+    border-radius: 8px;
+}
+
+#slideshow-prev:hover, #slideshow-next:hover {
+    background-color: black;
 }
 
 #slideshow-dot-wrapper {
-    margin-top: 30px;
+    display: flex;
+    background-color: black;
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 20px;
     column-gap: 8px;
 }
 

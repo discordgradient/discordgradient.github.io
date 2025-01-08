@@ -127,8 +127,8 @@ function setSwitch(input, pages, displays) {
 
 function setSlideShow(prevId, nextId) {
     const slideImgs = [
-        "static/getting-started-images/1-1.webp", "static/getting-started-images/1-2.webp", "static/getting-started-images/1-3.webp", "static/getting-started-images/1-4.webp",
-        "static/getting-started-images/2-1.webp", "static/getting-started-images/2-2.webp", "static/getting-started-images/2-3.webp", "static/getting-started-images/2-4.webp",
+        "static/get-started-images/1-1.webp", "static/get-started-images/1-2.webp", "static/get-started-images/1-3.webp", "static/get-started-images/1-4.webp",
+        "static/get-started-images/2-1.webp", "static/get-started-images/2-2.webp", "static/get-started-images/2-3.webp", "static/get-started-images/2-4.webp",
     ];
 
     var slideIndex = 0, newSlideIndex;

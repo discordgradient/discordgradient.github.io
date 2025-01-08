@@ -31,7 +31,7 @@
                 <nav id="top-nav">
                     <ul id="top-nav-list">
                         <li class="top-nav-item"><a href="about.html">About</a></li>
-                        <li class="top-nav-item"><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands" target="_blank">Invite</a></li>
+                        <li class="top-nav-item"><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code" target="_blank">Invite</a></li>
                         <li class="nav-active top-nav-item">Support</li>
                         <li class="top-nav-item" id="top-nav-dropdown">
                             <button>More</button>
@@ -248,14 +248,12 @@
 
 
 
-            <div id="getting-started-wrapper">
+            <div id="get-started-wrapper">
                 <div class="centered-div">
                     <h1 class="support-title">Getting Started</h1>
                 </div>
 
-                <div id="slideshow-dot-wrapper" class="centered-div"></div>
-
-                <div id="getting-started-slideshow" class="slideshow-viewport centered-div">
+                <div id="get-started-slideshow" class="slideshow-viewport centered-div">
                     <p id="slideshow-prev">&#10094;</p>
                     
                     <div id="slideshow-slide-wrapper">
@@ -304,7 +302,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img data-src="static/getting-started-images/2-1.webp" alt="Step 2-1">
+                                <img data-src="static/get-started-images/2-1.webp" alt="Step 2-1">
                                 <p class="slideshow-text">Click the gear icon next to a channel in which you want to use the bot to open Channel Settings.</p>
                             </div>
                         </div>
@@ -314,7 +312,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img data-src="static/getting-started-images/2-2.webp" alt="Step 2-2">
+                                <img data-src="static/get-started-images/2-2.webp" alt="Step 2-2">
                                 <p class="slideshow-text">Click the "Permissions" button once you are in the Channel Settings.</p>
                             </div>
                         </div>
@@ -324,7 +322,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img data-src="static/getting-started-images/2-3.webp" alt="Step 2-3">
+                                <img data-src="static/get-started-images/2-3.webp" alt="Step 2-3">
                                 <p class="slideshow-text">Click the small plus icon and select the role called "Gradient".</p>
                             </div>
                         </div>
@@ -334,7 +332,7 @@
                             <p class="slideshow-text card-blue">ℹ️ Please ensure that the bot has the necessary permissions to perform its actions in all
                             channels you would like to use it.</p>
                             <div class="slideshow-row">
-                                <img data-src="static/getting-started-images/2-4.webp" alt="Step 2-4">
+                                <img data-src="static/get-started-images/2-4.webp" alt="Step 2-4">
                                 <p class="slideshow-text">Ensure that the green check mark is selected for all the permissions you want Gradient to have, then press the "Save
                                 Changes" button.<br><br>
                                 Tip: Gradient requires the ability to read messages, send messages, and embed links at all times. Other permissions are
@@ -344,6 +342,10 @@
                     </div>
 
                     <p id="slideshow-next">&#10095;</p>
+                </div>
+
+                <div class="centered-div">
+                    <div id="slideshow-dot-wrapper"></div>
                 </div>
             </div>
         </div>
@@ -363,13 +365,13 @@
             window.onload = () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const faq = urlParams.get("faq");
-                const setup = urlParams.get("setup");
+                const getStarted = urlParams.get("get-started");
 
 
                 setNavDropdown();
                 setAccordions();
                 handleAnchors();
-                setSwitch("support-switch-input", ["help-wrapper", "getting-started-wrapper"], [["block", "none"], ["block", "none"]]);
+                setSwitch("support-switch-input", ["help-wrapper", "get-started-wrapper"], [["block", "none"], ["block", "none"]]);
                 setSlideShow("slideshow-prev", "slideshow-next");
 
 
@@ -413,7 +415,7 @@
                     });
                 });
 
-                if (setup) {
+                if (getStarted) {
                     document.getElementById("support-switch-input").click();
                     history.replaceState(null, null, window.location.pathname);
                 } else {
@@ -424,7 +426,7 @@
                     }
 
                     document.getElementById("help-wrapper").style.display = "block";
-                    document.getElementById("getting-started-wrapper").style.display = "none";
+                    document.getElementById("get-started-wrapper").style.display = "none";
                 }
             }
 
