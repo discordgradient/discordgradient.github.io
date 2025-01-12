@@ -535,6 +535,16 @@ body {
 
 .slideshow-header {
     font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.slideshow-page-number {
+    font-size: 20px;
+    white-space: nowrap;
 }
 
 .slideshow-row {
@@ -549,7 +559,7 @@ body {
     flex: 1;
 }
 
-.slideshow-text.card-blue {
+.slideshow-text.card-orange {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 5px 10px;
@@ -1378,6 +1388,16 @@ body {
 
 
 /* support.html - getting started */
+
+#get-started-subtitle {
+    font-family: "GG Sans Normal";
+    font-size: 25px;
+    color: white;
+    margin-top: 25px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 0;
+}
 
 
 
