@@ -575,13 +575,14 @@ body {
     font-size: 30px;
     margin-top: 10px;
     margin-bottom: 0;
-    padding: 0 5px;
-    transition: background-color 0.2s;
+    padding: 0 4px;
+    border: 1px solid transparent;
+    transition: border 0.2s;
     border-radius: 8px;
 }
 
 #slideshow-prev:hover, #slideshow-next:hover {
-    background-color: black;
+    border: 1px solid white;
 }
 
 #slideshow-dot-wrapper {
@@ -683,16 +684,6 @@ body {
     height: 50px;
 }
 
-.home-badge-hover {
-    position: relative;
-    display: inline-block;
-}
-
-.home-badge-hover {
-    display: flex;
-    flex-direction: column;
-}
-
 .home-badge-text {
     visibility: hidden;
     background-color: black;
@@ -707,10 +698,6 @@ body {
     white-space: nowrap;
     justify-self: center;
     align-self: end;
-}
-
-.home-badge-hover:hover .home-badge-text {
-    visibility: visible;
 }
 
 #home-status-badge-loading {
@@ -740,14 +727,15 @@ body {
 }
 
 #home-commands-wrapper {
-    font-size: 22px;
     padding-left: 20px;
     padding-right: 20px;
+    margin-bottom: 30px;
     column-gap: 10px;
+    row-gap: 5px;
 }
 
 #home-commands-wrapper > * {
-    margin-top: 0;
+    margin: 0;
 }
 
 #home-commands-count {
@@ -759,14 +747,13 @@ body {
 }
 
 #home-commands-text, #home-commands-card {
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 20px;
+    font-size: 24px;
+    min-height: 32px;
+    padding: 5px 0;
 }
 
 #home-commands-card {
     color: white;
-    min-height: 30px;
     border-radius: 10px;
     padding: 5px;
 }
@@ -947,20 +934,19 @@ body {
     padding: 8px;
     position: relative;
     z-index: 9999;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .discord-button:hover {
     background-color: #3444ed;
-    cursor: pointer;
 }
 
 
 
 /* about.html - command documentation */
 
-#commands-title,
-#commands-subtitle {
+#commands-title, #commands-subtitle {
     font-family: "GG Sans Normal";
     color: white;
     padding-left: 20px;
@@ -980,7 +966,7 @@ body {
 }
 
 #commands-search-bar {
-    margin-top: 40px;
+    margin-top: 35px;
 }
 
 #commands-search-suggestions {
@@ -989,10 +975,10 @@ body {
 
 #commands-search-bar input[type="text"] {
     width: 60%;
-    border-radius: 500px;
+    border-radius: 100px;
     background-color: #4e4e4e;
     padding: 10px 30px;
-    border: none;
+    border: 2px solid transparent;
     font-family: "GG Sans Normal";
     font-size: 30px;
     color: white;
@@ -1006,6 +992,7 @@ body {
 
 #commands-search-bar input[type="text"]:focus {
     outline: none;
+    border: 2px solid #007CC2;
 }
 
 #commands-search-bar input[type="text"]::-webkit-calendar-picker-indicator {
@@ -1051,8 +1038,61 @@ body {
     max-width: 80vw;
 }
 
-.commands-search-results-header,
-.commands-search-results-card {
+#commands-search-results-sort-container {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    grid-template-rows: auto auto;
+    justify-content: center;
+    column-gap: 25px;
+    row-gap: 5px;
+    font-family: "GG Sans Normal";
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 0 8px;
+    max-height: 24px;
+}
+
+.commands-search-results-sort-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.3s;
+}
+
+.commands-search-results-sort-button > * {
+    margin: 0;
+}
+
+.commands-search-results-sort-button:hover, .commands-search-results-sort-button-active {
+    border-bottom: 1px solid white;
+}
+
+.commands-search-results-sort-content {
+    background-color: #2a2a2a;
+    box-shadow: 0px 4px 16px black;
+    z-index: 1;
+    align-self: start;
+    visibility: hidden;
+}
+
+.commands-search-results-sort-content-text {
+    padding: 0 5px;
+}
+
+.commands-search-results-sort-content-active {
+    background-color: #0e6000;
+}
+
+.commands-search-results-sort-content-text:hover {
+    background-color: #1aaa00;
+}
+
+.commands-search-results-header, .commands-search-results-card {
     width: auto;
     padding-left: 10px;
     padding-right: 10px;
@@ -1108,14 +1148,19 @@ body {
 }
 
 .commands-search-results-card {
-    padding: 5px;
     font-size: 20px;
     border-radius: 10px;
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid transparent;
     color: white;
     cursor: pointer;
+}
+
+.commands-search-results-card-premium {
+    border: 1px solid #ffb700;
 }
 
 .commands-search-results-card b {
@@ -1231,7 +1276,7 @@ body {
     filter: invert(1);
 }
 
-#commands-search-results-overlay-close:hover {
+#commands-search-results-overlay-close {
     cursor: pointer;
 }
 

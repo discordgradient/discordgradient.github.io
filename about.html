@@ -382,13 +382,14 @@
 
 
                 function searchCommands(input, searchButton) {
-                    var idx, jdx, kdx;
+                    var idx, jdx, kdx, outputValue;
                     var exact, starts, contains, category, description, letters;
                     var exactAlias, startsAlias, containsAlias, lettersAlias;
                     var resultsContainer = document.getElementById("commands-search-results");
                     var dropdown = document.createElement("div");
                     dropdown.setAttribute("id", "commands-search-results-dropdown");
-                    var header, cardsContainer, showHideContainer;
+                    var header, cardsContainer, showHideContainer, sortContainer;
+                    var currentSort = "A - Z", currentGroup = "None";
 
 
                     function generateCards(cardsContainer, filtered, hasDescription = false) {
@@ -399,11 +400,13 @@
                             resultCard.setAttribute("title", `category: ${x.category}`);
                             if (x.nsfw) {
                                 resultCard.classList.add("blurred");
+                                resultCard.classList.add("commands-search-results-card-nsfw");
                             } else {
                                 resultCard.addEventListener("click", () => {
                                     openCard(allCommands.find(y => y.name == x.name));
                                 });
                             }
+                            if (x.premium) resultCard.classList.add("commands-search-results-card-premium");
 
                             resultCard.style.backgroundColor = categoryConstants.find(y => y.category == x.category).color;
 
@@ -428,6 +431,98 @@
                                 cardsContainer.appendChild(descriptionContainer);
                             }
                         });
+                    }
+
+
+                    function sortGroupCards() {
+                        var cardContainers = document.getElementsByClassName("commands-search-results-cards-container");
+                        var cards, categories;
+
+                        for (idx = 0; idx < cardContainers.length; idx++) {
+                            cards = [...cardContainers[idx].getElementsByClassName("commands-search-results-card")];
+                            categories = {};
+
+                            switch (currentSort) {
+                                case "A - Z":
+                                    cards.sort((a, b) => a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()));
+                                    break;
+
+                                case "Z - A":
+                                    cards.sort((a, b) => b.textContent.toLowerCase().localeCompare(a.textContent.toLowerCase()));
+                                    break;
+
+                                case "Length":
+                                    cards.sort((a, b) => a.textContent.length == b.textContent.length ? a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()) : a.textContent.length - b.textContent.length);
+                                    break;
+                            }
+
+                            switch (currentGroup) {
+                                case "None":
+                                    categories["0"] = cards;
+                                    break;
+
+                                case "Category":
+                                    cards.forEach(x => {
+                                        var category = x.getAttribute("title");
+                                        if (!categories[category]) categories[category] = [];
+                                        categories[category].push(x);
+                                    });
+                                    break;
+                            }
+
+                            cardContainers[idx].innerHTML = "";
+                            Object.values(categories).forEach(group => {
+                                group.forEach(x => cardContainers[idx].appendChild(x));
+                            });
+                        }
+                    }
+
+
+                    // TODO: select multiple options
+                    function generateSortButton(buttonName, buttonIcon, dropdownContent, selectMultiple) {
+                        var dropdown = document.createElement("div");
+                        dropdown.classList.add("commands-search-results-sort-button");
+                        var img = document.createElement("img");
+                        img.src = buttonIcon;
+                        img.alt = buttonName;
+                        img.draggable = false;
+                        var text = document.createElement("p");
+                        text.textContent = buttonName;
+                        dropdown.appendChild(img);
+                        dropdown.appendChild(text);
+
+                        var content = document.createElement("div");
+                        content.classList.add("commands-search-results-sort-content");
+                        dropdownContent.forEach((x, i) => {
+                            var option = document.createElement("div");
+                            option.textContent = x;
+                            option.classList.add("commands-search-results-sort-content-text");
+                            if (i == 0) option.classList.add("commands-search-results-sort-content-active");
+
+                            option.addEventListener("click", () => {
+                                var active = content.querySelector(".commands-search-results-sort-content-active");
+                                if (active.textContent != option.textContent) {
+                                    active.classList.remove("commands-search-results-sort-content-active");
+                                    option.classList.add("commands-search-results-sort-content-active");
+
+                                    switch (buttonName) {
+                                        case "Sort":
+                                            currentSort = option.textContent;
+                                            break;
+
+                                        case "Group":
+                                            currentGroup = option.textContent;
+                                            break;
+                                    }
+
+                                    sortGroupCards();
+                                }
+                            });
+
+                            content.appendChild(option);
+                        });
+
+                        return [dropdown, content];
                     }
 
 
@@ -476,7 +571,7 @@
 
 
                     if (input.length == 1) {
-                        starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
+                        starts = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw, premium: x.premium }));
                         starts.forEach(x => x.formatted = "<b>" + x.name[0] + "</b>" + x.name.slice(1));
 
                         for (idx = 0; idx < allCommands.length; idx++) {
@@ -484,7 +579,7 @@
 
                             for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
                                 if (allCommands[idx].aliases[jdx].toLowerCase().startsWith(input.toLowerCase())) {
-                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx][0] + "</b>" + allCommands[idx].aliases[jdx].slice(1), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx][0] + "</b>" + allCommands[idx].aliases[jdx].slice(1), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium });
                                     break;
                                 }
                             }
@@ -513,16 +608,16 @@
 
                         resultsContainer.appendChild(dropdown);
 
-                        return (starts.length > 0) ? "starts" : "none";
+                        outputValue = (starts.length > 0) ? "starts" : "none";
                     } else {
-                        exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category, nsfw: x.nsfw }));
+                        exact = allCommands.filter(x => x.category != "creator" && x.name.toLowerCase() == input.toLowerCase()).map(x => ({ name: x.name, formatted: "<b>" + x.name + "</b>", category: x.category, nsfw: x.nsfw, premium: x.premium }));
 
                         for (idx = 0; idx < allCommands.length; idx++) {
                             if (allCommands[idx].category == "creator" || allCommands[idx].aliases.length == 0 || exact.find(x => x.name == allCommands[idx].name)) continue;
 
                             for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
                                 if (allCommands[idx].aliases[jdx].toLowerCase() == input.toLowerCase()) {
-                                    exact.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx] + "</b>", category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    exact.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx] + "</b>", category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium });
                                     break;
                                 }
                             }
@@ -547,7 +642,7 @@
 
                         exact = new Set(exact.map(x => x.name));
 
-                        starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
+                        starts = allCommands.filter(x => !exact.has(x.name) && x.category != "creator" && x.name.toLowerCase().startsWith(input.toLowerCase())).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw, premium: x.premium }));
                         starts.forEach(x => x.formatted = "<b>" + x.name.slice(0, input.length) + "</b>" + x.name.slice(input.length));
 
                         for (idx = 0; idx < allCommands.length; idx++) {
@@ -555,7 +650,7 @@
 
                             for (jdx = 0; jdx < allCommands[idx].aliases.length; jdx++) {
                                 if (allCommands[idx].aliases[jdx].toLowerCase().startsWith(input.toLowerCase())) {
-                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx].slice(0, input.length) + "</b>" + allCommands[idx].aliases[jdx].slice(input.length), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    starts.push({ name: allCommands[idx].name, formatted: "<b>" + allCommands[idx].aliases[jdx].slice(0, input.length) + "</b>" + allCommands[idx].aliases[jdx].slice(input.length), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium });
                                     break;
                                 }
                             }
@@ -580,7 +675,7 @@
 
                         starts = new Set(starts.map(x => x.name));
 
-                        contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw }));
+                        contains = allCommands.filter(x => !exact.has(x.name) && !starts.has(x.name) && x.category != "creator" && (x.name.includes(input.toLowerCase()) || input.toLowerCase().includes(x.name))).map(x => ({ name: x.name, formatted: "", category: x.category, nsfw: x.nsfw, premium: x.premium }));
                         contains.forEach(x => {
                             if (input.toLowerCase().includes(x.name)) {
                                 x.formatted = `<b>${x.name}</b>`;
@@ -597,10 +692,10 @@
                                 if (allCommands[idx].aliases[jdx].toLowerCase().includes(input.toLowerCase())) {
                                     var inputLower = input.toLowerCase();
                                     var formatted = allCommands[idx].aliases[jdx].replaceAll(inputLower, `<b>${inputLower}</b>`);
-                                    contains.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    contains.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium });
                                     break;
                                 } else if (input.toLowerCase().includes(allCommands[idx].aliases[jdx])) {
-                                    contains.push({ name: allCommands[idx].name, formatted: `<b>${allCommands[idx].aliases[jdx]}</b>`, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    contains.push({ name: allCommands[idx].name, formatted: `<b>${allCommands[idx].aliases[jdx]}</b>`, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium });
                                     break;
                                 }
                             }
@@ -644,7 +739,7 @@
                                     }
                                 }
 
-                                description.push({ name: allCommands[idx].name, description: formatted.join(" "), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, matchCount: matches.length });
+                                description.push({ name: allCommands[idx].name, description: formatted.join(" "), category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium, matchCount: matches.length });
                             }
                         }
                         description.sort((a, b) => {
@@ -665,31 +760,10 @@
 
                             cardsContainer = document.createElement("div");
                             cardsContainer.classList.add("commands-search-results-cards-container-left");
-                            // cardsContainer.style.display = "none";
 
                             generateCards(cardsContainer, description, true);
 
-                            /*
-                            showHideContainer = document.createElement("div");
-                            showHideContainer.classList.add("commands-search-results-show-hide-container");
-                            showHideContainer.textContent = "Show";
-                            showHideContainer.addEventListener("click", () => {
-                                switch (showHideContainer.textContent) {
-                                    case "Show":
-                                        showHideContainer.textContent = "Hide";
-                                        cardsContainer.style.display = "flex";
-                                        break;
-    
-                                    case "Hide":
-                                        showHideContainer.textContent = "Show";
-                                        cardsContainer.style.display = "none";
-                                        break;
-                                }
-                            });
-                            */
-
                             dropdown.appendChild(header);
-                            // dropdown.appendChild(showHideContainer);
                             dropdown.appendChild(cardsContainer);
                         }
 
@@ -710,7 +784,7 @@
                             }
 
                             return true;
-                        }).map(x => ({ name: x.name, category: x.category, nsfw: x.nsfw })).sort((a, b) => a.name.localeCompare(b.name));
+                        }).map(x => ({ name: x.name, category: x.category, nsfw: x.nsfw, premium: x.premium })).sort((a, b) => a.name.localeCompare(b.name));
 
                         if (category.length > 0) {
                             header = document.createElement("p");
@@ -751,7 +825,7 @@
                                     }
                                 }
 
-                                letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium });
                             }
                         }
                         for (idx = 0; idx < allCommands.length; idx++) {
@@ -772,7 +846,7 @@
                                         }
                                     }
 
-                                    letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw });
+                                    letters.push({ name: allCommands[idx].name, formatted: formatted, category: allCommands[idx].category, nsfw: allCommands[idx].nsfw, premium: allCommands[idx].premium });
                                     break;
                                 }
                             }
@@ -826,8 +900,45 @@
 
                         resultsContainer.appendChild(dropdown);
 
-                        return (exact.size > 0) ? "exact" : (starts.size > 0) ? "starts" : (contains.size > 0) ? "contains" : (description.size > 0) ? "description" : (category.size > 0) ? "category" : (letters.size > 0) ? "letters" : "none";
+                        outputValue = (exact.size > 0) ? "exact" : (starts.size > 0) ? "starts" : (contains.size > 0) ? "contains" : (description.size > 0) ? "description" : (category.size > 0) ? "category" : (letters.size > 0) ? "letters" : "none";
                     }
+
+                    if (outputValue != "none") {
+                        sortContainer = document.createElement("div");
+                        sortContainer.setAttribute("id", "commands-search-results-sort-container");
+
+                        var [sortDropdown, sortContent] = generateSortButton("Sort", "static/material-icons/alpha_sort.svg", ["A - Z", "Z - A", "Length"]);
+                        var [filterDropdown, filterContent] = generateSortButton("Filter", "static/material-icons/filter.svg", ["Premium", "NSFW"]);
+                        var [groupDropdown, groupContent] = generateSortButton("Group", "static/material-icons/group.svg", ["None", "Category"]);
+
+                        document.addEventListener("click", event => {
+                            var toggleVisibility = (element, isTarget) => isTarget ? element.style.visibility == "visible" ? element.style.visibility = "hidden" : element.style.visibility = "visible" : element.style.visibility = "hidden";
+                            var toggleActive = (element, toggle) => element.classList[toggle ? "toggle" : "remove"]("commands-search-results-sort-button-active");
+
+                            var isSort = sortDropdown.contains(event.target);
+                            var isFilter = filterDropdown.contains(event.target);
+                            var isGroup = groupDropdown.contains(event.target);
+
+                            toggleVisibility(sortContent, isSort);
+                            toggleVisibility(filterContent, isFilter);
+                            toggleVisibility(groupContent, isGroup);
+                            toggleActive(sortDropdown, isSort);
+                            toggleActive(filterDropdown, isFilter);
+                            toggleActive(groupDropdown, isGroup);
+                        });
+
+                        sortContainer.appendChild(sortDropdown);
+                        // sortContainer.appendChild(filterDropdown);
+                        sortContainer.appendChild(groupDropdown);
+                        sortContainer.appendChild(sortContent);
+                        // sortContainer.appendChild(filterContent);
+                        sortContainer.appendChild(groupContent);
+                        dropdown.insertBefore(sortContainer, dropdown.firstChild);
+                    }
+
+                    resultsContainer.appendChild(dropdown);
+
+                    return outputValue;
                 }
 
 
@@ -985,6 +1096,7 @@
 
                         searchIcon = document.createElement("img");
                         searchIcon.alt = "Search";
+                        searchIcon.draggable = false;
 
                         if (searchInput.value.length > 0) {
                             switch (searchStatus) {
@@ -1029,7 +1141,7 @@
                         }
 
                         searchButton.appendChild(searchIcon);
-                    }, 1000);
+                    }, 800);
                 }
 
                 document.getElementById("commands-search-bar").addEventListener("input", onInput);
