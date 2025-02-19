@@ -29,7 +29,10 @@
                 <nav id="top-nav">
                     <ul id="top-nav-list">
                         <li class="top-nav-item"><a href="about.html">About</a></li>
-                        <li class="top-nav-item"><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a></li>
+                        <li class="top-nav-item">
+                            <a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a>
+                            <img src="static/material-icons/external_link.svg" alt="External Link" draggable="false">
+                        </li>
                         <li class="top-nav-item"><a href="support.html">Support</a></li>
                         <li class="top-nav-item" id="top-nav-dropdown">
                             <button>More</button>
@@ -44,6 +47,10 @@
         
             <div id="top-nav-dropdown-content">
                 <a href="acknowledgements.html">Acknowledgements</a>
+                <div class="top-nav-dropdown-content-row">
+                    <a href="https://gradient-discord.statuspage.io" target="_blank">Service status</a>
+                    <img src="static/material-icons/external_link.svg" alt="External Link" draggable="false">
+                </div>
             </div>
         </div>
 
@@ -82,6 +89,7 @@
                         <button id="home-invite">
                             <img src="static/discord-icon-white.webp" alt="Add to Discord" id="home-invite-icon" draggable="false">
                             Add to Discord
+                            <img src="static/material-icons/external_link.svg" alt="External Link" id="home-invite-external" draggable="false">
                         </button>
                     </a>
             
@@ -107,33 +115,21 @@
 
         <script>
             window.onload = () => {
-                setBadgeHovers();
+                setBadgeHover(document.getElementById("home-verified-app-badge"), document.getElementById("home-verified-app-text"));
+                setBadgeHover(document.getElementById("home-supports-commands-badge"), document.getElementById("home-supports-commands-text"));
                 getServiceStatus();
                 updateCommandCounter();
                 setNavDropdown();
             }
 
 
-            function setBadgeHovers() {
-                var verifiedAppBadge = document.getElementById("home-verified-app-badge");
-                var supportsCommandsBadge = document.getElementById("home-supports-commands-badge");
-                var statusBadge = document.getElementById("home-status-badge");
-
-                var verifiedAppText = document.getElementById("home-verified-app-text");
-                var supportsCommandsText = document.getElementById("home-supports-commands-text");
-
-                verifiedAppBadge.addEventListener("mouseover", () => {
-                    verifiedAppText.style.visibility = "visible";
+            function setBadgeHover(badge, text) {
+                badge.addEventListener("mouseover", () => {
+                    text.style.visibility = "visible";
                 });
-                verifiedAppBadge.addEventListener("mouseout", () => {
-                    verifiedAppText.style.visibility = "hidden";
-                });
-
-                supportsCommandsBadge.addEventListener("mouseover", () => {
-                    supportsCommandsText.style.visibility = "visible";
-                });
-                supportsCommandsBadge.addEventListener("mouseout", () => {
-                    supportsCommandsText.style.visibility = "hidden";
+                badge.addEventListener("mouseout", event => {
+                    // if (!text.contains(event.relatedTarget) && !badge.contains(event.relatedTarget)) text.style.visibility = "hidden";
+                    text.style.visibility = "hidden";
                 });
             }
 
@@ -143,66 +139,47 @@
 
                 try {
                     status = await fetch("https://93zbgvn3px8d.statuspage.io/api/v2/summary.json");
-                    status = await status.json();
+                    status = (await status.json())?.status;
                 } catch {
                     status = undefined;
                 }
 
                 var homeStatus = document.getElementById("home-badges");
 
-                var statusIcon = document.createElement("img");
-                statusIcon.setAttribute("id", "home-status-badge");
-                statusIcon.setAttribute("draggable", "false");
+                function createStatusIcon(src, alt) {
+                    var statusIcon = document.createElement("img");
+                    statusIcon.setAttribute("id", "home-status-badge");
+                    statusIcon.setAttribute("draggable", "false");
 
-                var statusHover = document.getElementById("home-status-text");
+                    statusIcon.src = src;
+                    statusIcon.alt = alt;
 
-                if (status && status.status) {
+                    var statusHover = document.getElementById("home-status-text");
+                    statusHover.textContent = statusIcon.alt;
+
+                    setBadgeHover(statusIcon, statusHover);
+
+                    homeStatus.appendChild(statusIcon);
+                }
+
+                if (status) {
                     setTimeout(() => {
                         document.getElementById("home-status-badge-loading").remove();
 
-                        status = status.status;
-
                         if (status.description) {
                             if (status.description == "All Systems Operational") {
-                                statusIcon.src = "static/status/operational.png";
-                                statusIcon.alt = "All Systems Operational";
+                                createStatusIcon("static/status/operational.png", "All Systems Operational");
                             } else {
-                                statusIcon.src = "static/status/minor-outage.png";
-                                statusIcon.alt = "Minor Outage";
+                                createStatusIcon("static/status/minor-outage.png", "Minor Outage");
                             }
                         } else {
-                            statusIcon.src = "static/status/major-outage.png";
-                            statusIcon.alt = "Major Outage";
+                            createStatusIcon("static/status/major-outage.png", "Major Outage");
                         }
-
-                        statusHover.textContent = statusIcon.alt;
-
-                        homeStatus.appendChild(statusIcon);
-
-                        statusIcon.addEventListener("mouseover", () => {
-                            statusHover.style.visibility = "visible";
-                        });
-                        statusIcon.addEventListener("mouseout", () => {
-                            statusHover.style.visibility = "hidden";
-                        });
                     }, 2000);
                 } else {
                     setTimeout(() => {
                         document.getElementById("home-status-badge-loading").remove();
-
-                        statusIcon.src = "static/status/major-outage.png";
-                        statusIcon.alt = "Major Outage";
-
-                        statusHover.textContent = statusIcon.alt;
-
-                        homeStatus.appendChild(statusIcon);
-
-                        statusIcon.addEventListener("mouseover", () => {
-                            statusHover.style.visibility = "visible";
-                        });
-                        statusIcon.addEventListener("mouseout", () => {
-                            statusHover.style.visibility = "hidden";
-                        });
+                        createStatusIcon("static/status/major-outage.png", "Major Outage");
                     }, 2000);
                 }
             }

@@ -24,14 +24,18 @@
     <body>
         <div id="nav-wrapper">
             <div id="nav-main-row">
-                <a href="index.html">
-                    <img src="static/avatar.webp" alt="Gradient Avatar" id="nav-avatar" draggable="false">
-                </a>
+                <div id="nav-avatar-wrapper">
+                    <a href="index.html"><img src="static/avatar.webp" alt="Gradient Avatar" id="nav-avatar" draggable="false"></a>
+                    <p id="nav-status">●</p>
+                </div>
         
                 <nav id="top-nav">
                     <ul id="top-nav-list">
                         <li class="top-nav-item"><a href="about.html">About</a></li>
-                        <li class="top-nav-item"><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a></li>
+                        <li class="top-nav-item">
+                            <a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a>
+                            <img src="static/material-icons/external_link.svg" alt="External Link" draggable="false">
+                        </li>
                         <li class="nav-active top-nav-item">Support</li>
                         <li class="top-nav-item" id="top-nav-dropdown">
                             <button>More</button>
@@ -200,6 +204,7 @@
                                     <button id="support-server-invite">
                                         <img src="static/discord-icon-white.webp" alt="Join server" id="support-server-invite-icon">
                                         Join server
+                                        <img src="static/material-icons/external_link.svg" alt="External Link" id="support-server-invite-external" draggable="false">
                                     </button>
                                 </a>
 

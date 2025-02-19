@@ -24,14 +24,18 @@
     <body>
         <div id="nav-wrapper">
             <div id="nav-main-row">
-                <a href="index.html">
-                    <img src="static/avatar.webp" alt="Gradient Avatar" id="nav-avatar" draggable="false">
-                </a>
+                <div id="nav-avatar-wrapper">
+                    <a href="index.html"><img src="static/avatar.webp" alt="Gradient Avatar" id="nav-avatar" draggable="false"></a>
+                    <p id="nav-status">●</p>
+                </div>
                 
                 <nav id="top-nav">
                     <ul id="top-nav-list">
                         <li class="top-nav-item"><a href="about.html">About</a></li>
-                        <li class="top-nav-item"><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a></li>
+                        <li class="top-nav-item">
+                            <a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a>
+                            <img src="static/material-icons/external_link.svg" alt="External Link" draggable="false">
+                        </li>
                         <li class="top-nav-item"><a href="support.html">Support</a></li>
                         <li class="top-nav-item" id="top-nav-dropdown">
                             <button>More</button>
@@ -79,49 +83,79 @@
 
                     <h3 class="policy-header" id="libraries">Open Source Libraries</h3>
                     <p class="policy-details">More details about all libraries used can be found on <a href="https://npmjs.com" target="_blank">NPM</a>.</p>
-                    <p class="policy-details">Discord API:</p>
-                    <ul class="policy-details">
-                        <li>@wozardlozard/discord.js</li>
-                    </ul>
-                    <p class="policy-details">Database:</p>
-                    <ul class="policy-details">
-                        <li>mongoose</li>
-                        <li>mongoose-encryption</li>
-                    </ul>
-                    <p class="policy-details">Image manipulation:</p>
-                    <ul class="policy-details">
-                        <li>canvas</li>
-                        <li>qrcode</li>
-                        <li>@wozardlozard/colorthief</li>
-                    </ul>
-                    <p class="policy-details">Web fetching:</p>
-                    <ul class="policy-details">
-                        <li>cheerio</li>
-                        <li>node-spotify-api</li>
-                        <li>node-superfetch</li>
-                        <li>twisted</li>
-                    </ul>
-                    <p class="policy-details">Numerical calculation:</p>
-                    <ul class="policy-details">
-                        <li>decimal.js</li>
-                        <li>mathjs</li>
-                        <li>nerdamer</li>
-                    </ul>
-                    <p class="policy-details">Music playback:</p>
-                    <ul class="policy-details">
-                        <li>libsodium-wrappers</li>
-                        <li>prism-media</li>
-                        <li>ytpl</li>
-                        <li>ytsr</li>
-                        <li>@discordjs/opus</li>
-                        <li>@discordjs/voice</li>
-                        <li>@distube/ytdl-core</li>
-                    </ul>
-                    <p class="policy-details">Miscellaneous:</p>
-                    <ul class="policy-details">
-                        <li>dotenv</li>
-                        <li>eslint</li>
-                    </ul>
+                    <table class="policy-table">
+                        <tr>
+                            <th>Discord API</th>
+                            <td>
+                                <ul class="policy-details">
+                                    <li>@wozardlozard/discord.js</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Database</th>
+                            <td>
+                                <ul class="policy-details">
+                                    <li>mongoose</li>
+                                    <li>mongoose-encryption</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Image manipulation</th>
+                            <td>
+                                <ul class="policy-details">
+                                    <li>canvas</li>
+                                    <li>qrcode</li>
+                                    <li>@wozardlozard/colorthief</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Web fetching</th>
+                            <td>
+                                <ul class="policy-details">
+                                    <li>cheerio</li>
+                                    <li>node-spotify-api</li>
+                                    <li>node-superfetch</li>
+                                    <li>twisted</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Numerical calculation</th>
+                            <td>
+                                <ul class="policy-details">
+                                    <li>decimal.js</li>
+                                    <li>mathjs</li>
+                                    <li>nerdamer</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Music playback</th>
+                            <td>
+                                <ul class="policy-details">
+                                    <li>libsodium-wrappers</li>
+                                    <li>prism-media</li>
+                                    <li>ytpl</li>
+                                    <li>ytsr</li>
+                                    <li>@discordjs/opus</li>
+                                    <li>@discordjs/voice</li>
+                                    <li>@distube/ytdl-core</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Miscellaneous</th>
+                            <td>
+                                <ul class="policy-details">
+                                    <li>dotenv</li>
+                                    <li>eslint</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div id="on-this-page-wrapper">

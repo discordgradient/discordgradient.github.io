@@ -24,14 +24,18 @@
     <body>
         <div id="nav-wrapper">
             <div id="nav-main-row">
-                <a href="index.html">
-                    <img src="static/avatar.webp" alt="Gradient Avatar" id="nav-avatar" draggable="false">
-                </a>
+                <div id="nav-avatar-wrapper">
+                    <a href="index.html"><img src="static/avatar.webp" alt="Gradient Avatar" id="nav-avatar" draggable="false"></a>
+                    <p id="nav-status">●</p>
+                </div>
         
                 <nav id="top-nav">
                     <ul id="top-nav-list">
                         <li class="nav-active top-nav-item">About</li>
-                        <li class="top-nav-item"><a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a></li>
+                        <li class="top-nav-item">
+                            <a href="https://discord.com/oauth2/authorize?client_id=683053587215024213&permissions=10432475036919&integration_type=0&scope=bot+applications.commands&redirect_uri=https://discordgradient.github.io/support.html?get-started=1&response_type=code">Invite</a>
+                            <img src="static/material-icons/external_link.svg" alt="External Link" draggable="false">
+                        </li>
                         <li class="top-nav-item"><a href="support.html">Support</a></li>
                         <li class="top-nav-item" id="top-nav-dropdown">
                             <button>More</button>
@@ -67,7 +71,7 @@
                         <h2 id="about-selection-title-header">Feature Explorer</h2>
                         <p id="about-selection-title-description">One bot, 12 different powerful categories to meet all of the needs of you
                             and your server.</p>
-                        <p class="card-blue">📖 See detailed command docs <a href="#" onclick="document.getElementById('about-switch-input').click();">here</a>.</p>
+                        <!--<p class="card-blue">📖 See detailed command docs <a href="#" onclick="document.getElementById('about-switch-input').click();">here</a>.</p>-->
                     </div>
                     
                     <div id="about-selection-grid">
@@ -389,7 +393,7 @@
                     var dropdown = document.createElement("div");
                     dropdown.setAttribute("id", "commands-search-results-dropdown");
                     var header, cardsContainer, showHideContainer, sortContainer;
-                    var currentSort = "A - Z", currentGroup = "None";
+                    var currentSort = "A - Z", currentVisibility = ["Premium"], currentGroup = "None";
 
 
                     function generateCards(cardsContainer, filtered, hasDescription = false) {
@@ -398,15 +402,18 @@
                             resultCard.innerHTML = x.formatted || x.name;
                             resultCard.classList.add("commands-search-results-card");
                             resultCard.setAttribute("title", `category: ${x.category}`);
-                            if (x.nsfw) {
-                                resultCard.classList.add("blurred");
-                                resultCard.classList.add("commands-search-results-card-nsfw");
-                            } else {
-                                resultCard.addEventListener("click", () => {
-                                    openCard(allCommands.find(y => y.name == x.name));
-                                });
+
+                            resultCard.addEventListener("click", () => {
+                                openCard(allCommands.find(y => y.name == x.name));
+                            });
+
+                            if (x.premium) {
+                                resultCard.classList.add("commands-search-results-card-premium");
                             }
-                            if (x.premium) resultCard.classList.add("commands-search-results-card-premium");
+                            if (x.nsfw) {
+                                resultCard.classList.add("commands-search-results-card-nsfw");
+                                resultCard.style.display = "none";
+                            }
 
                             resultCard.style.backgroundColor = categoryConstants.find(y => y.category == x.category).color;
 
@@ -431,29 +438,52 @@
                                 cardsContainer.appendChild(descriptionContainer);
                             }
                         });
+
+                        if ([...cardsContainer.children].every(x => x.style.display == "none")) {
+                            var noDisplay = document.createElement("p");
+                            noDisplay.classList.add("commands-search-results-nodisplay");
+                            noDisplay.textContent = `These results are currently hidden by visibility filters. Try enabling some filters to see these results.`;
+                            cardsContainer.appendChild(noDisplay);
+                        }
                     }
 
 
-                    function sortGroupCards() {
+                    function arrangeCards(toSort, toFilter) {
                         var cardContainers = document.getElementsByClassName("commands-search-results-cards-container");
-                        var cards, categories;
+                        var cards, categories, noDisplay;
 
                         for (idx = 0; idx < cardContainers.length; idx++) {
                             cards = [...cardContainers[idx].getElementsByClassName("commands-search-results-card")];
                             categories = {};
+                            noDisplay = null;
 
-                            switch (currentSort) {
-                                case "A - Z":
-                                    cards.sort((a, b) => a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()));
-                                    break;
+                            if (toSort) {
+                                switch (currentSort) {
+                                    case "A - Z":
+                                        cards.sort((a, b) => a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()));
+                                        break;
 
-                                case "Z - A":
-                                    cards.sort((a, b) => b.textContent.toLowerCase().localeCompare(a.textContent.toLowerCase()));
-                                    break;
+                                    case "Z - A":
+                                        cards.sort((a, b) => b.textContent.toLowerCase().localeCompare(a.textContent.toLowerCase()));
+                                        break;
 
-                                case "Length":
-                                    cards.sort((a, b) => a.textContent.length == b.textContent.length ? a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()) : a.textContent.length - b.textContent.length);
-                                    break;
+                                    case "Length":
+                                        cards.sort((a, b) => a.textContent.length == b.textContent.length ? a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()) : a.textContent.length - b.textContent.length);
+                                        break;
+                                }
+                            } else if (toFilter) {
+                                cards.forEach(x => {
+                                    x.style.display = (
+                                        (!x.classList.contains("commands-search-results-card-premium") || currentVisibility.includes("Premium")) &&
+                                        (!x.classList.contains("commands-search-results-card-nsfw") || currentVisibility.includes("NSFW"))
+                                    ) ? "block" : "none";
+                                });
+
+                                if (cards.every(x => x.style.display == "none")) {
+                                    noDisplay = document.createElement("p");
+                                    noDisplay.classList.add("commands-search-results-nodisplay");
+                                    noDisplay.textContent = `These results are currently hidden by visibility filters. Try enabling some filters to see these results.`;
+                                }
                             }
 
                             switch (currentGroup) {
@@ -474,12 +504,12 @@
                             Object.values(categories).forEach(group => {
                                 group.forEach(x => cardContainers[idx].appendChild(x));
                             });
+                            if (noDisplay) cardContainers[idx].appendChild(noDisplay);
                         }
                     }
 
 
-                    // TODO: select multiple options
-                    function generateSortButton(buttonName, buttonIcon, dropdownContent, selectMultiple) {
+                    function generateSortButton(buttonName, buttonIcon, dropdownContent, selectMultiple = false, confirmations = null) {
                         var dropdown = document.createElement("div");
                         dropdown.classList.add("commands-search-results-sort-button");
                         var img = document.createElement("img");
@@ -500,22 +530,41 @@
                             if (i == 0) option.classList.add("commands-search-results-sort-content-active");
 
                             option.addEventListener("click", () => {
-                                var active = content.querySelector(".commands-search-results-sort-content-active");
-                                if (active.textContent != option.textContent) {
-                                    active.classList.remove("commands-search-results-sort-content-active");
-                                    option.classList.add("commands-search-results-sort-content-active");
+                                if (confirmations && confirmations[i]) {
+                                    if (!option.classList.contains("commands-search-results-sort-content-active")) {
+                                        var confirmed = confirm(confirmations[i]);
+                                        if (!confirmed) return;
+                                    }
+                                }
 
-                                    switch (buttonName) {
-                                        case "Sort":
-                                            currentSort = option.textContent;
-                                            break;
+                                if (!selectMultiple) {
+                                    var active = content.querySelector(".commands-search-results-sort-content-active");
+                                    if (active.textContent != option.textContent) {
+                                        active.classList.remove("commands-search-results-sort-content-active");
+                                        option.classList.add("commands-search-results-sort-content-active");
 
-                                        case "Group":
-                                            currentGroup = option.textContent;
-                                            break;
+                                        switch (buttonName) {
+                                            case "Sort":
+                                                currentSort = option.textContent;
+                                                break;
+
+                                            case "Group":
+                                                currentGroup = option.textContent;
+                                                break;
+                                        }
+
+                                        arrangeCards(true, false);
+                                    }
+                                } else if (buttonName == "Visibility") {
+                                    if (option.classList.contains("commands-search-results-sort-content-active")) {
+                                        option.classList.remove("commands-search-results-sort-content-active");
+                                        currentVisibility = currentVisibility.filter(y => y != option.textContent);
+                                    } else {
+                                        option.classList.add("commands-search-results-sort-content-active");
+                                        currentVisibility.push(option.textContent);
                                     }
 
-                                    sortGroupCards();
+                                    arrangeCards(false, true);
                                 }
                             });
 
@@ -908,7 +957,7 @@
                         sortContainer.setAttribute("id", "commands-search-results-sort-container");
 
                         var [sortDropdown, sortContent] = generateSortButton("Sort", "static/material-icons/alpha_sort.svg", ["A - Z", "Z - A", "Length"]);
-                        var [filterDropdown, filterContent] = generateSortButton("Filter", "static/material-icons/filter.svg", ["Premium", "NSFW"]);
+                        var [visibilityDropdown, visibilityContent] = generateSortButton("Visibility", "static/material-icons/visibility.svg", ["Premium", "NSFW"], true, ["", "NSFW (not safe for work) commands are hidden by default. To enable them, you must confirm that you are 18 years of age or older."]);
                         var [groupDropdown, groupContent] = generateSortButton("Group", "static/material-icons/group.svg", ["None", "Category"]);
 
                         document.addEventListener("click", event => {
@@ -916,23 +965,18 @@
                             var toggleActive = (element, toggle) => element.classList[toggle ? "toggle" : "remove"]("commands-search-results-sort-button-active");
 
                             var isSort = sortDropdown.contains(event.target);
-                            var isFilter = filterDropdown.contains(event.target);
+                            var isFilter = visibilityDropdown.contains(event.target);
                             var isGroup = groupDropdown.contains(event.target);
 
                             toggleVisibility(sortContent, isSort);
-                            toggleVisibility(filterContent, isFilter);
+                            toggleVisibility(visibilityContent, isFilter);
                             toggleVisibility(groupContent, isGroup);
                             toggleActive(sortDropdown, isSort);
-                            toggleActive(filterDropdown, isFilter);
+                            toggleActive(visibilityDropdown, isFilter);
                             toggleActive(groupDropdown, isGroup);
                         });
 
-                        sortContainer.appendChild(sortDropdown);
-                        // sortContainer.appendChild(filterDropdown);
-                        sortContainer.appendChild(groupDropdown);
-                        sortContainer.appendChild(sortContent);
-                        // sortContainer.appendChild(filterContent);
-                        sortContainer.appendChild(groupContent);
+                        sortContainer.append(sortDropdown, visibilityDropdown, groupDropdown, sortContent, visibilityContent, groupContent);
                         dropdown.insertBefore(sortContainer, dropdown.firstChild);
                     }
 
@@ -998,6 +1042,15 @@
                         premiumTag.textContent = "⭐ Premium";
 
                         commandTags.appendChild(premiumTag);
+                    }
+                    if (command.nsfw) {
+                        var nsfwTag = document.createElement("div");
+                        nsfwTag.classList.add("commands-search-results-overlay-tag");
+                        nsfwTag.style.backgroundColor = "#ff4800";
+                        nsfwTag.style.color = "#bebebe";
+                        nsfwTag.textContent = "⚠️ NSFW";
+
+                        commandTags.appendChild(nsfwTag);
                     }
 
                     infoTable.setAttribute("id", "commands-search-results-overlay-table");
