@@ -61,16 +61,6 @@
     100% { transform: rotate(360deg); }
 }
 
-@keyframes home-button-border-spin {
-    from {
-        --home-button-angle: 0deg;
-    }
-
-    to {
-        --home-button-angle: 360deg;
-    }
-}
-
 
 
 /* BODY STYLING */
@@ -85,6 +75,11 @@ body {
     margin: 0;
     display: grid;
     grid-template-rows: auto 1fr auto;
+    font-family: "GG Sans Normal";
+}
+
+button, input, textarea, select {
+    font-family: inherit;
 }
 
 
@@ -97,7 +92,6 @@ body {
     margin-right: 40px;
     padding: 0;
     color: white;
-    font-family: "GG Sans Normal";
 }
 
 #nav-main-row {
@@ -156,7 +150,6 @@ body {
 }
 
 #top-nav button {
-    font-family: inherit;
     font-size: inherit;
     background-color: transparent;
     border: none;
@@ -321,14 +314,12 @@ body {
     align-items: center;
 }
 
-.card-orange,
-.card-blue {
+.card-orange, .card-blue {
     border-radius: 5px;
     padding: 8px 12px;
 }
 
-.card-orange a,
-.card-blue a {
+.card-orange a, .card-blue a {
     color: white;
 }
 
@@ -348,7 +339,6 @@ body {
 
 .footer-content {
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 18px;
     background-color: rgb(77, 107, 78);
     border: 1px solid rgb(6, 158, 12);
@@ -376,7 +366,6 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     column-gap: 20px;
     margin-top: 30px;
@@ -411,7 +400,6 @@ body {
 
 #on-this-page-wrapper {
     color: white;
-    font-family: "GG Sans Normal";
     margin: 0;
     border-radius: 5px;
     padding: 15px 15px;
@@ -466,7 +454,6 @@ body {
     transition: background-color 0.4s, border-radius 0s;
     background-color: #2c2c34;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
 }
 
@@ -489,7 +476,6 @@ body {
     max-height: 0;
     background-color: #545454;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     border-radius: 0 0 10px 10px;
 }
@@ -510,7 +496,6 @@ body {
 
 .updated-date {
     color: #bebebe;
-    font-family: "GG Sans Normal";
     font-size: 25px;
     margin-top: 0;
     margin-bottom: 10px;
@@ -518,7 +503,6 @@ body {
 
 #policy-title, .policy-header, .policy-subheader, .policy-details, .policy-note, .policy-table {
     color: white;
-    font-family: "GG Sans Normal";
 }
 
 #policy-title {
@@ -532,6 +516,18 @@ body {
     font-size: 30px;
     margin-top: 0;
     margin-bottom: 20px;
+    counter-increment: policy-numbers;
+}
+
+.policy-header::before {
+    content: counter(policy-numbers);
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #5865f2;
+    text-align: center;
+    margin-right: 10px;
 }
 
 .policy-subheader {
@@ -554,10 +550,12 @@ body {
     color: #7edbff;
 }
 
+.policy-table-container {
+    overflow-x: auto;
+}
+
 .policy-table {
-    width: 100%;
     border-collapse: collapse;
-    table-layout: auto;
 }
 
 .policy-table th, .policy-table td {
@@ -567,12 +565,8 @@ body {
 
 .policy-table th {
     text-align: left;
-    padding-right: 10px;
-    width: auto;
-}
-
-.policy-table ul {
-    padding-left: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 .slideshow-viewport {
@@ -580,7 +574,6 @@ body {
     margin-left: 60px;
     margin-right: 60px;
     color: white;
-    font-family: "GG Sans Normal";
     column-gap: 25px;
     align-items: flex-start;
 }
@@ -628,7 +621,7 @@ body {
     flex: 1;
 }
 
-.slideshow-text.card-orange {
+.slideshow-text.card-blue {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 5px 10px;
@@ -758,11 +751,9 @@ body {
     background-color: black;
     color: white;
     text-align: center;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     border-radius: 6px;
     padding: 5px 10px;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     white-space: nowrap;
     justify-self: center;
@@ -781,7 +772,6 @@ body {
 
 #home-subtitle, #home-commands-wrapper {
     color: #c9c9c9;
-    font-family: "GG Sans Normal";
 }
 
 #home-subtitle {
@@ -793,6 +783,15 @@ body {
 #home-subtitle > * {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+#home-subtitle-colored {
+    --home-subtitle-background-size: 400%;
+    background-image: linear-gradient(74deg, rgb(66, 133, 244) 0px, rgb(155, 114, 203) 9%, rgb(217, 101, 112) 20%, rgb(217, 101, 112) 24%, rgb(155, 114, 203) 35%, rgb(66, 133, 244) 44%, rgb(155, 114, 203) 50%, rgb(217, 101, 112) 56%, rgb(155, 114, 203) 75%, rgb(66, 133, 244) 100%);
+    background-size: var(--home-subtitle-background-size) 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 #home-commands-wrapper {
@@ -836,7 +835,6 @@ body {
 #home-invite {
     cursor: pointer;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     border: none;
     background-color: #5865f2;
@@ -853,7 +851,7 @@ body {
     background-color: #7f89f0;
 }
 
-#home-invite::after, #home-invite::before {
+#home-invite::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -865,7 +863,6 @@ body {
     padding: 2px;
     border-radius: 22px;
     background-image: conic-gradient(from var(--home-button-angle) at 50% 50%, #f08d24 0deg, #ffff0d 100deg, #f08d24 120deg, #ff3030 290deg, #f08d24 300deg);
-    animation: 3s home-button-border-spin linear infinite;
 }
 
 #home-invite-link {
@@ -886,7 +883,6 @@ body {
 #home-more-info {
     cursor: pointer;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     border: none;
     background-color: #4e4e4e;
@@ -900,7 +896,7 @@ body {
     background-color: #6a6a6a;
 }
 
-#home-more-info::before, #home-more-info::after {
+#home-more-info::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -912,7 +908,6 @@ body {
     padding: 2px;
     border-radius: 22px;
     background-image: conic-gradient(from var(--home-button-angle) at 50% 50%, #00c538 0deg, #155edd 130deg, #8E47FE 180deg, #155edd 330deg, #00c538 360deg);
-    animation: 3s home-button-border-spin linear infinite;
 }
 
 
@@ -950,7 +945,6 @@ body {
     border-radius: 5px;
     background-color: #4e4e4e;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 16px;
     margin-top: 10px;
     text-align: center;
@@ -971,7 +965,6 @@ body {
 
 #about-selection-title {
     color: white;
-    font-family: "GG Sans Normal";
 }
 
 #about-selection-title-header {
@@ -998,7 +991,6 @@ body {
 
 .about-category-text {
     color: white;
-    font-family: "GG Sans Normal";
     text-align: left;
 }
 
@@ -1027,7 +1019,6 @@ body {
 
 .discord-button {
     color: white;
-    font-family: "GG Sans Normal";
     background-color: #5865f2;
     font-size: 15px;
     border: none;
@@ -1049,7 +1040,6 @@ body {
 /* about.html - command documentation */
 
 #commands-title, #commands-subtitle {
-    font-family: "GG Sans Normal";
     color: white;
     padding-left: 20px;
     padding-right: 20px;
@@ -1081,13 +1071,11 @@ body {
     background-color: #4e4e4e;
     padding: 10px 30px;
     border: 2px solid transparent;
-    font-family: "GG Sans Normal";
     font-size: 30px;
     color: white;
 }
 
 #commands-search-bar input[type="text"]::placeholder {
-    font-family: "GG Sans Normal";
     font-size: 30px;
     color: #8f8f8f;
 }
@@ -1147,7 +1135,6 @@ body {
     justify-content: center;
     column-gap: 25px;
     row-gap: 5px;
-    font-family: "GG Sans Normal";
     color: white;
     font-size: 16px;
     margin-top: 10px;
@@ -1198,7 +1185,6 @@ body {
     width: auto;
     padding-left: 10px;
     padding-right: 10px;
-    font-family: "GG Sans Normal";
 }
 
 .commands-search-results-header, .commands-search-results-nodisplay {
@@ -1229,7 +1215,6 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 18px;
     padding-bottom: 10px;
     cursor: pointer;
@@ -1279,7 +1264,6 @@ body {
 }
 
 .commands-search-results-card-description {
-    font-family: "GG Sans Normal";
     font-size: 16px;
     color: #c0c0c0;
 }
@@ -1316,7 +1300,6 @@ body {
 #commands-search-results-overlay-header {
     text-align: center;
     color: white;
-    font-family: "GG Sans Normal";
 }
 
 #commands-search-results-overlay-title {
@@ -1357,7 +1340,6 @@ body {
 
 #commands-search-results-overlay-table {
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -1395,7 +1377,6 @@ body {
 /* support.html - help center */
 
 .support-title, .support-subtitle {
-    font-family: "GG Sans Normal";
     color: white;
 }
 
@@ -1415,7 +1396,6 @@ body {
 }
 
 .support-text {
-    font-family: "GG Sans Normal";
     font-size: 20px;
     color: white;
     margin-left: 20px;
@@ -1433,7 +1413,6 @@ body {
 #support-server-invite, #support-server-widget {
     cursor: pointer;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     border: none;
     border-radius: 20px;
@@ -1479,7 +1458,6 @@ body {
     margin-left: 20px;
     margin-right: 20px;
     color: white;
-    font-family: "GG Sans Normal";
     display: flex;
     flex-direction: column;
     row-gap: 20px;
@@ -1501,7 +1479,6 @@ body {
 .support-feedback-field {
     width: 100%;
     box-sizing: border-box;
-    font-family: "GG Sans Normal";
     font-size: 18px;
     padding: 5px 10px;
     border-radius: 0 8px 8px 0;
@@ -1522,7 +1499,6 @@ body {
     cursor: pointer;
     background-color: #007CC2;
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 18px;
     border: none;
     border-radius: 20px;
@@ -1540,7 +1516,6 @@ body {
 
 #support-feedback-submitted {
     color: white;
-    font-family: "GG Sans Normal";
     font-size: 20px;
     column-gap: 15px;
 }
@@ -1550,7 +1525,6 @@ body {
 /* support.html - getting started */
 
 #get-started-subtitle {
-    font-family: "GG Sans Normal";
     font-size: 25px;
     color: white;
     margin-top: 25px;
@@ -1659,5 +1633,39 @@ body {
     #slideshow-prev, #slideshow-next {
         margin: 0;
         transform: rotate(90deg);
+    }
+}
+
+
+
+/* REDUCED MOTION ADJUSTMENTS */
+
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes home-button-border-spin {
+        from {
+            --home-button-angle: 0deg;
+        }
+    
+        to {
+            --home-button-angle: 360deg;
+        }
+    }
+
+    #home-invite::before {
+        animation: 3s home-button-border-spin linear infinite;
+    }
+
+    #home-more-info::before {
+        animation: 3s home-button-border-spin linear infinite;
+    }
+
+    @keyframes home-subtitle-bg-move {
+        from {
+            background-position: var(--home-subtitle-background-size) 0;
+        }
+    }
+
+    #home-subtitle-colored {
+        animation: 30s home-subtitle-bg-move linear infinite;
     }
 }
