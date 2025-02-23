@@ -22,6 +22,16 @@
 
 
 
+/* VARIABLES */
+
+@property --home-button-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+
+
 /* KEYFRAMES */
 
 @keyframes fade-in {
@@ -49,6 +59,16 @@
 @keyframes loading-spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes home-button-border-spin {
+    from {
+        --home-button-angle: 0deg;
+    }
+
+    to {
+        --home-button-angle: 360deg;
+    }
 }
 
 
@@ -818,25 +838,38 @@ body {
     color: white;
     font-family: "GG Sans Normal";
     font-size: 20px;
-    border: double 2px transparent;
-    background-image: linear-gradient(#5865f2, #5865f2), conic-gradient(from 100deg at 50% 50%, #ffff0d 0deg, #f08d24 130deg, #ff3030 180deg, #f08d24 330deg, #ffff0d 360deg);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
+    border: none;
+    background-color: #5865f2;
     border-radius: 20px;
     padding: 10px 20px;
-    transition: background-color 0.3s ease;
     display: flex;
     align-items: center;
     flex-direction: row;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+#home-invite:hover {
+    background-color: #7f89f0;
+}
+
+#home-invite::after, #home-invite::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 2px;
+    border-radius: 22px;
+    background-image: conic-gradient(from var(--home-button-angle) at 50% 50%, #f08d24 0deg, #ffff0d 100deg, #f08d24 120deg, #ff3030 290deg, #f08d24 300deg);
+    animation: 3s home-button-border-spin linear infinite;
 }
 
 #home-invite-link {
     text-decoration: none;
-}
-
-#home-invite:hover {
-    color: black;
-    background-image: conic-gradient(from 100deg at 50% 50%, #ffff0d 0deg, #f08d24 130deg, #ff3030 180deg, #f08d24 330deg, #ffff0d 360deg), conic-gradient(from 100deg at 50% 50%, #ffff0d 0deg, #f08d24 130deg, #ff3030 180deg, #f08d24 330deg, #ffff0d 360deg);
 }
 
 #home-invite-icon {
@@ -850,25 +883,36 @@ body {
     margin-left: 5px;
 }
 
-#home-invite:hover #home-invite-external {
-    filter: invert(1);
-}
-
 #home-more-info {
     cursor: pointer;
     color: white;
     font-family: "GG Sans Normal";
     font-size: 20px;
-    border: double 2px transparent;
-    background-image: linear-gradient(#4e4e4e, #4e4e4e), conic-gradient(from 100deg at 50% 50%, #0DFF50 0deg, #155edd 130deg, #8E47FE 180deg, #155edd 330deg, #0DFF50 360deg);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
+    border: none;
+    background-color: #4e4e4e;
     border-radius: 20px;
     padding: 10px 20px;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
 #home-more-info:hover {
-    background-image: conic-gradient(from 100deg at 50% 50%, #0DFF50 0deg, #155edd 130deg, #8E47FE 180deg, #155edd 330deg, #0DFF50 360deg), conic-gradient(from 100deg at 50% 50%, #0DFF50 0deg, #155edd 130deg, #8E47FE 180deg, #155edd 330deg, #0DFF50 360deg);
+    background-color: #6a6a6a;
+}
+
+#home-more-info::before, #home-more-info::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 2px;
+    border-radius: 22px;
+    background-image: conic-gradient(from var(--home-button-angle) at 50% 50%, #00c538 0deg, #155edd 130deg, #8E47FE 180deg, #155edd 330deg, #00c538 360deg);
+    animation: 3s home-button-border-spin linear infinite;
 }
 
 
